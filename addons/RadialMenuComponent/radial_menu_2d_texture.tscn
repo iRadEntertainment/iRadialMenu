@@ -1,0 +1,32 @@
+[gd_scene load_steps=2 format=3 uid="uid://jqpmr6c7vi37"]
+
+[ext_resource type="Script" uid="uid://ceu1vmk8f15y4" path="res://addons/RadialMenuComponent/radial_menu_2d_texture.gd" id="1_qldds"]
+
+[node name="RadialMenu2DTexture" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_qldds")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "THIS IS SPARTA!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button" type="Button" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2

@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=4 uid="uid://c2n486inebntt"]
+[gd_scene load_steps=41 format=4 uid="uid://c2n486inebntt"]
 
 [ext_resource type="Script" uid="uid://5nupk7xpupoh" path="res://addons/RadialMenuComponent/examples/example.gd" id="1_to72g"]
 [ext_resource type="Script" uid="uid://coduooiqlcoy7" path="res://addons/RadialMenuComponent/examples/player.gd" id="1_ycgey"]
@@ -8,8 +8,11 @@
 [ext_resource type="Texture2D" uid="uid://c3cfjrof6lu1y" path="res://addons/RadialMenuComponent/examples/assets/kenney_food-kit/Models/GLB format/Textures/colormap.png" id="4_g0bew"]
 [ext_resource type="PackedScene" uid="uid://c1dt0gi3tnuj6" path="res://addons/RadialMenuComponent/examples/assets/kenney_furniture-kit/Models/GLTF format/tableRound.glb" id="4_ycgey"]
 [ext_resource type="Material" uid="uid://da7ju4dwr7lua" path="res://addons/RadialMenuComponent/examples/assets/outline_next_pass.tres" id="5_dfrf6"]
+[ext_resource type="PackedScene" uid="uid://dtbsttap0e1jc" path="res://addons/RadialMenuComponent/examples/assets/kenney_furniture-kit/Models/GLTF format/bathtub.glb" id="8_p1g4v"]
 [ext_resource type="Texture2D" uid="uid://cano4dpv3hnje" path="res://addons/RadialMenuComponent/examples/assets/icon_crossair.png" id="9_tumbf"]
+[ext_resource type="PackedScene" uid="uid://c1et20ef1fla7" path="res://addons/RadialMenuComponent/examples/assets/kenney_furniture-kit/Models/GLTF format/chair.glb" id="9_yoxnx"]
 [ext_resource type="Script" uid="uid://0ln1m70wl35q" path="res://addons/RadialMenuComponent/examples/reticle.gd" id="10_tumbf"]
+[ext_resource type="PackedScene" uid="uid://cyhhnf5n85ctn" path="res://addons/RadialMenuComponent/radial_menu_component.tscn" id="13_yoxnx"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_74urx"]
 sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
@@ -24,18 +27,31 @@ sky = SubResource("Sky_g0bew")
 tonemap_mode = 2
 glow_enabled = true
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_to72g"]
-size = Vector2(500, 500)
-
-[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_e4h0h"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yoxnx"]
+transparency = 1
+albedo_color = Color(1, 0.439216, 0.423529, 0.376471)
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_tumbf"]
+material = SubResource("StandardMaterial3D_yoxnx")
 radius = 0.3
 height = 1.8
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_l1ju2"]
+albedo_color = Color(5.67943e-06, 0.773013, 0.330841, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_1ce7q"]
+material = SubResource("StandardMaterial3D_l1ju2")
+radius = 0.1
+height = 0.2
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ycgey"]
 radius = 0.3
 height = 1.8
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_to72g"]
+size = Vector2(500, 500)
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_e4h0h"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_3ravq"]
 size = Vector3(0.8396, 0.330322, 0.450195)
@@ -210,15 +226,6 @@ environment = SubResource("Environment_dfrf6")
 transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
 shadow_enabled = true
 
-[node name="Plane" type="StaticBody3D" parent="."]
-
-[node name="Mesh" type="MeshInstance3D" parent="Plane"]
-mesh = SubResource("PlaneMesh_to72g")
-skeleton = NodePath("../..")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Plane"]
-shape = SubResource("WorldBoundaryShape3D_e4h0h")
-
 [node name="Player" type="CharacterBody3D" parent="."]
 script = ExtResource("1_ycgey")
 
@@ -242,9 +249,21 @@ node_a = NodePath("..")
 [node name="RayCast3D" type="RayCast3D" parent="Player/Camera3D" groups=["interacting_ray"]]
 target_position = Vector3(0, 0, -2)
 
+[node name="BigBall" type="MeshInstance3D" parent="Player/Camera3D"]
+mesh = SubResource("SphereMesh_1ce7q")
+
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Player"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
 shape = SubResource("CapsuleShape3D_ycgey")
+
+[node name="Plane" type="StaticBody3D" parent="."]
+
+[node name="Mesh" type="MeshInstance3D" parent="Plane"]
+mesh = SubResource("PlaneMesh_to72g")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Plane"]
+shape = SubResource("WorldBoundaryShape3D_e4h0h")
 
 [node name="Decorations" type="Node3D" parent="."]
 
@@ -323,6 +342,12 @@ transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -0.69374, 0.539441, 0.790257)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.365573, 0)
 shape = SubResource("CylinderShape3D_p1g4v")
 
+[node name="bathtub" parent="Decorations" instance=ExtResource("8_p1g4v")]
+transform = Transform3D(1.30703, 0, 1.51383, 0, 2, 0, -1.51383, 0, 1.30703, 3.05359, 0, 4.21692)
+
+[node name="chair" parent="Decorations" instance=ExtResource("9_yoxnx")]
+transform = Transform3D(-1.91225, 0, 0.585912, 0, 2, 0, -0.585912, 0, -1.91225, -0.419343, 0, 2.78896)
+
 [node name="GUI" type="CanvasLayer" parent="."]
 
 [node name="Reticle" type="TextureRect" parent="GUI"]
@@ -359,3 +384,6 @@ grow_horizontal = 0
 grow_vertical = 0
 theme_override_styles/normal = SubResource("StyleBoxFlat_tumbf")
 text = "Use CTRL to toggle between Mouse Capture"
+
+[node name="RadialMenuComponent" parent="." instance=ExtResource("13_yoxnx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.20211, 1.27609, -1.7461)

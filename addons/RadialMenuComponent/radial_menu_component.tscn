@@ -1,5 +1,33 @@
-[gd_scene format=3 uid="uid://cyhhnf5n85ctn"]
+[gd_scene load_steps=6 format=3 uid="uid://cyhhnf5n85ctn"]
 
-[node name="RadialMenuComponent" type="Control"]
-layout_mode = 3
-anchors_preset = 0
+[ext_resource type="Script" uid="uid://conyevxgcg0rc" path="res://addons/RadialMenuComponent/radial_menu_component.gd" id="1_xa0mt"]
+[ext_resource type="PackedScene" uid="uid://jqpmr6c7vi37" path="res://addons/RadialMenuComponent/radial_menu_2d_texture.tscn" id="2_xa0mt"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_bwkxr"]
+orientation = 2
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_ofauq"]
+viewport_path = NodePath("ProjectionPlane/SubViewport")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xa0mt"]
+resource_local_to_scene = true
+transparency = 1
+depth_draw_mode = 1
+shading_mode = 0
+specular_mode = 2
+disable_ambient_light = true
+disable_fog = true
+albedo_texture = SubResource("ViewportTexture_ofauq")
+billboard_keep_scale = true
+
+[node name="RadialMenuComponent" type="Node3D"]
+script = ExtResource("1_xa0mt")
+
+[node name="ProjectionPlane" type="MeshInstance3D" parent="."]
+mesh = SubResource("PlaneMesh_bwkxr")
+surface_material_override/0 = SubResource("StandardMaterial3D_xa0mt")
+
+[node name="SubViewport" type="SubViewport" parent="ProjectionPlane"]
+transparent_bg = true
+
+[node name="RadialMenu2DTexture" parent="ProjectionPlane/SubViewport" instance=ExtResource("2_xa0mt")]
