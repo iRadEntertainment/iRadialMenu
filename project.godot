@@ -14,3 +14,12 @@ config/name="RadialMenuComponent"
 run/main_scene="uid://c2n486inebntt"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
+
+[display]
+
+window/size/viewport_width=1980
+window/size/viewport_height=1024
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/advanced_radial_menu/plugin.cfg")

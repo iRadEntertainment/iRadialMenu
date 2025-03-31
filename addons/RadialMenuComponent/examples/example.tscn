@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=4 uid="uid://c2n486inebntt"]
+[gd_scene load_steps=42 format=4 uid="uid://c2n486inebntt"]
 
 [ext_resource type="Script" uid="uid://5nupk7xpupoh" path="res://addons/RadialMenuComponent/examples/example.gd" id="1_to72g"]
 [ext_resource type="Script" uid="uid://coduooiqlcoy7" path="res://addons/RadialMenuComponent/examples/player.gd" id="1_ycgey"]
@@ -200,6 +200,22 @@ shadow_mesh = SubResource("ArrayMesh_m803a")
 height = 0.729004
 radius = 0.694824
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yoxnx"]
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+bg_color = Color(0.129412, 0.14902, 0.180392, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.988235, 0.498039, 0.498039, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tumbf"]
 content_margin_left = 8.0
 content_margin_top = 8.0
@@ -370,6 +386,13 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+
+[node name="lb_mouse_in_radial" type="Label" parent="GUI/Info"]
+layout_mode = 1
+offset_right = 188.0
+offset_bottom = 39.0
+theme_override_styles/normal = SubResource("StyleBoxFlat_yoxnx")
+text = "Mouse in Radial menu"
 
 [node name="Label" type="Label" parent="GUI/Info"]
 layout_mode = 1

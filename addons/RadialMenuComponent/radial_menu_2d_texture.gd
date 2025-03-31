@@ -1,14 +1,16 @@
 extends Control
 
-var current_mpos: Vector2
-
-func _process(delta: float) -> void:
-	queue_redraw()
 
 
-func input_from_3D_world(event: InputEventMouse) -> void:
-	current_mpos = event.position
+# those inputs are passed from radial_menu_component.gd
+func _input(event: InputEvent) -> void:
+	if event is InputEventMouse:
+		pass
 
 
-#func _draw() -> void:
-	#draw_circle(current_mpos, 8, Color.RED)
+func _on_radial_menu_advanced_slot_selected(slot: Control, index: int) -> void:
+	print(slot, index)
+
+
+func _on_radial_menu_advanced_selection_changed(new_selection: int) -> void:
+	print(new_selection)
