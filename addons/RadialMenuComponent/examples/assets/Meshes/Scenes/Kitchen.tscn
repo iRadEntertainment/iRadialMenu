@@ -1,5 +1,6 @@
-[gd_scene load_steps=16 format=3 uid="uid://bho2erxj4orht"]
+[gd_scene load_steps=17 format=3 uid="uid://bho2erxj4orht"]
 
+[ext_resource type="VoxelGIData" uid="uid://bxdxdnn3w31an" path="res://addons/RadialMenuComponent/examples/assets/Meshes/Scenes/Kitchen.VoxelGI_data.res" id="1_6clyv"]
 [ext_resource type="PackedScene" uid="uid://c35rsgng7lh12" path="res://addons/RadialMenuComponent/examples/assets/Meshes/GLB/Counter.gltf" id="1_cg6bm"]
 [ext_resource type="PackedScene" uid="uid://b4nbpeht3ov8l" path="res://addons/RadialMenuComponent/examples/assets/Meshes/GLB/Wall.gltf" id="2_cu21e"]
 [ext_resource type="PackedScene" uid="uid://bo7o4mcio1yhr" path="res://addons/RadialMenuComponent/examples/assets/Meshes/GLB/WallWindow.gltf" id="3_6clyv"]
@@ -10,8 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://cb5ocxfj0yv6f" path="res://addons/RadialMenuComponent/examples/assets/Meshes/GLB/CounterHigh.gltf" id="8_f4cnp"]
 [ext_resource type="PackedScene" uid="uid://c6s7lkkcrdeic" path="res://addons/RadialMenuComponent/examples/assets/Meshes/GLB/Table.gltf" id="9_j7g74"]
 [ext_resource type="PackedScene" uid="uid://batlhhonrrcw3" path="res://addons/RadialMenuComponent/examples/assets/Meshes/GLB/Chair.gltf" id="10_v5jv7"]
-
-[sub_resource type="PlaneMesh" id="PlaneMesh_3ebhb"]
+[ext_resource type="PackedScene" uid="uid://dka76jibjmmsd" path="res://addons/RadialMenuComponent/examples/assets/Meshes/GLB/CeilingLamp.gltf" id="12_ewwjk"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_fkbdc"]
 
@@ -29,27 +29,35 @@ sky_material = SubResource("ProceduralSkyMaterial_5hc1h")
 background_mode = 2
 sky = SubResource("Sky_wkcpj")
 ambient_light_source = 2
-ambient_light_color = Color(0.423651, 0.423651, 0.423651, 1)
+tonemap_mode = 3
 ssao_enabled = true
-ssil_enabled = true
 ssil_radius = 1.13
 ssil_intensity = 2.69
 sdfgi_use_occlusion = true
+sdfgi_bounce_feedback = 0.48
 sdfgi_min_cell_size = 0.01
 sdfgi_cascade0_distance = 0.64
 sdfgi_max_distance = 10.24
+glow_enabled = true
+glow_intensity = 1.05
+glow_blend_mode = 1
 
 [node name="Kitchen" type="Node3D"]
 
+[node name="VoxelGI" type="VoxelGI" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00473114, 1.29575, 0.000114918)
+size = Vector3(8, 3, 8)
+data = ExtResource("1_6clyv")
+
 [node name="Env" type="Node3D" parent="."]
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Env"]
-transform = Transform3D(5.53459, 0, 0, 0, 1, 0, 0, 0, 6.33908, 0, 0, 0)
-mesh = SubResource("PlaneMesh_3ebhb")
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Env"]
+transform = Transform3D(6.43993, 0, 0, 0, 0.495067, 0, 0, 0, 6.33908, 0, 2.53167, 0)
+mesh = SubResource("BoxMesh_fkbdc")
 skeleton = NodePath("../..")
 
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="Env"]
-transform = Transform3D(6.43993, 0, 0, 0, 0.223127, 0, 0, 0, 6.33908, 0, 2.46823, 0)
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="Env"]
+transform = Transform3D(6.43993, 0, 0, 0, 0.223127, 0, 0, 0, 6.33908, 0, -0.096287, 0)
 mesh = SubResource("BoxMesh_fkbdc")
 skeleton = NodePath("../..")
 
@@ -129,9 +137,17 @@ environment = SubResource("Environment_li445")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="LightingRig"]
 transform = Transform3D(0.897482, 0.242218, -0.368588, 0, 0.835702, 0.549183, 0.441052, -0.492882, 0.750027, 0, 1.46822, 0)
-light_energy = 3.101
+light_indirect_energy = 2.0
 shadow_enabled = true
 
-[node name="OmniLight3D" type="OmniLight3D" parent="LightingRig"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.98086, 0)
+[node name="CeilingLamp2" parent="LightingRig" instance=ExtResource("12_ewwjk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00334954, 2.29219, -0.0158864)
+
+[node name="SpotLight3D" type="SpotLight3D" parent="LightingRig/CeilingLamp2"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -0.00334954, -0.17435, 0.0158864)
+light_energy = 4.47
+light_indirect_energy = 2.0
 shadow_enabled = true
+spot_range = 4.597
+spot_attenuation = 2.81
+spot_angle = 77.73
