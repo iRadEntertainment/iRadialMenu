@@ -1,8 +1,9 @@
-[gd_scene load_steps=17 format=3 uid="uid://bho2erxj4orht"]
+[gd_scene load_steps=19 format=3 uid="uid://bho2erxj4orht"]
 
 [ext_resource type="VoxelGIData" uid="uid://bxdxdnn3w31an" path="res://addons/RadialMenuComponent/examples/assets/Meshes/Scenes/Kitchen.VoxelGI_data.res" id="1_6clyv"]
 [ext_resource type="PackedScene" uid="uid://c35rsgng7lh12" path="res://addons/RadialMenuComponent/examples/assets/Meshes/GLB/Counter.gltf" id="1_cg6bm"]
 [ext_resource type="PackedScene" uid="uid://b4nbpeht3ov8l" path="res://addons/RadialMenuComponent/examples/assets/Meshes/GLB/Wall.gltf" id="2_cu21e"]
+[ext_resource type="PackedScene" uid="uid://cmqana1f4vljd" path="res://addons/RadialMenuComponent/examples/assets/Meshes/GLB/Outside.gltf" id="2_gnr32"]
 [ext_resource type="PackedScene" uid="uid://bo7o4mcio1yhr" path="res://addons/RadialMenuComponent/examples/assets/Meshes/GLB/WallWindow.gltf" id="3_6clyv"]
 [ext_resource type="PackedScene" uid="uid://bqlwpy3g1owxb" path="res://addons/RadialMenuComponent/examples/assets/Meshes/GLB/CounterSink.gltf" id="4_ewwjk"]
 [ext_resource type="PackedScene" uid="uid://hdj4vogh88c4" path="res://addons/RadialMenuComponent/examples/assets/Meshes/GLB/Oven.gltf" id="5_b7iid"]
@@ -11,14 +12,14 @@
 [ext_resource type="PackedScene" uid="uid://cb5ocxfj0yv6f" path="res://addons/RadialMenuComponent/examples/assets/Meshes/GLB/CounterHigh.gltf" id="8_f4cnp"]
 [ext_resource type="PackedScene" uid="uid://c6s7lkkcrdeic" path="res://addons/RadialMenuComponent/examples/assets/Meshes/GLB/Table.gltf" id="9_j7g74"]
 [ext_resource type="PackedScene" uid="uid://batlhhonrrcw3" path="res://addons/RadialMenuComponent/examples/assets/Meshes/GLB/Chair.gltf" id="10_v5jv7"]
+[ext_resource type="PackedScene" uid="uid://cgp82vwgcxi2h" path="res://addons/RadialMenuComponent/examples/assets/Meshes/GLB/FloorTiie.gltf" id="12_b7iid"]
 [ext_resource type="PackedScene" uid="uid://dka76jibjmmsd" path="res://addons/RadialMenuComponent/examples/assets/Meshes/GLB/CeilingLamp.gltf" id="12_ewwjk"]
-
-[sub_resource type="BoxMesh" id="BoxMesh_fkbdc"]
+[ext_resource type="PackedScene" uid="uid://bddx4j62vl884" path="res://addons/RadialMenuComponent/examples/assets/Meshes/GLB/Door.gltf" id="15_5idc5"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_5hc1h"]
 sky_top_color = Color(0.287352, 0.825068, 0.991276, 1)
 sky_horizon_color = Color(0.833306, 0.894851, 0.960677, 1)
-ground_bottom_color = Color(0.172261, 0.17644, 0.167278, 1)
+ground_bottom_color = Color(0.224152, 0.564782, 0.270061, 1)
 ground_horizon_color = Color(0.505292, 0.670544, 0.849927, 1)
 sun_angle_max = 0.0
 
@@ -29,37 +30,35 @@ sky_material = SubResource("ProceduralSkyMaterial_5hc1h")
 background_mode = 2
 sky = SubResource("Sky_wkcpj")
 ambient_light_source = 2
+ambient_light_color = Color(0.215902, 0.215902, 0.215902, 1)
+ambient_light_sky_contribution = 0.45
+ambient_light_energy = 4.53
 tonemap_mode = 3
-ssao_enabled = true
-ssil_radius = 1.13
+ssil_enabled = true
+ssil_radius = 1.0
 ssil_intensity = 2.69
+ssil_sharpness = 1.0
 sdfgi_use_occlusion = true
 sdfgi_bounce_feedback = 0.48
 sdfgi_min_cell_size = 0.01
 sdfgi_cascade0_distance = 0.64
 sdfgi_max_distance = 10.24
 glow_enabled = true
-glow_intensity = 1.05
-glow_blend_mode = 1
+adjustment_enabled = true
+adjustment_contrast = 1.1
 
 [node name="Kitchen" type="Node3D"]
 
 [node name="VoxelGI" type="VoxelGI" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00473114, 1.29575, 0.000114918)
-size = Vector3(8, 3, 8)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0453177, 1.17197, 0.0148854)
+subdiv = 3
+size = Vector3(6.29834, 2.75244, 6.26685)
 data = ExtResource("1_6clyv")
 
 [node name="Env" type="Node3D" parent="."]
 
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="Env"]
-transform = Transform3D(6.43993, 0, 0, 0, 0.495067, 0, 0, 0, 6.33908, 0, 2.53167, 0)
-mesh = SubResource("BoxMesh_fkbdc")
-skeleton = NodePath("../..")
-
-[node name="MeshInstance3D3" type="MeshInstance3D" parent="Env"]
-transform = Transform3D(6.43993, 0, 0, 0, 0.223127, 0, 0, 0, 6.33908, 0, -0.096287, 0)
-mesh = SubResource("BoxMesh_fkbdc")
-skeleton = NodePath("../..")
+[node name="Outside2" parent="Env" instance=ExtResource("2_gnr32")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, -0.0981751, 0)
 
 [node name="Counter2" parent="Env" instance=ExtResource("1_cg6bm")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 2.56568)
@@ -130,24 +129,76 @@ transform = Transform3D(5.96046e-08, 0, -1, 0, 1, 0, 1, 0, 5.96046e-08, 0.110785
 [node name="Chair5" parent="Env" instance=ExtResource("10_v5jv7")]
 transform = Transform3D(-1.19209e-07, 0, 1, 0, 1, 0, -1, 0, -1.19209e-07, 0.110785, 0, -0.944499)
 
+[node name="FloorTiie" parent="Env" instance=ExtResource("12_b7iid")]
+
+[node name="FloorTiie2" parent="Env" instance=ExtResource("12_b7iid")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 0)
+
+[node name="FloorTiie3" parent="Env" instance=ExtResource("12_b7iid")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 0)
+
+[node name="FloorTiie4" parent="Env" instance=ExtResource("12_b7iid")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2)
+
+[node name="FloorTiie5" parent="Env" instance=ExtResource("12_b7iid")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 2)
+
+[node name="FloorTiie6" parent="Env" instance=ExtResource("12_b7iid")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 2)
+
+[node name="FloorTiie7" parent="Env" instance=ExtResource("12_b7iid")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2)
+
+[node name="FloorTiie8" parent="Env" instance=ExtResource("12_b7iid")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.48002, 0)
+
+[node name="FloorTiie9" parent="Env" instance=ExtResource("12_b7iid")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 2.48002, 0)
+
+[node name="FloorTiie10" parent="Env" instance=ExtResource("12_b7iid")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 2.48002, 0)
+
+[node name="FloorTiie11" parent="Env" instance=ExtResource("12_b7iid")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.48002, 2)
+
+[node name="FloorTiie12" parent="Env" instance=ExtResource("12_b7iid")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 2.48002, 2)
+
+[node name="FloorTiie13" parent="Env" instance=ExtResource("12_b7iid")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 2.48002, 2)
+
+[node name="FloorTiie14" parent="Env" instance=ExtResource("12_b7iid")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.48002, -2)
+
 [node name="LightingRig" type="Node3D" parent="."]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="LightingRig"]
 environment = SubResource("Environment_li445")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="LightingRig"]
-transform = Transform3D(0.897482, 0.242218, -0.368588, 0, 0.835702, 0.549183, 0.441052, -0.492882, 0.750027, 0, 1.46822, 0)
+transform = Transform3D(0.902924, 0.236039, -0.359186, -1.49267e-08, 0.835702, 0.549183, 0.429802, -0.495871, 0.754574, 0, 1.46822, 0)
 light_indirect_energy = 2.0
 shadow_enabled = true
 
 [node name="CeilingLamp2" parent="LightingRig" instance=ExtResource("12_ewwjk")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00334954, 2.29219, -0.0158864)
 
-[node name="SpotLight3D" type="SpotLight3D" parent="LightingRig/CeilingLamp2"]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -0.00334954, -0.17435, 0.0158864)
-light_energy = 4.47
-light_indirect_energy = 2.0
+[node name="OmniLight3D" type="OmniLight3D" parent="LightingRig/CeilingLamp2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.357685, 0)
+light_energy = 0.5
 shadow_enabled = true
-spot_range = 4.597
-spot_attenuation = 2.81
-spot_angle = 77.73
+
+[node name="Door2" parent="LightingRig" instance=ExtResource("15_5idc5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, -3)
+
+[node name="FloorTiie8" parent="." instance=ExtResource("12_b7iid")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -2)
+
+[node name="FloorTiie9" parent="." instance=ExtResource("12_b7iid")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -2)
+
+[node name="FloorTiie10" parent="." instance=ExtResource("12_b7iid")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 2.48002, -2)
+
+[node name="FloorTiie11" parent="." instance=ExtResource("12_b7iid")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 2.48002, -2)
