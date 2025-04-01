@@ -1,6 +1,6 @@
 [gd_scene load_steps=11 format=3 uid="uid://cyhhnf5n85ctn"]
 
-[ext_resource type="Script" uid="uid://conyevxgcg0rc" path="res://addons/RadialMenuComponent/radial_menu_component.gd" id="1_xa0mt"]
+[ext_resource type="Script" uid="uid://conyevxgcg0rc" path="res://addons/RadialMenuComponent/RadialMenu3DFlat.gd" id="1_xa0mt"]
 [ext_resource type="Script" uid="uid://da4pf8umd7lhq" path="res://addons/advanced_radial_menu/radial_menu_class.gd" id="2_ql3id"]
 [ext_resource type="Texture2D" uid="uid://n4qnbdn57bda" path="res://addons/RadialMenuComponent/examples/assets/Icons/carrot.svg" id="3_npiev"]
 [ext_resource type="Texture2D" uid="uid://daaotfj34f52k" path="res://addons/RadialMenuComponent/examples/assets/Icons/chicken-leg.svg" id="4_q7elh"]
@@ -29,9 +29,8 @@ billboard_keep_scale = true
 
 [node name="RadialMenuComponent" type="Node3D"]
 script = ExtResource("1_xa0mt")
-mouse_mode = 2
 distance_from_camera = 0.6
-prevent_propagate = false
+tilt_strength = 0.67
 
 [node name="ProjectionPlane" type="MeshInstance3D" parent="."]
 mesh = SubResource("PlaneMesh_bwkxr")

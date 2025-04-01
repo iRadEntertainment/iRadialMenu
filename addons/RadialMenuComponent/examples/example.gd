@@ -59,7 +59,7 @@ func check_hovered_interactibles() -> void:
 
 func _debug_radial_menu() -> void:
 	var lb_style: StyleBoxFlat = $GUI/Info/lb_mouse_in_radial.get_theme_stylebox("normal")
-	var intersection: Variant = $RadialMenuComponent.get_mouse_2D_pos_on_plane()
+	var intersection: Variant = $RadialMenuComponent._get_mouse_2D_pos_on_plane()
 	lb_style.bg_color = Color.SEA_GREEN if intersection else Color.BROWN
 	$GUI/Info/lb_mouse_in_radial.text = "%s" % intersection
 

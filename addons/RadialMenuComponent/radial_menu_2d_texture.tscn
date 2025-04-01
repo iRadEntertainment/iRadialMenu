@@ -1,11 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://jqpmr6c7vi37"]
+[gd_scene load_steps=8 format=3 uid="uid://jqpmr6c7vi37"]
 
 [ext_resource type="Script" uid="uid://ceu1vmk8f15y4" path="res://addons/RadialMenuComponent/radial_menu_2d_texture.gd" id="1_qldds"]
 [ext_resource type="Script" uid="uid://da4pf8umd7lhq" path="res://addons/advanced_radial_menu/radial_menu_class.gd" id="2_b1mfd"]
 [ext_resource type="Texture2D" uid="uid://n4qnbdn57bda" path="res://addons/RadialMenuComponent/examples/assets/Icons/carrot.svg" id="3_ou78h"]
 [ext_resource type="Texture2D" uid="uid://daaotfj34f52k" path="res://addons/RadialMenuComponent/examples/assets/Icons/chicken-leg.svg" id="4_ly6vj"]
 [ext_resource type="Texture2D" uid="uid://d3jyjuyulbl08" path="res://addons/RadialMenuComponent/examples/assets/Icons/cooking-pot.svg" id="5_6n4cb"]
-[ext_resource type="Texture2D" uid="uid://ccnonft2v8260" path="res://addons/RadialMenuComponent/examples/assets/color_ref.png" id="6_6n4cb"]
 [ext_resource type="Texture2D" uid="uid://d0pl6sa1q4xxr" path="res://addons/RadialMenuComponent/examples/assets/Icons/eating.svg" id="6_lirkk"]
 [ext_resource type="Texture2D" uid="uid://n2xcx1tvmmo6" path="res://addons/RadialMenuComponent/examples/assets/Icons/fridge.svg" id="7_ishsx"]
 
@@ -46,10 +45,10 @@ metadata/_custom_type_script = "uid://da4pf8umd7lhq"
 [node name="carrot" type="TextureRect" parent="RadialMenuAdvanced"]
 texture_filter = 4
 layout_mode = 0
-offset_left = 691.305
-offset_top = 108.263
-offset_right = 739.305
-offset_bottom = 156.263
+offset_left = 1160.56
+offset_top = 220.215
+offset_right = 1208.56
+offset_bottom = 268.215
 pivot_offset = Vector2(24, 24)
 mouse_filter = 2
 texture = ExtResource("3_ou78h")
@@ -59,10 +58,10 @@ expand_mode = 1
 modulate = Color(0.164706, 0.219608, 0.231373, 1)
 texture_filter = 4
 layout_mode = 0
-offset_left = 412.695
-offset_top = 108.263
-offset_right = 460.695
-offset_bottom = 156.263
+offset_left = 771.443
+offset_top = 220.215
+offset_right = 819.443
+offset_bottom = 268.215
 pivot_offset = Vector2(24, 24)
 mouse_filter = 2
 texture = ExtResource("4_ly6vj")
@@ -71,10 +70,10 @@ expand_mode = 1
 [node name="cooking_pot" type="TextureRect" parent="RadialMenuAdvanced"]
 texture_filter = 4
 layout_mode = 0
-offset_left = 326.6
-offset_top = 373.237
-offset_right = 374.6
-offset_bottom = 421.237
+offset_left = 651.2
+offset_top = 590.285
+offset_right = 699.2
+offset_bottom = 638.285
 pivot_offset = Vector2(24, 24)
 mouse_filter = 2
 texture = ExtResource("5_6n4cb")
@@ -83,10 +82,10 @@ expand_mode = 1
 [node name="eating" type="TextureRect" parent="RadialMenuAdvanced"]
 texture_filter = 4
 layout_mode = 0
-offset_left = 552.0
-offset_top = 537.0
-offset_right = 600.0
-offset_bottom = 585.0
+offset_left = 966.0
+offset_top = 819.0
+offset_right = 1014.0
+offset_bottom = 867.0
 pivot_offset = Vector2(24, 24)
 mouse_filter = 2
 texture = ExtResource("6_lirkk")
@@ -95,17 +94,13 @@ expand_mode = 1
 [node name="fridge" type="TextureRect" parent="RadialMenuAdvanced"]
 texture_filter = 4
 layout_mode = 0
-offset_left = 777.4
-offset_top = 373.237
-offset_right = 825.4
-offset_bottom = 421.237
+offset_left = 1280.8
+offset_top = 590.285
+offset_right = 1328.8
+offset_bottom = 638.285
 pivot_offset = Vector2(24, 24)
 mouse_filter = 2
 texture = ExtResource("7_ishsx")
 expand_mode = 1
-
-[node name="ColorRef" type="Sprite2D" parent="."]
-position = Vector2(1503, 314)
-texture = ExtResource("6_6n4cb")
 
 [connection signal="slot_selected" from="RadialMenuAdvanced" to="." method="_on_radial_menu_advanced_slot_selected"]
