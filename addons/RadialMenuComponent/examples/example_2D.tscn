@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=3 uid="uid://bwc8b2udlcvuq"]
+
+[ext_resource type="Script" uid="uid://da4pf8umd7lhq" path="res://addons/RadialMenuComponent/RadialMenu2D.gd" id="1_agg0q"]
+[ext_resource type="Script" uid="uid://bh7dqd6irweox" path="res://addons/RadialMenuComponent/RadialMenuItem.gd" id="2_uu7ei"]
+[ext_resource type="Texture2D" uid="uid://cg16vj463vrw1" path="res://addons/RadialMenuComponent/examples/assets/Icons/grab.svg" id="3_bf82l"]
+
+[sub_resource type="Resource" id="Resource_s8fc6"]
+script = ExtResource("2_uu7ei")
+option_name = "Grab"
+image = ExtResource("3_bf82l")
+callback = Callable()
+metadata/_custom_type_script = "uid://bh7dqd6irweox"
+
+[node name="example_2D" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_agg0q")
+items = Array[ExtResource("2_uu7ei")]([SubResource("Resource_s8fc6")])
+start_angle_offset = -90.0
+dim_outer_radius = 512
+reticle_outer_enabled = false
+reticle_inner_enabled = false
+keep_selection_outside = false
+metadata/_custom_type_script = "uid://da4pf8umd7lhq"

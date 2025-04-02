@@ -1,24 +1,28 @@
+@tool
 @icon("icon_radial_3d_2d.svg")
 class_name RadialMenu3DFlat extends Node3D
 
-# node references
+#region Node references
 var _cam: Camera3D:
 	get(): return get_viewport().get_camera_3d()
 var _plane_material: StandardMaterial3D:
 	get(): return _plane.get_surface_override_material(0)
+
+
 @onready var _plane: MeshInstance3D = $ProjectionPlane
 @onready var mesh: PlaneMesh = $ProjectionPlane.mesh
 @onready var sub_viewport: SubViewport = $ProjectionPlane/SubViewport
-@onready var menu: RadialMenu2D = $ProjectionPlane/SubViewport/RadialMenu2D
+@onready var radial_menu_2d: RadialMenu2D = $ProjectionPlane/SubViewport/example_2D
+#endregion
 
-
+@export var engine_preview: bool = true: set = _set_engine_preview
 ## This will set the mouse mode on popup()
 @export var mouse_mode: Input.MouseMode = Input.MOUSE_MODE_VISIBLE
 ## The resolution of the [SubViewport] in pixels used for rendering the 2D UI
 @export var ui_resoulution: int = 512
 ## The dimension in world units of the [PlaneMesh] used for projecting the 2D interface
 @export var ui_dimension: float = 0.4
-## If [code]true[/code] will place the menu at [code]distance_from_camera[/code] from the current world [Camera]
+## If [code]true[/code] will place the radial_menu_2d at [code]distance_from_camera[/code] from the current world [Camera]
 @export var fix_distance: bool = true
 ## The distance from the current [Camera] in 3D world units
 @export var distance_from_camera: float = 1.0
@@ -35,7 +39,7 @@ var _plane_material: StandardMaterial3D:
 var previous_mouse_mode: Input.MouseMode
 var tw: Tween
 
-signal option_selected(selected: int, control_node: Control)
+signal option_selected(selected: int)
 
 
 #region Init
@@ -47,7 +51,7 @@ func _ready() -> void:
 
 
 func _connect_signals() -> void:
-	menu.slot_selected.connect(_on_slot_selected)
+	radial_menu_2d.slot_selected.connect(_on_slot_selected)
 	visibility_changed.connect(_on_visibility_changed)
 #endregion
 
@@ -188,13 +192,21 @@ func _get_mouse_on_projection_plane() -> Variant:
 #endregion
 
 
+#region Setters
+func _set_engine_preview(value: bool) -> void:
+	engine_preview = value
+	if radial_menu_2d:
+		radial_menu_2d.engine_preview = engine_preview
+#endregion
+
+
 #region Signals
 func _on_visibility_changed() -> void:
 	if visible:
 		_face_camera()
 
 
-func _on_slot_selected(control_node: Control, index: int) -> void:
-	option_selected.emit(control_node, index)
+func _on_slot_selected(index: int) -> void:
+	option_selected.emit(index)
 	close_popup()
 #endregion

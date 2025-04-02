@@ -22,4 +22,4 @@ window/size/viewport_height=1024
 
 [editor_plugins]
 
-enabled=PackedStringArray()
+enabled=PackedStringArray("res://addons/RadialMenuComponent/plugin.cfg")

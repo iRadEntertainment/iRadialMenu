@@ -12,7 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://cano4dpv3hnje" path="res://addons/RadialMenuComponent/examples/assets/icon_crossair.png" id="9_tumbf"]
 [ext_resource type="PackedScene" uid="uid://c1et20ef1fla7" path="res://addons/RadialMenuComponent/examples/assets/kenney_furniture-kit/Models/GLTF format/chair.glb" id="9_yoxnx"]
 [ext_resource type="Script" uid="uid://0ln1m70wl35q" path="res://addons/RadialMenuComponent/examples/reticle.gd" id="10_tumbf"]
-[ext_resource type="PackedScene" uid="uid://cyhhnf5n85ctn" path="res://addons/RadialMenuComponent/radial_menu_component.tscn" id="13_yoxnx"]
+[ext_resource type="PackedScene" uid="uid://cyhhnf5n85ctn" path="res://addons/RadialMenuComponent/examples/example_3D_flat.tscn" id="13_yoxnx"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_74urx"]
 sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
