@@ -1,16 +1,16 @@
-extends Node3D
-class_name RadialMenu3DFlat
+@icon("icon_radial_3d_2d.svg")
+class_name RadialMenu3DFlat extends Node3D
 
 # node references
 var _cam: Camera3D:
 	get(): return get_viewport().get_camera_3d()
+var _plane_material: StandardMaterial3D:
+	get(): return _plane.get_surface_override_material(0)
 @onready var _plane: MeshInstance3D = $ProjectionPlane
 @onready var mesh: PlaneMesh = $ProjectionPlane.mesh
 @onready var sub_viewport: SubViewport = $ProjectionPlane/SubViewport
-@onready var menu: RadialMenuAdvanced = $ProjectionPlane/SubViewport/RadialMenuAdvanced
+@onready var menu: RadialMenu2D = $ProjectionPlane/SubViewport/RadialMenu2D
 
-var plane_material: StandardMaterial3D:
-	get(): return _plane.get_surface_override_material(0)
 
 ## This will set the mouse mode on popup()
 @export var mouse_mode: Input.MouseMode = Input.MOUSE_MODE_VISIBLE
@@ -37,18 +37,22 @@ var tw: Tween
 
 signal option_selected(selected: int, control_node: Control)
 
-#region init
+
+#region Init
 func _ready() -> void:
 	hide()
+	_connect_signals()
 	
-	plane_material.no_depth_test = draw_on_top
-	
+	_plane_material.no_depth_test = draw_on_top
+
+
+func _connect_signals() -> void:
 	menu.slot_selected.connect(_on_slot_selected)
 	visibility_changed.connect(_on_visibility_changed)
 #endregion
 
 
-## 
+#region Main functions
 func popup(_pop_global_position: Vector3) -> void:
 	previous_mouse_mode = Input.mouse_mode
 	Input.mouse_mode = mouse_mode
@@ -82,6 +86,12 @@ func close_popup() -> void:
 	tw.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
 	tw.tween_property(_plane, ^"scale", Vector3.ZERO, 0.3)
 	tw.tween_callback(hide)
+#endregion
+
+
+#region Update
+func _set_properties() -> void:
+	pass
 
 
 func _face_camera() -> void:

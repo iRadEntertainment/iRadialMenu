@@ -10,7 +10,7 @@ config_version=5
 
 [application]
 
-config/name="RadialMenuComponent"
+config/name="Radial Menu 3D Plugin"
 run/main_scene="uid://c2n486inebntt"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
@@ -22,4 +22,4 @@ window/size/viewport_height=1024
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/advanced_radial_menu/plugin.cfg")
+enabled=PackedStringArray()
