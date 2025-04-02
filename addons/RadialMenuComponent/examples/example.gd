@@ -79,9 +79,9 @@ func _input(event: InputEvent) -> void:
 
 
 func add_banana_to_world(_world_pos: Vector3) -> void:
-	var new_banananana: RigidBody3D= $Decorations/Banana.duplicate(0)
+	var new_banananana: RigidBody3D= $Interactibles/Banana.duplicate(0)
 	new_banananana.position = _world_pos
-	$Decorations.add_child(new_banananana)
+	$Interactibles.add_child(new_banananana)
 
 
 func _on_interactible_just_left_clicked(body: PhysicsBody3D) -> void:

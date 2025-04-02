@@ -1,60 +1,15 @@
-[gd_scene load_steps=42 format=4 uid="uid://c2n486inebntt"]
+[gd_scene load_steps=32 format=4 uid="uid://c2n486inebntt"]
 
 [ext_resource type="Script" uid="uid://5nupk7xpupoh" path="res://addons/RadialMenuComponent/examples/example.gd" id="1_to72g"]
 [ext_resource type="Script" uid="uid://coduooiqlcoy7" path="res://addons/RadialMenuComponent/examples/player.gd" id="1_ycgey"]
-[ext_resource type="PackedScene" uid="uid://b2fl1a2v77kc4" path="res://addons/RadialMenuComponent/examples/assets/kenney_furniture-kit/Models/GLTF format/tableGlass.glb" id="2_g0bew"]
 [ext_resource type="Script" uid="uid://dfe4ptnify0dt" path="res://addons/RadialMenuComponent/examples/camera_3d.gd" id="2_ycgey"]
 [ext_resource type="Script" uid="uid://ciqtxp1oq6pn8" path="res://addons/RadialMenuComponent/examples/Interactible.gd" id="3_g0bew"]
 [ext_resource type="Texture2D" uid="uid://c3cfjrof6lu1y" path="res://addons/RadialMenuComponent/examples/assets/kenney_food-kit/Models/GLB format/Textures/colormap.png" id="4_g0bew"]
-[ext_resource type="PackedScene" uid="uid://c1dt0gi3tnuj6" path="res://addons/RadialMenuComponent/examples/assets/kenney_furniture-kit/Models/GLTF format/tableRound.glb" id="4_ycgey"]
 [ext_resource type="Material" uid="uid://da7ju4dwr7lua" path="res://addons/RadialMenuComponent/examples/assets/outline_next_pass.tres" id="5_dfrf6"]
-[ext_resource type="PackedScene" uid="uid://dtbsttap0e1jc" path="res://addons/RadialMenuComponent/examples/assets/kenney_furniture-kit/Models/GLTF format/bathtub.glb" id="8_p1g4v"]
 [ext_resource type="Texture2D" uid="uid://cano4dpv3hnje" path="res://addons/RadialMenuComponent/examples/assets/icon_crossair.png" id="9_tumbf"]
-[ext_resource type="PackedScene" uid="uid://c1et20ef1fla7" path="res://addons/RadialMenuComponent/examples/assets/kenney_furniture-kit/Models/GLTF format/chair.glb" id="9_yoxnx"]
+[ext_resource type="PackedScene" uid="uid://bho2erxj4orht" path="res://addons/RadialMenuComponent/examples/assets/Meshes/Scenes/Kitchen.tscn" id="10_3ravq"]
 [ext_resource type="Script" uid="uid://0ln1m70wl35q" path="res://addons/RadialMenuComponent/examples/reticle.gd" id="10_tumbf"]
 [ext_resource type="PackedScene" uid="uid://cyhhnf5n85ctn" path="res://addons/RadialMenuComponent/examples/example_3D_flat.tscn" id="13_yoxnx"]
-
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_74urx"]
-sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
-ground_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
-
-[sub_resource type="Sky" id="Sky_g0bew"]
-sky_material = SubResource("ProceduralSkyMaterial_74urx")
-
-[sub_resource type="Environment" id="Environment_dfrf6"]
-background_mode = 2
-sky = SubResource("Sky_g0bew")
-tonemap_mode = 2
-glow_enabled = true
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yoxnx"]
-transparency = 1
-albedo_color = Color(1, 0.439216, 0.423529, 0.376471)
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_tumbf"]
-material = SubResource("StandardMaterial3D_yoxnx")
-radius = 0.3
-height = 1.8
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_l1ju2"]
-albedo_color = Color(5.67943e-06, 0.773013, 0.330841, 1)
-
-[sub_resource type="SphereMesh" id="SphereMesh_1ce7q"]
-material = SubResource("StandardMaterial3D_l1ju2")
-radius = 0.1
-height = 0.2
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ycgey"]
-radius = 0.3
-height = 1.8
-
-[sub_resource type="PlaneMesh" id="PlaneMesh_to72g"]
-size = Vector2(500, 500)
-
-[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_e4h0h"]
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_3ravq"]
-size = Vector3(0.8396, 0.330322, 0.450195)
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_tumbf"]
 rough = true
@@ -107,6 +62,9 @@ blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_0rmsr")
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_3ravq"]
+rough = true
+bounce = 0.04
+absorbent = true
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_dfrf6"]
 height = 0.358398
@@ -196,9 +154,25 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_m803a")
 
-[sub_resource type="CylinderShape3D" id="CylinderShape3D_p1g4v"]
-height = 0.729004
-radius = 0.694824
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yoxnx"]
+albedo_color = Color(1, 0.439216, 0.423529, 0.376471)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_tumbf"]
+material = SubResource("StandardMaterial3D_yoxnx")
+radius = 0.3
+height = 1.8
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_l1ju2"]
+albedo_color = Color(5.67943e-06, 0.773013, 0.330841, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_1ce7q"]
+material = SubResource("StandardMaterial3D_l1ju2")
+radius = 0.1
+height = 0.2
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ycgey"]
+radius = 0.3
+height = 1.8
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yoxnx"]
 content_margin_left = 8.0
@@ -235,14 +209,99 @@ corner_radius_bottom_left = 8
 [node name="Example" type="Node3D"]
 script = ExtResource("1_to72g")
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_dfrf6")
+[node name="RadialMenuComponent" parent="." instance=ExtResource("13_yoxnx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.20211, 1.27609, -1.7461)
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
-shadow_enabled = true
+[node name="Kitchen" parent="." instance=ExtResource("10_3ravq")]
+
+[node name="FloorTiie8" parent="Kitchen/Env" index="31"]
+visible = false
+
+[node name="FloorTiie9" parent="Kitchen/Env" index="32"]
+visible = false
+
+[node name="FloorTiie10" parent="Kitchen/Env" index="33"]
+visible = false
+
+[node name="FloorTiie11" parent="Kitchen/Env" index="34"]
+visible = false
+
+[node name="FloorTiie12" parent="Kitchen/Env" index="35"]
+visible = false
+
+[node name="FloorTiie13" parent="Kitchen/Env" index="36"]
+visible = false
+
+[node name="FloorTiie14" parent="Kitchen/Env" index="37"]
+visible = false
+
+[node name="FloorTiie10" parent="Kitchen" index="5"]
+visible = false
+
+[node name="FloorTiie11" parent="Kitchen" index="6"]
+visible = false
+
+[node name="Interactibles" type="Node3D" parent="."]
+
+[node name="Banana" type="RigidBody3D" parent="Interactibles"]
+transform = Transform3D(0.61114, 0, -0.791522, 0, 1, 0, 0.791522, 0, 0.61114, 1.73181, 0.89607, 2.49227)
+mass = 0.1
+physics_material_override = SubResource("PhysicsMaterial_tumbf")
+angular_damp = 5.0
+metadata/_edit_group_ = true
+
+[node name="Interactible" type="Node3D" parent="Interactibles/Banana"]
+script = ExtResource("3_g0bew")
+metadata/_custom_type_script = "uid://ciqtxp1oq6pn8"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Interactibles/Banana"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.110033, 0)
+shape = SubResource("CylinderShape3D_ycgey")
+
+[node name="Mesh" type="MeshInstance3D" parent="Interactibles/Banana"]
+mesh = SubResource("ArrayMesh_dfrf6")
+skeleton = NodePath("")
+
+[node name="Eggplant" type="RigidBody3D" parent="Interactibles"]
+transform = Transform3D(0.945524, 0, 0.325552, 0, 1, 0, -0.325552, 0, 0.945524, 2.36296, 0.933697, 1.2251)
+mass = 0.2
+physics_material_override = SubResource("PhysicsMaterial_3ravq")
+angular_damp = 5.0
+metadata/_edit_group_ = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Interactibles/Eggplant"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.0948386, 0)
+shape = SubResource("CylinderShape3D_dfrf6")
+
+[node name="Mesh" type="MeshInstance3D" parent="Interactibles/Eggplant"]
+transform = Transform3D(1, 0, 0, 0, 0.145738, 0.989323, 0, -0.989323, 0.145738, 0, 0.069, 0.198)
+mesh = SubResource("ArrayMesh_ycgey")
+skeleton = NodePath("")
+
+[node name="Interactible" type="Node3D" parent="Interactibles/Eggplant"]
+script = ExtResource("3_g0bew")
+metadata/_custom_type_script = "uid://ciqtxp1oq6pn8"
+
+[node name="Egg" type="RigidBody3D" parent="Interactibles"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.46676, 0.89607, 0.849505)
+mass = 0.05
+angular_damp = 5.0
+metadata/_edit_group_ = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Interactibles/Egg"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.080765, 0)
+shape = SubResource("CapsuleShape3D_dfrf6")
+
+[node name="Mesh" type="MeshInstance3D" parent="Interactibles/Egg"]
+mesh = SubResource("ArrayMesh_to72g")
+skeleton = NodePath("")
+
+[node name="Interactible" type="Node3D" parent="Interactibles/Egg"]
+script = ExtResource("3_g0bew")
+metadata/_custom_type_script = "uid://ciqtxp1oq6pn8"
 
 [node name="Player" type="CharacterBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.53574, 0, 0)
 script = ExtResource("1_ycgey")
 
 [node name="Mesh" type="MeshInstance3D" parent="Player"]
@@ -271,98 +330,6 @@ mesh = SubResource("SphereMesh_1ce7q")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Player"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
 shape = SubResource("CapsuleShape3D_ycgey")
-
-[node name="Plane" type="StaticBody3D" parent="."]
-
-[node name="Mesh" type="MeshInstance3D" parent="Plane"]
-mesh = SubResource("PlaneMesh_to72g")
-skeleton = NodePath("../..")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Plane"]
-shape = SubResource("WorldBoundaryShape3D_e4h0h")
-
-[node name="Decorations" type="Node3D" parent="."]
-
-[node name="Table" type="StaticBody3D" parent="Decorations"]
-transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -1.14013, 0.00292629, 2.14002)
-metadata/_edit_group_ = true
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Decorations/Table"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.419716, 0.163698, -0.224331)
-shape = SubResource("BoxShape3D_3ravq")
-
-[node name="tableGlass" parent="Decorations/Table" instance=ExtResource("2_g0bew")]
-
-[node name="Banana" type="RigidBody3D" parent="Decorations"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.234077, 0.660645, 1.65694)
-mass = 0.1
-physics_material_override = SubResource("PhysicsMaterial_tumbf")
-metadata/_edit_group_ = true
-
-[node name="Interactible" type="Node3D" parent="Decorations/Banana"]
-script = ExtResource("3_g0bew")
-metadata/_custom_type_script = "uid://ciqtxp1oq6pn8"
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Decorations/Banana"]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.110033, 0)
-shape = SubResource("CylinderShape3D_ycgey")
-
-[node name="Mesh" type="MeshInstance3D" parent="Decorations/Banana"]
-mesh = SubResource("ArrayMesh_dfrf6")
-skeleton = NodePath("")
-
-[node name="Eggplant" type="RigidBody3D" parent="Decorations"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.12808, 0.730633, -0.893082)
-mass = 0.2
-physics_material_override = SubResource("PhysicsMaterial_3ravq")
-metadata/_edit_group_ = true
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Decorations/Eggplant"]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.0948386, 0)
-shape = SubResource("CylinderShape3D_dfrf6")
-
-[node name="Mesh" type="MeshInstance3D" parent="Decorations/Eggplant"]
-transform = Transform3D(1, 0, 0, 0, 0.145738, 0.989323, 0, -0.989323, 0.145738, 0, 0.069, 0.198)
-mesh = SubResource("ArrayMesh_ycgey")
-skeleton = NodePath("")
-
-[node name="Interactible" type="Node3D" parent="Decorations/Eggplant"]
-script = ExtResource("3_g0bew")
-metadata/_custom_type_script = "uid://ciqtxp1oq6pn8"
-
-[node name="Egg" type="RigidBody3D" parent="Decorations"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.851013, 0.730633, -0.893082)
-mass = 0.05
-metadata/_edit_group_ = true
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Decorations/Egg"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.080765, 0)
-shape = SubResource("CapsuleShape3D_dfrf6")
-
-[node name="Mesh" type="MeshInstance3D" parent="Decorations/Egg"]
-mesh = SubResource("ArrayMesh_to72g")
-skeleton = NodePath("")
-
-[node name="Interactible" type="Node3D" parent="Decorations/Egg"]
-script = ExtResource("3_g0bew")
-metadata/_custom_type_script = "uid://ciqtxp1oq6pn8"
-
-[node name="Table2" type="StaticBody3D" parent="Decorations"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.04009, 0.000558555, -0.880565)
-metadata/_edit_group_ = true
-
-[node name="tableRound" parent="Decorations/Table2" instance=ExtResource("4_ycgey")]
-transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -0.69374, 0.539441, 0.790257)
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Decorations/Table2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.365573, 0)
-shape = SubResource("CylinderShape3D_p1g4v")
-
-[node name="bathtub" parent="Decorations" instance=ExtResource("8_p1g4v")]
-transform = Transform3D(1.30703, 0, 1.51383, 0, 2, 0, -1.51383, 0, 1.30703, 3.05359, 0, 4.21692)
-
-[node name="chair" parent="Decorations" instance=ExtResource("9_yoxnx")]
-transform = Transform3D(-1.91225, 0, 0.585912, 0, 2, 0, -0.585912, 0, -1.91225, -0.419343, 0, 2.78896)
 
 [node name="GUI" type="CanvasLayer" parent="."]
 
@@ -408,5 +375,4 @@ grow_vertical = 0
 theme_override_styles/normal = SubResource("StyleBoxFlat_tumbf")
 text = "Use CTRL to toggle between Mouse Capture"
 
-[node name="RadialMenuComponent" parent="." instance=ExtResource("13_yoxnx")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.20211, 1.27609, -1.7461)
+[editable path="Kitchen"]
