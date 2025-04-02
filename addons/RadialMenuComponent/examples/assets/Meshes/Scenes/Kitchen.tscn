@@ -1,6 +1,5 @@
-[gd_scene load_steps=19 format=3 uid="uid://bho2erxj4orht"]
+[gd_scene load_steps=25 format=3 uid="uid://bho2erxj4orht"]
 
-[ext_resource type="VoxelGIData" uid="uid://bxdxdnn3w31an" path="res://addons/RadialMenuComponent/examples/assets/Meshes/Scenes/Kitchen.VoxelGI_data.res" id="1_6clyv"]
 [ext_resource type="PackedScene" uid="uid://c35rsgng7lh12" path="res://addons/RadialMenuComponent/examples/assets/Meshes/GLB/Counter.gltf" id="1_cg6bm"]
 [ext_resource type="PackedScene" uid="uid://b4nbpeht3ov8l" path="res://addons/RadialMenuComponent/examples/assets/Meshes/GLB/Wall.gltf" id="2_cu21e"]
 [ext_resource type="PackedScene" uid="uid://cmqana1f4vljd" path="res://addons/RadialMenuComponent/examples/assets/Meshes/GLB/Outside.gltf" id="2_gnr32"]
@@ -15,6 +14,26 @@
 [ext_resource type="PackedScene" uid="uid://cgp82vwgcxi2h" path="res://addons/RadialMenuComponent/examples/assets/Meshes/GLB/FloorTiie.gltf" id="12_b7iid"]
 [ext_resource type="PackedScene" uid="uid://dka76jibjmmsd" path="res://addons/RadialMenuComponent/examples/assets/Meshes/GLB/CeilingLamp.gltf" id="12_ewwjk"]
 [ext_resource type="PackedScene" uid="uid://bddx4j62vl884" path="res://addons/RadialMenuComponent/examples/assets/Meshes/GLB/Door.gltf" id="15_5idc5"]
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_gnr32"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_5idc5"]
+size = Vector3(6, 2.5, 0.15)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_f4cnp"]
+size = Vector3(6, 0.15, 6)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_j7g74"]
+size = Vector3(0.8, 0.7, 1.5)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_v5jv7"]
+size = Vector3(0.8, 0.896069, 3.69727)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_3ebhb"]
+size = Vector3(0.8, 0.896069, 3.97626)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_fkbdc"]
+size = Vector3(0.898901, 2.00417, 0.792999)
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_5hc1h"]
 sky_top_color = Color(0.287352, 0.825068, 0.991276, 1)
@@ -48,12 +67,6 @@ adjustment_enabled = true
 adjustment_contrast = 1.1
 
 [node name="Kitchen" type="Node3D"]
-
-[node name="VoxelGI" type="VoxelGI" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0453177, 1.17197, 0.0148854)
-subdiv = 3
-size = Vector3(6.29834, 2.75244, 6.26685)
-data = ExtResource("1_6clyv")
 
 [node name="Env" type="Node3D" parent="."]
 
@@ -169,6 +182,55 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 2.48002, 2)
 
 [node name="FloorTiie14" parent="Env" instance=ExtResource("12_b7iid")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.48002, -2)
+
+[node name="Collisions" type="Node3D" parent="."]
+
+[node name="Floor" type="StaticBody3D" parent="Collisions"]
+visible = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Collisions/Floor"]
+shape = SubResource("WorldBoundaryShape3D_gnr32")
+
+[node name="Walls" type="StaticBody3D" parent="Collisions"]
+visible = false
+
+[node name="wall_01" type="CollisionShape3D" parent="Collisions/Walls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25, -3)
+shape = SubResource("BoxShape3D_5idc5")
+
+[node name="wall_02" type="CollisionShape3D" parent="Collisions/Walls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25, 3)
+shape = SubResource("BoxShape3D_5idc5")
+
+[node name="wall_03" type="CollisionShape3D" parent="Collisions/Walls"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 3, 1.25, 1.31134e-07)
+shape = SubResource("BoxShape3D_5idc5")
+
+[node name="wall_04" type="CollisionShape3D" parent="Collisions/Walls"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -3, 1.25, -1.31134e-07)
+shape = SubResource("BoxShape3D_5idc5")
+
+[node name="ceiling" type="CollisionShape3D" parent="Collisions/Walls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.425, 0)
+shape = SubResource("BoxShape3D_f4cnp")
+
+[node name="Furnitures" type="StaticBody3D" parent="Collisions"]
+
+[node name="Table" type="CollisionShape3D" parent="Collisions/Furnitures"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.075, 0.35, -0.025)
+shape = SubResource("BoxShape3D_j7g74")
+
+[node name="Counter01" type="CollisionShape3D" parent="Collisions/Furnitures"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.52558, 0.448035, 1.09831)
+shape = SubResource("BoxShape3D_v5jv7")
+
+[node name="Counter02" type="CollisionShape3D" parent="Collisions/Furnitures"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.947781, 0.448035, 2.55674)
+shape = SubResource("BoxShape3D_3ebhb")
+
+[node name="Fridge" type="CollisionShape3D" parent="Collisions/Furnitures"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -1.47638, 1.00208, 2.50729)
+shape = SubResource("BoxShape3D_fkbdc")
 
 [node name="LightingRig" type="Node3D" parent="."]
 
