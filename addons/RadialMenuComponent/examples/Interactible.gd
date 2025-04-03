@@ -3,6 +3,8 @@ class_name Interactible
 
 @export_flags_3d_physics var collision_mask = 0xFFFFFFFF
 
+@export var radial_items: Array[RadialMenuItem]
+
 var parent: PhysicsBody3D
 var mesh_instance: MeshInstance3D
 var next_pass_material: ShaderMaterial

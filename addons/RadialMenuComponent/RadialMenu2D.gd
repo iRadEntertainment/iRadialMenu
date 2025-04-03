@@ -12,8 +12,14 @@ class_name RadialMenu2D extends Control
 		suppress_warnings = val
 		update_configuration_warnings()
 # @export_tool_button("Check items", "Button") var trigger_warnings = func(): update_configuration_warnings()
-@export var items: Array[RadialMenuItem] = []
-@export var settings := RadialMenuSettings.new()
+@export var items: Array[RadialMenuItem] = []:
+	set(val):
+		items = val
+		update()
+@export var settings := RadialMenuSettings.new():
+	set(val):
+		settings = val
+		settings.changed.connect(_on_settings_changed)
 
 #region Functional variables
 var selected_idx: int = -1
@@ -34,9 +40,9 @@ var _is_focus_action_pressed := false
 #endregion
 
 #region Signals
-signal slot_selected(selected_idx: int)
+signal selected(selected_idx: int)
 signal selection_changed(selected_idx: int)
-signal selection_canceled
+signal canceled
 #endregion
 
 
@@ -74,23 +80,60 @@ func _gui_input(event: InputEvent) -> void:
 		if !event.is_pressed() or selected_idx == -1:
 			return
 		select()
+	if event is InputEventMouseMotion:
+		hover_at_local_position(event.position)
 
 
 func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("ui_cancel"):
-		selection_canceled.emit()
+	if not is_visible_in_tree():
+		return
 	
-	if !settings.select_action_name.is_empty():
-		var is_select_input: bool = event.is_action_released(settings.select_action_name) and settings.action_released
-		is_select_input = (event.is_action_pressed(settings.select_action_name) and !settings.action_released) or is_select_input
-		if is_select_input:
+	if event is InputEventAction:
+		if event.is_pressed() and settings.action_released:
+			return
+		
+		var cancel_action_name: StringName = &"ui_cancel"
+		var select_action_name: StringName = &"ui_select" if !settings.select_action_name else settings.select_action_name
+		if event.is_action(cancel_action_name):
+			cancel()
+		
+		if event.is_action(select_action_name):
 			select()
+	
+	if event is InputEventJoypadMotion:
+		var controller_vector: Vector2 = Input.get_vector(
+			settings.move_left_action_name if !settings.move_left_action_name.is_empty() else &"ui_left",
+			settings.move_right_action_name if !settings.move_right_action_name.is_empty() else &"ui_right",
+			settings.move_back_action_name if !settings.move_back_action_name.is_empty() else &"ui_down",
+			settings.move_forward_action_name if !settings.move_forward_action_name.is_empty() else &"ui_up",
+			settings.controller_deadzone
+		)
+		var pointer_vector: Vector2 = ui_input_vector_to_pointer_position(controller_vector)
+
+
+func hover_at_local_position(_pos: Vector2) -> void:
+	var pointer_pos: Vector2 = _pos - center
+	hover_at_centered_pointer_position(pointer_pos)
+
+
+func hover_at_centered_pointer_position(_pointer_pos: Vector2) -> void:
+	if not is_visible_in_tree():
+		return
+	# pointer position is the position of the mouse or controller action compared to the center
+	var prev_selected_idx := selected_idx
+	selected_idx = get_selection_at_position(_pointer_pos)
+	
+	if selected_idx != prev_selected_idx:
+		selection_changed.emit(selected_idx)
+	
+	queue_redraw()
 #endregion
 
 
 #region Update
 func update() -> void:
-	if !validate_items(): return
+	if !validate_items():
+		return
 	_calculate_size_values()
 	queue_redraw()
 
@@ -121,7 +164,6 @@ func _calculate_size_values() -> void:
 func _draw() -> void:
 	if !items_validated:
 		return
-	
 	_draw_background()
 	_draw_reticle()
 	_draw_highlight()
@@ -281,25 +323,12 @@ func _draw_icons() -> void:
 		draw_texture_rect(texture, rect, false, color)
 
 
-func _process(delta: float) -> void:
-	if not is_visible_in_tree(): return
-	if !preview_draw: return
-	# pointer position is the position of the mouse or controller action compared to the center
-	var pointer_pos: Vector2 = get_local_mouse_position() - center
-	var controller_vector: Vector2 = Input.get_vector(
-		settings.move_left_action_name if !settings.move_left_action_name.is_empty() else &"ui_left",
-		settings.move_right_action_name if !settings.move_right_action_name.is_empty() else &"ui_right",
-		settings.move_back_action_name if !settings.move_back_action_name.is_empty() else &"ui_down",
-		settings.move_forward_action_name if !settings.move_forward_action_name.is_empty() else &"ui_up",
-		settings.controller_deadzone
-	)
-	var prev_selected_idx := selected_idx
-	selected_idx = get_selection_at_position(pointer_pos)
-	
-	if selected_idx != prev_selected_idx:
-		selection_changed.emit(selected_idx)
-	
-	update()
+func _process(_delta: float) -> void:
+	if !_is_editor:
+		return
+	if preview_draw and self == EditorInterface.get_edited_scene_root():
+		hover_at_local_position(get_local_mouse_position())
+		update()
 #endregion
 
 
@@ -307,6 +336,10 @@ func _process(delta: float) -> void:
 func _on_property_edited(property: StringName) -> void:
 	if property == &"items":
 		update_configuration_warnings()
+
+
+func _on_settings_changed() -> void:
+	update()
 #endregion
 
 
@@ -344,18 +377,25 @@ func get_selection_at_position(_pointer_pos: Vector2) -> int:
 
 
 func select() -> void: # select currently hovered element
-	if not items_validated:
-		return
 	if selected_idx == -1:
-		selection_canceled.emit()
+		cancel()
 	else:
-		slot_selected.emit(selected_idx)
+		selected.emit(selected_idx)
 		var item: RadialMenuItem = items[selected_idx]
 		print("Slot selected: %s" % item.option_name)
 		if item.callback:
 			item.callback.call_deferred()
 	
 	selected_idx = -1
+
+
+func cancel() -> void:
+	selected_idx = -1
+	canceled.emit()
+
+
+func ui_input_vector_to_pointer_position(_ui_input_vector: Vector2) -> Vector2:
+	return _ui_input_vector * settings.dim_outer_radius
 
 
 static func get_sector_points(
@@ -386,6 +426,7 @@ static func get_sector_points(
 	
 	return inner_p
 
+
 static func uv_from_sector_poly(_sector_poly_size: int) -> PackedVector2Array:
 	var uv_poly := PackedVector2Array()
 	var half_size: float = float(_sector_poly_size/2.0)
@@ -400,7 +441,6 @@ static func uv_from_sector_poly(_sector_poly_size: int) -> PackedVector2Array:
 		uv_poly.append(uv_p)
 	
 	return uv_poly
-
 #endregion
 
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://cyhhnf5n85ctn"]
+[gd_scene load_steps=15 format=3 uid="uid://cyhhnf5n85ctn"]
 
 [ext_resource type="Script" uid="uid://conyevxgcg0rc" path="res://addons/RadialMenuComponent/RadialMenu3DFlat.gd" id="1_xa0mt"]
 [ext_resource type="Script" uid="uid://bh7dqd6irweox" path="res://addons/RadialMenuComponent/RadialMenuItem.gd" id="2_aeisu"]
@@ -7,33 +7,46 @@
 [ext_resource type="Texture2D" uid="uid://n4qnbdn57bda" path="res://addons/RadialMenuComponent/examples/assets/Icons/carrot.svg" id="4_b735g"]
 [ext_resource type="Script" uid="uid://dc0nfn1i4kqbg" path="res://addons/RadialMenuComponent/RadialMenuSettings.gd" id="5_5xg8d"]
 [ext_resource type="Texture2D" uid="uid://daaotfj34f52k" path="res://addons/RadialMenuComponent/examples/assets/Icons/chicken-leg.svg" id="5_pi13m"]
+[ext_resource type="Texture2D" uid="uid://d3jyjuyulbl08" path="res://addons/RadialMenuComponent/examples/assets/Icons/cooking-pot.svg" id="7_eqjm5"]
 
 [sub_resource type="Resource" id="Resource_eqjm5"]
 script = ExtResource("2_aeisu")
 option_name = "Grab"
+description = ""
 image = ExtResource("3_ou5d3")
-callback = Callable()
+callback_name = ""
 metadata/_custom_type_script = "uid://bh7dqd6irweox"
 
 [sub_resource type="Resource" id="Resource_aeisu"]
 script = ExtResource("2_aeisu")
 option_name = "Carrot"
+description = ""
 image = ExtResource("4_b735g")
-callback = Callable()
+callback_name = ""
 metadata/_custom_type_script = "uid://bh7dqd6irweox"
 
 [sub_resource type="Resource" id="Resource_3k7j8"]
 script = ExtResource("2_aeisu")
 option_name = "Chicken"
+description = ""
 image = ExtResource("5_pi13m")
-callback = Callable()
+callback_name = ""
 metadata/_custom_type_script = "uid://bh7dqd6irweox"
 
 [sub_resource type="Resource" id="Resource_4qi88"]
 script = ExtResource("2_aeisu")
 option_name = "Fridge"
+description = ""
 image = ExtResource("3_pi13m")
-callback = Callable()
+callback_name = ""
+metadata/_custom_type_script = "uid://bh7dqd6irweox"
+
+[sub_resource type="Resource" id="Resource_tw8h4"]
+script = ExtResource("2_aeisu")
+option_name = "Pot"
+description = ""
+image = ExtResource("7_eqjm5")
+callback_name = ""
 metadata/_custom_type_script = "uid://bh7dqd6irweox"
 
 [sub_resource type="Resource" id="Resource_ou5d3"]
@@ -77,15 +90,17 @@ move_forward_action_name = ""
 move_left_action_name = ""
 move_back_action_name = ""
 move_right_action_name = ""
-keep_selection_outside = true
+keep_selection_outside = false
 controller_enabled = false
 controller_deadzone = 0.0
 metadata/_custom_type_script = "uid://dc0nfn1i4kqbg"
 
 [node name="example_3D_flat" type="Node3D"]
 script = ExtResource("1_xa0mt")
-items = Array[ExtResource("2_aeisu")]([SubResource("Resource_eqjm5"), SubResource("Resource_aeisu"), SubResource("Resource_3k7j8"), SubResource("Resource_4qi88"), null])
+reset_nodes = true
+items = Array[ExtResource("2_aeisu")]([SubResource("Resource_eqjm5"), SubResource("Resource_aeisu"), SubResource("Resource_3k7j8"), SubResource("Resource_4qi88"), SubResource("Resource_tw8h4")])
 preview_draw = true
+preview_movement = true
 settings2D = SubResource("Resource_ou5d3")
 distance_from_camera = 0.6
 tilt_strength = 0.14

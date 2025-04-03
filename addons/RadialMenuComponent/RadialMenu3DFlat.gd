@@ -2,31 +2,41 @@
 @icon("icon_radial_3d_2d.svg")
 class_name RadialMenu3DFlat extends Node3D
 
-#@export var reset_nodes: bool = false:
-	#set(val):
-		#reset_nodes = val
-		#if is_node_ready():
-			#_clear_nodes()
-			#await get_tree().process_frame
-			#create_nodes()
-			#setup_nodes()
-@export var items: Array[RadialMenuItem]
+@export var reset_nodes: bool = false:
+	set(val):
+		reset_nodes = val
+		if is_node_ready():
+			_clear_nodes()
+			await get_tree().process_frame
+			create_nodes()
+			setup_nodes()
+@export var items: Array[RadialMenuItem]:
+	set(val):
+		items = val
+		if radial_menu_2d:
+			radial_menu_2d.items = items
 @export var suppress_warnings := false:
 	set(val):
 		suppress_warnings = val
 		update_configuration_warnings()
 
+#region Preview
 @export_group("Editor Preview", "preview_")
 @export var preview_draw: bool = false:
 	set(val):
 		preview_draw = val
-		if radial_menu_2d:
-			radial_menu_2d.preview_draw = preview_draw
+		#if radial_menu_2d:
+			#radial_menu_2d.preview_draw = preview_draw
+		set_process(preview_movement or preview_draw)
 @export var preview_movement: bool = false:
 	set(val):
 		preview_movement = val
-		set_process(preview_movement)
+		if not preview_movement:
+			_plane.transform = Transform2D.IDENTITY
+		set_process(preview_movement or preview_draw)
+#endregion
 
+#region Settings
 @export_group("Settings")
 @export var settings2D := RadialMenuSettings.new():
 	set(val):
@@ -54,13 +64,11 @@ class_name RadialMenu3DFlat extends Node3D
 @export var tilt_with_mouse: bool = true
 ## The strength of the tilt in radiants, if [code]tilt_wit_mouse[/code] is [code]true[/code]
 @export_range(0.0, 2.0, 0.01) var tilt_strength: float = 0.2
+#endregion
 
 #region Node references
 var _cam: Camera3D:
-	get():
-		if Engine.is_editor_hint():
-			return EditorInterface.get_editor_viewport_3d().get_camera_3d()
-		return get_viewport().get_camera_3d()
+	get(): return viewport.get_camera_3d()
 
 var _plane_material: StandardMaterial3D:
 	get():
@@ -70,16 +78,29 @@ var _plane: MeshInstance3D
 var _mesh: PlaneMesh
 var sub_viewport: SubViewport
 var radial_menu_2d: RadialMenu2D
+
+# for editor preview
+var viewport: Viewport:
+	get():
+		return get_viewport() if !_is_editor else EditorInterface.get_editor_viewport_3d()
+var node_3d_editor: Node: # Node3DEditor (unlisted)
+	get():
+		return null if !_is_editor else EditorInterface.get_editor_main_screen().get_child(1)
 #endregion
 
 #region Functional variables
+
 var previous_mouse_mode: Input.MouseMode
 var tw: Tween
 var items_validated: bool
 var _is_editor: bool
 #endregion
 
-signal option_selected(selected: int)
+#region Signals
+signal selected(selected_idx: int)
+signal selection_changed(selected_idx: int)
+signal canceled
+#endregion
 
 
 #region Init
@@ -137,21 +158,25 @@ func create_nodes() -> void:
 func setup_nodes() -> void:
 	_mesh.size = ui_dimension * Vector2.ONE
 	sub_viewport.size = ui_resolution * Vector2i.ONE
+	sub_viewport.render_target_update_mode = SubViewport.UPDATE_ALWAYS
 	radial_menu_2d.position = Vector2.ZERO
 	radial_menu_2d.size = sub_viewport.size
 	radial_menu_2d.set_anchors_preset(Control.PRESET_FULL_RECT)
 	radial_menu_2d.items = items
+	radial_menu_2d.settings = settings2D
 	_plane_material.no_depth_test = draw_on_top
 	_plane_material.albedo_texture = sub_viewport.get_texture()
 	if _is_editor:
-		_plane_material.albedo_texture.viewport_path = get_path_to(sub_viewport)
+		_plane_material.albedo_texture.viewport_path = EditorInterface.get_edited_scene_root().get_path_to(sub_viewport)
 	#else:
 		#_plane_material.albedo_texture.viewport_path = self.get_path_to(sub_viewport)
 	#print("viewport path: ", _plane_material.albedo_texture.viewport_path)
 
 
 func _connect_signals() -> void:
-	radial_menu_2d.slot_selected.connect(_on_slot_selected)
+	radial_menu_2d.selected.connect(_on_selected)
+	radial_menu_2d.canceled.connect(_on_canceled)
+	radial_menu_2d.selected.connect(_on_selection_changed)
 	visibility_changed.connect(_on_visibility_changed)
 
 
@@ -174,21 +199,22 @@ func validate_items() -> bool:
 
 
 #region Update
-func _process(delta: float) -> void:
-	if not Engine.is_editor_hint() or not preview_movement:
+func _process(_delta: float) -> void:
+	if not _is_editor:
 		return
-	if not items_validated:
+	if !node_3d_editor.visible:
 		return
-	
-	_face_camera()
-	var m_pos: Variant = _get_mouse_2D_pos_on_plane()
-	if not m_pos:
+	if not validate_items() or not radial_menu_2d:
 		return
 	
-	# push the event to the subviewport converted to 2D space
-	var event_2d := InputEventMouseMotion.new()
-	event_2d.position = m_pos
-	sub_viewport.push_input(event_2d)
+	radial_menu_2d.update()
+	if preview_movement:
+		_face_camera()
+	
+	if preview_draw:
+		var m_pos: Variant = _get_mouse_2D_pos_on_plane()
+		if m_pos and radial_menu_2d:
+			radial_menu_2d.hover_at_local_position(m_pos)
 #endregion
 
 
@@ -246,8 +272,8 @@ func _face_camera() -> void:
 
 func _tilt() -> void:
 	# tilt _plane with mouse
-	var m_pos: Vector2 = get_viewport().get_mouse_position()
-	var tilt: Vector2 = m_pos - Vector2(get_viewport().size)/2.0
+	var m_pos: Vector2 = viewport.get_mouse_position()
+	var tilt: Vector2 = m_pos - Vector2(viewport.size)/2.0
 	tilt /= Vector2(sub_viewport.size)
 	tilt *= tilt_strength
 	
@@ -306,7 +332,7 @@ func _get_mouse_on_projection_plane() -> Variant:
 		from = _cam.global_position
 		dir = -_cam.global_transform.basis.z
 	else:
-		var screen_mouse_pos: Vector2 = get_viewport().get_mouse_position()
+		var screen_mouse_pos: Vector2 = viewport.get_mouse_position()
 		from = _cam.project_ray_origin(screen_mouse_pos)
 		dir = _cam.project_ray_normal(screen_mouse_pos)
 	
@@ -343,8 +369,17 @@ func _on_visibility_changed() -> void:
 		_face_camera()
 
 
-func _on_slot_selected(index: int) -> void:
-	option_selected.emit(index)
+func _on_selected(selected_idx: int) -> void:
+	selected.emit(selected_idx)
+	close_popup()
+
+
+func _on_selection_changed(selected_idx: int) -> void:
+	selection_changed.emit(selected_idx)
+
+
+func _on_canceled() -> void:
+	canceled.emit()
 	close_popup()
 
 

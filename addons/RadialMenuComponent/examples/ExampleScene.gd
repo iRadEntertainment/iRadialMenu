@@ -95,6 +95,7 @@ func _on_interactible_just_left_clicked(interactible: Interactible, body: Physic
 
 
 func _on_interactible_just_right_clicked(interactible: Interactible, body: PhysicsBody3D) -> void:
+	radial_menu.items = interactible.radial_items
 	radial_menu.popup(body.global_position)
 
 

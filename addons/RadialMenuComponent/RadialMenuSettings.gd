@@ -1,3 +1,4 @@
+@tool
 extends Resource
 class_name RadialMenuSettings
 
@@ -13,11 +14,7 @@ enum SeparatorType{LINE, SECTOR}
 @export var bg_texture: Texture2D
 
 @export_subgroup("Dimensions", "dim_")
-@export var dim_autosize := true#:
-	#set(val):
-		#dim_autosize = val
-		#dim_outer_radius = _get_auto_circle_radius()
-		#notify_property_list_changed()
+@export var dim_autosize := true
 @export_range(0, 1024, 1) var dim_outer_radius: int = 384
 @export var dim_center_offset := Vector2.ZERO
 @export_range(0.0, 1.0, 0.01) var dim_inner_radius_ratio: float = 0.6
@@ -72,9 +69,4 @@ enum SeparatorType{LINE, SECTOR}
 @export_subgroup("Controller")
 @export var controller_enabled := false
 @export_range(0.0, 1.0, 0.01) var controller_deadzone: float = 0.0
-# controller works only when running
-#If you hold / pressed this action, the controller will work. For example, Button 7 or 8
-#Leave empty to always work
-#Hold "focus_action_name" or just toggle. Works only if "focus_action_name" is not empty
-#Select center element by pressing action (Works only if "first_item_centered" is engine_preview)
 #endregion
