@@ -1,8 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://bwc8b2udlcvuq"]
+[gd_scene load_steps=11 format=3 uid="uid://bwc8b2udlcvuq"]
 
 [ext_resource type="Script" uid="uid://da4pf8umd7lhq" path="res://addons/RadialMenuComponent/RadialMenu2D.gd" id="1_agg0q"]
 [ext_resource type="Script" uid="uid://bh7dqd6irweox" path="res://addons/RadialMenuComponent/RadialMenuItem.gd" id="2_uu7ei"]
 [ext_resource type="Texture2D" uid="uid://cg16vj463vrw1" path="res://addons/RadialMenuComponent/examples/assets/Icons/grab.svg" id="3_bf82l"]
+[ext_resource type="Texture2D" uid="uid://bqi8wq6o4grn2" path="res://addons/RadialMenuComponent/examples/assets/Icons/throwing-ball.svg" id="4_agg0q"]
+[ext_resource type="Texture2D" uid="uid://d0pl6sa1q4xxr" path="res://addons/RadialMenuComponent/examples/assets/Icons/eating.svg" id="5_uu7ei"]
+[ext_resource type="Script" uid="uid://dc0nfn1i4kqbg" path="res://addons/RadialMenuComponent/RadialMenuSettings.gd" id="6_uu7ei"]
 
 [sub_resource type="Resource" id="Resource_s8fc6"]
 script = ExtResource("2_uu7ei")
@@ -10,6 +13,66 @@ option_name = "Grab"
 image = ExtResource("3_bf82l")
 callback = Callable()
 metadata/_custom_type_script = "uid://bh7dqd6irweox"
+
+[sub_resource type="Resource" id="Resource_bf82l"]
+script = ExtResource("2_uu7ei")
+option_name = "Throw"
+image = ExtResource("4_agg0q")
+callback = Callable()
+metadata/_custom_type_script = "uid://bh7dqd6irweox"
+
+[sub_resource type="Resource" id="Resource_m2ejf"]
+script = ExtResource("2_uu7ei")
+option_name = "Eat"
+image = ExtResource("5_uu7ei")
+callback = Callable()
+metadata/_custom_type_script = "uid://bh7dqd6irweox"
+
+[sub_resource type="Resource" id="Resource_r5tc8"]
+script = ExtResource("6_uu7ei")
+start_angle_offset = 7.448
+first_item_centered = false
+bg_circle_color = Color(0.164706, 0.219608, 0.231373, 0.666667)
+bg_full_circle = false
+resolution = 64
+dim_autosize = true
+dim_outer_radius = 512
+dim_center_offset = Vector2(0, 0)
+dim_inner_radius_ratio = 0.21
+hover_color = Color(0.745098, 0.211765, 0.156863, 1)
+hover_child_modulate = Color(1, 1, 1, 1)
+hover_offset_start = 0
+hover_offset_end = 0
+hover_size_factor = 1.0
+hover_offset = Vector2(0, 0)
+hover_children_radial_offset = 0.0
+reticle_outer_enabled = false
+reticle_inner_enabled = false
+reticle_separator_enabled = false
+reticle_outer_width = 6
+reticle_inner_width = 6
+reticle_separator_width = 86
+reticle_separator_type = 1
+reticle_outer_color = Color(0.745098, 0.211765, 0.156863, 1)
+reticle_inner_color = Color(0.745098, 0.211765, 0.156863, 1)
+reticle_separator_color = Color(0.745098, 0.211765, 0.156863, 1)
+reticle_antialiased = true
+item_auto_size = false
+item_size = 253
+item_auto_size_factor = 1.0
+item_offset = Vector2(0, 0)
+item_align = false
+item_modulate = Color(1, 1, 1, 0.509804)
+select_action_name = "ui_select"
+action_released = false
+move_forward_action_name = ""
+move_left_action_name = ""
+move_back_action_name = ""
+move_right_action_name = ""
+keep_selection_outside = true
+controller_enabled = false
+controller_deadzone = 0.0
+metadata/_custom_type_script = "uid://dc0nfn1i4kqbg"
 
 [node name="example_2D" type="Control"]
 layout_mode = 3
@@ -19,10 +82,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_agg0q")
-items = Array[ExtResource("2_uu7ei")]([SubResource("Resource_s8fc6")])
-start_angle_offset = -90.0
-dim_outer_radius = 512
-reticle_outer_enabled = false
-reticle_inner_enabled = false
-keep_selection_outside = false
+items = Array[ExtResource("2_uu7ei")]([SubResource("Resource_s8fc6"), SubResource("Resource_bf82l"), SubResource("Resource_m2ejf")])
+settings = SubResource("Resource_r5tc8")
 metadata/_custom_type_script = "uid://da4pf8umd7lhq"

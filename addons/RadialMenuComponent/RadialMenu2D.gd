@@ -1,4 +1,4 @@
-# Script edited from "Advanced Radial Menu" by "ortyrx"
+# Script based on the work from "Advanced Radial Menu" by "ortyrx"
 # https://github.com/diklor/advanced_radial_menu
 # Edit author Dario "iRad" De Vita
 
@@ -6,90 +6,12 @@
 @icon("icon_radial_2d.svg")
 class_name RadialMenu2D extends Control
 
-enum SeparatorType{LINE, SECTOR}
-
 @export var engine_preview := true: set = _set_engine_preview
 @export var items: Array[RadialMenuItem] = []
-
-#region exports Apperarance
-@export_group("Appearance")
-@export_range(-180.0, 180.0) var start_angle_offset: float = 0.0 # degrees
-@export var first_item_centered := false
-@export var bg_circle_color := Color("2a383baa")
-@export var bg_full_circle: bool = false
-@export_range(3, 1024, 1) var resolution: int = 64
-@export var bg_texture: Texture2D
-
-@export_subgroup("Dimensions", "dim_")
-@export var dim_autosize := true:
-	set(val):
-		dim_autosize = val
-		dim_outer_radius = _get_auto_circle_radius()
-		notify_property_list_changed()
-@export_range(0, 1024, 1) var dim_outer_radius: int = 384
-@export var dim_center_offset := Vector2.ZERO
-@export_range(0.0, 1.0, 0.01) var dim_inner_radius_ratio: float = 0.6
-
-@export_subgroup("Highlight", "hover_")
-@export var hover_color := Color("be3628")
-@export var hover_child_modulate := Color("2a383b")
-@export_range(-1024, 1024, 1) var hover_offset_start: int = 0
-@export_range(-1024, 1024, 1) var hover_offset_end: int = 0
-@export_range(0.1, 3.0, 0.001) var hover_size_factor: float = 1.0
-@export var hover_offset := Vector2.ZERO
-@export_range(-10, 10) var hover_children_radial_offset: float = 0.0
-
-@export_subgroup("Reticle", "reticle_")
-@export var reticle_outer_enabled := true
-@export var reticle_inner_enabled := true
-@export var reticle_separator_enabled := true
-@export_range(1, 1024) var reticle_outer_width: int = 6
-@export_range(1, 512) var reticle_inner_width: int = 6
-@export_range(1, 256) var reticle_separator_width: int = 6
-@export var reticle_separator_type: SeparatorType = SeparatorType.LINE
-@export var reticle_outer_color := Color("be3628")
-@export var reticle_inner_color := Color("be3628")
-@export var reticle_separator_color := Color("be3628")
-@export var reticle_antialiased := true
-
-@export_subgroup("Items", "item_")
-@export var item_auto_size := false
-@export_range(1, 1024, 1) var item_size: int = 48
-@export_range(0, 2, 0.1) var item_auto_size_factor: float = 1.0
-@export var item_offset := Vector2.ZERO
-@export var item_align := false
-@export var item_modulate := Color.WHITE
-#endregion
-
-#region exports Input
-@export_group("Input")
-@export var select_action_name := "ui_select"
-#@export var focus_action_name := ""
-#@export var focus_action_hold_mode := true
-#@export var center_element_action_name := ""
-@export var action_released := false
-#@export var one_shot := false
-@export var move_forward_action_name := ""
-@export var move_left_action_name := ""
-@export var move_back_action_name := ""
-@export var move_right_action_name := ""
-
-@export_subgroup("Mouse")
-@export var keep_selection_outside := true
-
-@export_subgroup("Controller")
-@export var controller_enabled := false
-@export_range(0.0, 1.0, 0.01) var controller_deadzone: float = 0.0
-# controller works only when running
-#If you hold / pressed this action, the controller will work. For example, Button 7 or 8
-#Leave empty to always work
-#Hold "focus_action_name" or just toggle. Works only if "focus_action_name" is not empty
-#Select center element by pressing action (Works only if "first_item_centered" is engine_preview)
-#endregion
+@export var settings := RadialMenuSettings.new()
 
 #region Functional variables
 var selected_idx: int = -1
-var tick: float = 0.0
 
 var start_angle_offset_radiants: float
 var center := Vector2.ZERO
@@ -133,9 +55,9 @@ func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel"):
 		selection_canceled.emit()
 	
-	if !select_action_name.is_empty():
-		var is_select_input: bool = event.is_action_released(select_action_name) and action_released
-		is_select_input = (event.is_action_pressed(select_action_name) and !action_released) or is_select_input
+	if !settings.select_action_name.is_empty():
+		var is_select_input: bool = event.is_action_released(settings.select_action_name) and settings.action_released
+		is_select_input = (event.is_action_pressed(settings.select_action_name) and !settings.action_released) or is_select_input
 		if is_select_input:
 			select()
 #endregion
@@ -143,31 +65,32 @@ func _input(event: InputEvent) -> void:
 
 #region Update
 func update() -> void:
+	if items.is_empty(): return
 	_calculate_size_values()
 	queue_redraw()
 
 
 func _calculate_size_values() -> void:
 	# main circle
-	center = (size / 2.0) + dim_center_offset
-	if dim_autosize:
-		dim_outer_radius = _get_auto_circle_radius()
-	dim_inner_radius = int(dim_outer_radius * dim_inner_radius_ratio)
-	dim_inner_radius = clamp(dim_inner_radius, 4, dim_outer_radius - (reticle_outer_width + reticle_inner_width) )
-	start_angle_offset_radiants = deg_to_rad(start_angle_offset)
+	center = (size / 2.0) + settings.dim_center_offset
+	if settings.dim_autosize:
+		settings.dim_outer_radius = _get_auto_circle_radius()
+	dim_inner_radius = int(settings.dim_outer_radius * settings.dim_inner_radius_ratio)
+	dim_inner_radius = clamp(dim_inner_radius, 4, settings.dim_outer_radius - (settings.reticle_outer_width + settings.reticle_inner_width) )
+	start_angle_offset_radiants = deg_to_rad(settings.start_angle_offset)
 	
 	# sectors
-	items_radial_count = items.size() if !first_item_centered else items.size() - 1
+	items_radial_count = items.size() if !settings.first_item_centered else items.size() - 1
 	sector_angle_full = TAU/items_radial_count
-	sector_resolution = max(int(resolution / items_radial_count), 2)
+	sector_resolution = max(int(settings.resolution / items_radial_count), 2)
 	
-	sector_angle_gap = reticle_separator_width / dim_inner_radius
+	sector_angle_gap = settings.reticle_separator_width / dim_inner_radius
 	sector_angle_net = sector_angle_full - sector_angle_gap
 	
 	# items
-	var doughnut_width_full: float = dim_outer_radius - dim_inner_radius
-	var doughnut_width_net: float = doughnut_width_full - reticle_inner_width - reticle_outer_width
-	item_pos_radius = dim_inner_radius + reticle_inner_width + doughnut_width_net / 2.0
+	var doughnut_width_full: float = settings.dim_outer_radius - dim_inner_radius
+	var doughnut_width_net: float = doughnut_width_full - settings.reticle_inner_width - settings.reticle_outer_width
+	item_pos_radius = dim_inner_radius + settings.reticle_inner_width + doughnut_width_net / 2.0
 
 
 func _draw() -> void:
@@ -180,9 +103,9 @@ func _draw() -> void:
 
 
 func _draw_background() -> void:
-	if first_item_centered or bg_full_circle:
-		draw_circle(center, dim_outer_radius, bg_circle_color, true, -1, reticle_antialiased)
-	elif bg_texture:
+	if settings.first_item_centered or settings.bg_full_circle:
+		draw_circle(center, settings.dim_outer_radius, settings.bg_circle_color, true, -1, settings.reticle_antialiased)
+	elif settings.bg_texture:
 		for i in items_radial_count:
 			var angle_center_selected: float = i * sector_angle_full + sector_angle_full/2.0 + start_angle_offset_radiants
 			var poly: PackedVector2Array = get_sector_points(
@@ -190,12 +113,12 @@ func _draw_background() -> void:
 				angle_center_selected,
 				sector_angle_net,
 				dim_inner_radius,
-				dim_outer_radius,
+				settings.dim_outer_radius,
 				sector_resolution
 			)
 			var uv_poly: PackedVector2Array = uv_from_sector_poly(poly.size())
-			draw_polygon(poly, [bg_circle_color], uv_poly, bg_texture)
-	elif reticle_separator_type == SeparatorType.SECTOR and !reticle_separator_enabled:
+			draw_polygon(poly, [settings.bg_circle_color], uv_poly, settings.bg_texture)
+	elif settings.reticle_separator_type == RadialMenuSettings.SeparatorType.SECTOR and !settings.reticle_separator_enabled:
 		for i in items_radial_count:
 			var angle_center_selected: float = i * sector_angle_full + sector_angle_full/2.0 + start_angle_offset_radiants
 			var poly: PackedVector2Array = get_sector_points(
@@ -203,63 +126,63 @@ func _draw_background() -> void:
 				angle_center_selected,
 				sector_angle_net,
 				dim_inner_radius,
-				dim_outer_radius,
+				settings.dim_outer_radius,
 				sector_resolution
 			)
-			draw_polygon(poly, [bg_circle_color])
+			draw_polygon(poly, [settings.bg_circle_color])
 	else:
 		# draw a doughnut
 		var poly_right: PackedVector2Array = get_sector_points(
-			center, 0, PI, dim_inner_radius, dim_outer_radius, int(resolution/2)
+			center, 0, PI, dim_inner_radius, settings.dim_outer_radius, int(settings.resolution/2)
 		)
 		var poly_left: PackedVector2Array = get_sector_points(
-			center, PI, PI, dim_inner_radius, dim_outer_radius, int(resolution/2)
+			center, PI, PI, dim_inner_radius, settings.dim_outer_radius, int(settings.resolution/2)
 		)
-		draw_polygon(poly_right, [bg_circle_color])
-		draw_polygon(poly_left, [bg_circle_color])
+		draw_polygon(poly_right, [settings.bg_circle_color])
+		draw_polygon(poly_left, [settings.bg_circle_color])
 
 
 func _draw_reticle() -> void:
 	var arc_start_angle: float = 0
 	var arc_end_angle: float = TAU
 	
-	if reticle_inner_enabled:
+	if settings.reticle_inner_enabled:
 		draw_arc(
 			center,
-			dim_inner_radius + reticle_inner_width/2.0,
+			dim_inner_radius + settings.reticle_inner_width/2.0,
 			arc_start_angle,
 			arc_end_angle,
-			resolution,
-			reticle_inner_color,
-			reticle_inner_width,
-			reticle_antialiased
+			settings.resolution,
+			settings.reticle_inner_color,
+			settings.reticle_inner_width,
+			settings.reticle_antialiased
 		)
 	
-	if reticle_outer_enabled:
+	if settings.reticle_outer_enabled:
 		draw_arc(
 			center,
-			dim_outer_radius - reticle_outer_width/2.0,
+			settings.dim_outer_radius - settings.reticle_outer_width/2.0,
 			arc_start_angle,
 			arc_end_angle,
-			resolution,
-			reticle_outer_color,
-			reticle_outer_width,
-			reticle_antialiased
+			settings.resolution,
+			settings.reticle_outer_color,
+			settings.reticle_outer_width,
+			settings.reticle_antialiased
 		)
-	if reticle_separator_enabled:
-		match reticle_separator_type:
-			SeparatorType.LINE:
+	if settings.reticle_separator_enabled:
+		match settings.reticle_separator_type:
+			RadialMenuSettings.SeparatorType.LINE:
 				for i in items_radial_count:
 					var point := Vector2.from_angle(i * sector_angle_full + start_angle_offset_radiants)
 					draw_line(
-						center + point * (dim_inner_radius + reticle_inner_width/2.0),
-						center + point * (dim_outer_radius - reticle_outer_width/2.0),
-						reticle_separator_color,
-						reticle_separator_width,
-						reticle_antialiased
+						center + point * (dim_inner_radius + settings.reticle_inner_width/2.0),
+						center + point * (settings.dim_outer_radius - settings.reticle_outer_width/2.0),
+						settings.reticle_separator_color,
+						settings.reticle_separator_width,
+						settings.reticle_antialiased
 					)
-			SeparatorType.SECTOR:
-				var res: int = int(resolution/items_radial_count)
+			RadialMenuSettings.SeparatorType.SECTOR:
+				var res: int = int(settings.resolution/items_radial_count)
 				for i in items_radial_count:
 					var angle_center = i * sector_angle_full + start_angle_offset_radiants
 					var poly: PackedVector2Array = get_sector_points(
@@ -267,66 +190,65 @@ func _draw_reticle() -> void:
 						angle_center,
 						sector_angle_gap,
 						dim_inner_radius,
-						dim_outer_radius,
+						settings.dim_outer_radius,
 						res
 					)
-					draw_polygon(poly, [reticle_separator_color])
+					draw_polygon(poly, [settings.reticle_separator_color])
 
 
 func _draw_highlight() -> void:
 	if selected_idx == -1:
 		return
-	if selected_idx == 0 and first_item_centered:
-		draw_circle(center, dim_inner_radius, hover_color)
+	if selected_idx == 0 and settings.first_item_centered:
+		draw_circle(center, dim_inner_radius, settings.hover_color)
 		return
 	
-	var idx: int = selected_idx if !first_item_centered else selected_idx - 1
+	var idx: int = selected_idx if !settings.first_item_centered else selected_idx - 1
 	var angle_center_selected: float = idx * sector_angle_full + sector_angle_full/2.0 + start_angle_offset_radiants
 	var poly: PackedVector2Array = get_sector_points(
 		center,
 		angle_center_selected,
-		sector_angle_net if reticle_separator_type == SeparatorType.SECTOR else sector_angle_full,
+		sector_angle_net if settings.reticle_separator_type == RadialMenuSettings.SeparatorType.SECTOR else sector_angle_full,
 		dim_inner_radius,
-		dim_outer_radius,
+		settings.dim_outer_radius,
 		sector_resolution
 	)
-	draw_polygon(poly, [hover_color])
+	draw_polygon(poly, [settings.hover_color])
 
 
 func _draw_icons() -> void:
-	if first_item_centered:
+	if settings.first_item_centered:
 		var item: RadialMenuItem = items[0]
 		var texture: Texture2D = item.image
-		#var item_size
-		var color: Color = hover_child_modulate if selected_idx == 0 else item_modulate
+		var color: Color = settings.hover_child_modulate if selected_idx == 0 else settings.item_modulate
 		var factor := 1.0
 		
-		if item_auto_size:
-			factor = (dim_outer_radius / (item_size * 1.5)) * item_auto_size_factor
+		if settings.item_auto_size:
+			factor = (settings.dim_outer_radius / (settings.item_size * 1.5)) * settings.item_auto_size_factor
 		
 		var rect := Rect2()
-		rect.size = Vector2.ONE * item_size
+		rect.size = Vector2.ONE * settings.item_size
 		rect.position = center - rect.size/2.0
 		draw_texture_rect(texture, rect, false, color)
 	
 	for i: int in items_radial_count:
 		var idx: int = i
-		if first_item_centered:
+		if settings.first_item_centered:
 			idx = i + 1
 		
 		var item: RadialMenuItem = items[idx]
 		var texture: Texture2D = item.image
-		#var item_size
-		var color: Color = hover_child_modulate if selected_idx == idx else item_modulate
+		#var settings.item_size
+		var color: Color = settings.hover_child_modulate if selected_idx == idx else settings.item_modulate
 		var factor := 1.0
 		
-		if item_auto_size:
-			factor = (dim_outer_radius / (item_size * 1.5)) * item_auto_size_factor
+		if settings.item_auto_size:
+			factor = (settings.dim_outer_radius / (settings.item_size * 1.5)) * settings.item_auto_size_factor
 		
 		var item_angle_pos: float = i * sector_angle_full + sector_angle_full / 2.0
 		item_angle_pos += start_angle_offset_radiants
 		var rect := Rect2()
-		rect.size = Vector2.ONE * item_size
+		rect.size = Vector2.ONE * settings.item_size
 		rect.position = Vector2.from_angle(item_angle_pos) * item_pos_radius
 		rect.position += center - rect.size/2.0
 		
@@ -339,11 +261,11 @@ func _process(delta: float) -> void:
 	# pointer position is the position of the mouse or controller action compared to the center
 	var pointer_pos: Vector2 = get_local_mouse_position() - center
 	var controller_vector: Vector2 = Input.get_vector(
-		move_left_action_name if !move_left_action_name.is_empty() else &"ui_left",
-		move_right_action_name if !move_right_action_name.is_empty() else &"ui_right",
-		move_back_action_name if !move_back_action_name.is_empty() else &"ui_down",
-		move_forward_action_name if !move_forward_action_name.is_empty() else &"ui_up",
-		controller_deadzone
+		settings.move_left_action_name if !settings.move_left_action_name.is_empty() else &"ui_left",
+		settings.move_right_action_name if !settings.move_right_action_name.is_empty() else &"ui_right",
+		settings.move_back_action_name if !settings.move_back_action_name.is_empty() else &"ui_down",
+		settings.move_forward_action_name if !settings.move_forward_action_name.is_empty() else &"ui_up",
+		settings.controller_deadzone
 	)
 	var prev_selected_idx := selected_idx
 	selected_idx = get_selection_at_position(pointer_pos)
@@ -372,16 +294,16 @@ func _set_engine_preview(value: bool) -> void:
 func get_selection_at_position(_pointer_pos: Vector2) -> int:
 	var angle: float = wrapf(_pointer_pos.angle() - start_angle_offset_radiants, 0.0, TAU)
 	var _pointer_radius: float = _pointer_pos.length()
-	var is_in_outer_circle: bool = _pointer_radius < dim_outer_radius
+	var is_in_outer_circle: bool = _pointer_radius < settings.dim_outer_radius
 	var is_in_inner_circle: bool = _pointer_radius < dim_inner_radius
 	var is_in_doughnut: bool = is_in_outer_circle and not is_in_inner_circle
 	
-	if first_item_centered and is_in_inner_circle:
+	if settings.first_item_centered and is_in_inner_circle:
 		return 0
 	
-	if keep_selection_outside or is_in_doughnut:
+	if settings.keep_selection_outside or is_in_doughnut:
 		var idx: int = floor((angle / TAU) * items_radial_count)
-		if first_item_centered:
+		if settings.first_item_centered:
 			idx += 1
 		return idx
 	
@@ -446,8 +368,8 @@ static func uv_from_sector_poly(_sector_poly_size: int) -> PackedVector2Array:
 #endregion
 
 
-#region Conditional properties
-func _validate_property(property: Dictionary) -> void:
-	if property.name == "dim_outer_radius" and dim_autosize == true:
-		property.usage |= PROPERTY_USAGE_READ_ONLY
-#endregion
+##region Conditional properties
+#func _validate_property(property: Dictionary) -> void:
+	#if property.name == "dim_outer_radius" and dim_autosize == true:
+		#property.usage |= PROPERTY_USAGE_READ_ONLY
+##endregion
