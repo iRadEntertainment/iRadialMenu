@@ -18,9 +18,9 @@ var is_hovered := false:
 		is_hovered = val
 		highlight(is_hovered)
 
-signal just_hovered(body: PhysicsBody3D)
-signal just_left_clicked(body: PhysicsBody3D)
-signal just_right_clicked(body: PhysicsBody3D)
+signal just_hovered(interactible: Interactible, body: PhysicsBody3D)
+signal just_left_clicked(interactible: Interactible, body: PhysicsBody3D)
+signal just_right_clicked(interactible: Interactible, body: PhysicsBody3D)
 
 
 
@@ -64,9 +64,9 @@ func _input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
 		if event.is_released(): return
 		if event.button_index == MOUSE_BUTTON_LEFT:
-			just_left_clicked.emit(parent)
+			just_left_clicked.emit(self, parent)
 		elif event.button_index == MOUSE_BUTTON_RIGHT:
-			just_right_clicked.emit(parent)
+			just_right_clicked.emit(self, parent)
 
 
 func _physics_process(_delta: float) -> void:
@@ -89,7 +89,14 @@ func _physics_process(_delta: float) -> void:
 	
 	var res: Dictionary = direct_space_state.intersect_ray(physic_query)
 	var found: PhysicsBody3D = res.get("collider", null)
-	is_hovered = found == parent
+	var temp_hovered: bool = is_hovered
+	if not found:
+		temp_hovered = false
+	elif found == parent:
+		temp_hovered = true
+	if is_hovered != temp_hovered:
+		is_hovered = temp_hovered
+		just_hovered.emit(self, parent)
 
 
 func highlight(toggle: bool) -> void:

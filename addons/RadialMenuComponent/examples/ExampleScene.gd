@@ -2,6 +2,7 @@ extends Node3D
 
 
 var hovered_body: PhysicsBody3D
+var picked_body: PhysicsBody3D
 @onready var pin_joint_3d: PinJoint3D = $Player/Camera3D/PickerBody/PinJoint3D
 
 
@@ -81,21 +82,24 @@ func _input(event: InputEvent) -> void:
 
 
 func add_banana_to_world(_world_pos: Vector3) -> void:
-	var new_banananana: RigidBody3D= $Interactibles/Banana.duplicate(0)
+	var new_banananana: RigidBody3D= $Interactibles/Banana.duplicate()
 	new_banananana.position = _world_pos
 	$Interactibles.add_child(new_banananana)
 
 
-func _on_interactible_just_left_clicked(body: PhysicsBody3D) -> void:
+func _on_interactible_just_left_clicked(interactible: Interactible, body: PhysicsBody3D) -> void:
 	print(body.name, " left clicked")
 	$Player/Camera3D/PickerBody.global_position = intersect_point
 	pin_joint_3d.node_b = pin_joint_3d.get_path_to(hovered_body)
-	
-func _on_interactible_just_right_clicked(body: PhysicsBody3D) -> void:
-	radial_menu.popup(body.global_position)
-func _on_interactible_just_hovered(body: PhysicsBody3D) -> void:
-	hovered_body = body
+	picked_body = hovered_body
 
+
+func _on_interactible_just_right_clicked(interactible: Interactible, body: PhysicsBody3D) -> void:
+	radial_menu.popup(body.global_position)
+
+
+func _on_interactible_just_hovered(interactible: Interactible, body: PhysicsBody3D) -> void:
+	hovered_body = body
 
 
 static func screen_to_world_pos(screen_pos: Vector2, distance_m: float, cam: Camera3D) -> Variant:
