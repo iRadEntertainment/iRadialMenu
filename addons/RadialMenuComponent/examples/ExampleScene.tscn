@@ -1,15 +1,95 @@
-[gd_scene load_steps=32 format=4 uid="uid://c2n486inebntt"]
+[gd_scene load_steps=43 format=4 uid="uid://c2n486inebntt"]
 
-[ext_resource type="Script" uid="uid://5nupk7xpupoh" path="res://addons/RadialMenuComponent/examples/example.gd" id="1_to72g"]
-[ext_resource type="Script" uid="uid://coduooiqlcoy7" path="res://addons/RadialMenuComponent/examples/player.gd" id="1_ycgey"]
-[ext_resource type="Script" uid="uid://dfe4ptnify0dt" path="res://addons/RadialMenuComponent/examples/camera_3d.gd" id="2_ycgey"]
-[ext_resource type="Script" uid="uid://ciqtxp1oq6pn8" path="res://addons/RadialMenuComponent/examples/Interactible.gd" id="3_g0bew"]
-[ext_resource type="Texture2D" uid="uid://c3cfjrof6lu1y" path="res://addons/RadialMenuComponent/examples/assets/kenney_food-kit/Models/GLB format/Textures/colormap.png" id="4_g0bew"]
-[ext_resource type="Material" uid="uid://da7ju4dwr7lua" path="res://addons/RadialMenuComponent/examples/assets/outline_next_pass.tres" id="5_dfrf6"]
-[ext_resource type="Texture2D" uid="uid://cano4dpv3hnje" path="res://addons/RadialMenuComponent/examples/assets/icon_crossair.png" id="9_tumbf"]
-[ext_resource type="PackedScene" uid="uid://bho2erxj4orht" path="res://addons/RadialMenuComponent/examples/assets/Meshes/Scenes/Kitchen.tscn" id="10_3ravq"]
-[ext_resource type="Script" uid="uid://0ln1m70wl35q" path="res://addons/RadialMenuComponent/examples/reticle.gd" id="10_tumbf"]
-[ext_resource type="PackedScene" uid="uid://cyhhnf5n85ctn" path="res://addons/RadialMenuComponent/examples/example_3D_flat.tscn" id="13_yoxnx"]
+[ext_resource type="Script" uid="uid://5nupk7xpupoh" path="res://addons/RadialMenuComponent/examples/ExampleScene.gd" id="1_0d7d0"]
+[ext_resource type="Script" uid="uid://conyevxgcg0rc" path="res://addons/RadialMenuComponent/RadialMenu3DFlat.gd" id="2_2m568"]
+[ext_resource type="Script" uid="uid://bh7dqd6irweox" path="res://addons/RadialMenuComponent/RadialMenuItem.gd" id="3_8njal"]
+[ext_resource type="PackedScene" uid="uid://bho2erxj4orht" path="res://addons/RadialMenuComponent/examples/assets/Meshes/Scenes/Kitchen.tscn" id="3_poqfy"]
+[ext_resource type="Script" uid="uid://ciqtxp1oq6pn8" path="res://addons/RadialMenuComponent/examples/Interactible.gd" id="4_ikaqs"]
+[ext_resource type="Texture2D" uid="uid://n4qnbdn57bda" path="res://addons/RadialMenuComponent/examples/assets/Icons/carrot.svg" id="4_vq21g"]
+[ext_resource type="Texture2D" uid="uid://c3cfjrof6lu1y" path="res://addons/RadialMenuComponent/examples/assets/kenney_food-kit/Models/GLB format/Textures/colormap.png" id="5_hicoi"]
+[ext_resource type="Texture2D" uid="uid://daaotfj34f52k" path="res://addons/RadialMenuComponent/examples/assets/Icons/chicken-leg.svg" id="5_wfcuc"]
+[ext_resource type="Texture2D" uid="uid://d3jyjuyulbl08" path="res://addons/RadialMenuComponent/examples/assets/Icons/cooking-pot.svg" id="6_csfdt"]
+[ext_resource type="Material" uid="uid://da7ju4dwr7lua" path="res://addons/RadialMenuComponent/examples/assets/outline_next_pass.tres" id="6_k3ah0"]
+[ext_resource type="Script" uid="uid://coduooiqlcoy7" path="res://addons/RadialMenuComponent/examples/player.gd" id="7_8njal"]
+[ext_resource type="Texture2D" uid="uid://d0pl6sa1q4xxr" path="res://addons/RadialMenuComponent/examples/assets/Icons/eating.svg" id="7_tfodv"]
+[ext_resource type="Script" uid="uid://dc0nfn1i4kqbg" path="res://addons/RadialMenuComponent/RadialMenuSettings.gd" id="8_drjwn"]
+[ext_resource type="Script" uid="uid://dfe4ptnify0dt" path="res://addons/RadialMenuComponent/examples/camera_3d.gd" id="8_vq21g"]
+[ext_resource type="Texture2D" uid="uid://cano4dpv3hnje" path="res://addons/RadialMenuComponent/examples/assets/icon_crossair.png" id="9_wfcuc"]
+[ext_resource type="Script" uid="uid://0ln1m70wl35q" path="res://addons/RadialMenuComponent/examples/reticle.gd" id="10_csfdt"]
+
+[sub_resource type="Resource" id="Resource_3lgu8"]
+script = ExtResource("3_8njal")
+option_name = ""
+image = ExtResource("4_vq21g")
+callback = Callable()
+metadata/_custom_type_script = "uid://bh7dqd6irweox"
+
+[sub_resource type="Resource" id="Resource_l3u6p"]
+script = ExtResource("3_8njal")
+option_name = ""
+image = ExtResource("5_wfcuc")
+callback = Callable()
+metadata/_custom_type_script = "uid://bh7dqd6irweox"
+
+[sub_resource type="Resource" id="Resource_qdwjm"]
+script = ExtResource("3_8njal")
+option_name = ""
+image = ExtResource("6_csfdt")
+callback = Callable()
+metadata/_custom_type_script = "uid://bh7dqd6irweox"
+
+[sub_resource type="Resource" id="Resource_vfrhp"]
+script = ExtResource("3_8njal")
+option_name = ""
+image = ExtResource("7_tfodv")
+callback = Callable()
+metadata/_custom_type_script = "uid://bh7dqd6irweox"
+
+[sub_resource type="Resource" id="Resource_umtot"]
+script = ExtResource("8_drjwn")
+start_angle_offset = 0.0
+first_item_centered = false
+bg_circle_color = Color(0.164706, 0.219608, 0.231373, 0.666667)
+bg_full_circle = false
+resolution = 64
+dim_autosize = true
+dim_outer_radius = 256
+dim_center_offset = Vector2(0, 0)
+dim_inner_radius_ratio = 0.6
+hover_color = Color(0.745098, 0.211765, 0.156863, 1)
+hover_child_modulate = Color(0.164706, 0.219608, 0.231373, 1)
+hover_offset_start = 0
+hover_offset_end = 0
+hover_size_factor = 1.0
+hover_offset = Vector2(0, 0)
+hover_children_radial_offset = 0.0
+reticle_outer_enabled = true
+reticle_inner_enabled = true
+reticle_separator_enabled = true
+reticle_outer_width = 6
+reticle_inner_width = 6
+reticle_separator_width = 6
+reticle_separator_type = 0
+reticle_outer_color = Color(0.745098, 0.211765, 0.156863, 1)
+reticle_inner_color = Color(0.745098, 0.211765, 0.156863, 1)
+reticle_separator_color = Color(0.745098, 0.211765, 0.156863, 1)
+reticle_antialiased = true
+item_auto_size = false
+item_size = 48
+item_auto_size_factor = 1.0
+item_offset = Vector2(0, 0)
+item_align = false
+item_modulate = Color(1, 1, 1, 1)
+select_action_name = "ui_select"
+action_released = false
+move_forward_action_name = ""
+move_left_action_name = ""
+move_back_action_name = ""
+move_right_action_name = ""
+keep_selection_outside = true
+controller_enabled = false
+controller_deadzone = 0.0
+metadata/_custom_type_script = "uid://dc0nfn1i4kqbg"
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_tumbf"]
 rough = true
@@ -22,9 +102,9 @@ radius = 0.0869141
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_x5o7u"]
 resource_name = "colormap"
-next_pass = ExtResource("5_dfrf6")
+next_pass = ExtResource("6_k3ah0")
 cull_mode = 2
-albedo_texture = ExtResource("4_g0bew")
+albedo_texture = ExtResource("5_hicoi")
 texture_filter = 2
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_0rmsr"]
@@ -73,7 +153,7 @@ radius = 0.0942383
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_t2e8k"]
 resource_name = "colormap"
 cull_mode = 2
-albedo_texture = ExtResource("4_g0bew")
+albedo_texture = ExtResource("5_hicoi")
 texture_filter = 2
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_73cv1"]
@@ -117,7 +197,7 @@ height = 0.178302
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_by47r"]
 resource_name = "colormap"
 cull_mode = 2
-albedo_texture = ExtResource("4_g0bew")
+albedo_texture = ExtResource("5_hicoi")
 texture_filter = 2
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_m803a"]
@@ -206,13 +286,18 @@ corner_radius_top_right = 8
 corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
 
-[node name="Example" type="Node3D"]
-script = ExtResource("1_to72g")
+[node name="ExampleScene" type="Node3D"]
+script = ExtResource("1_0d7d0")
 
-[node name="RadialMenuComponent" parent="." instance=ExtResource("13_yoxnx")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.20211, 1.27609, -1.7461)
+[node name="RadialMenu3DFlat" type="Node3D" parent="."]
+unique_name_in_owner = true
+script = ExtResource("2_2m568")
+reset_nodes = true
+items = Array[ExtResource("3_8njal")]([SubResource("Resource_3lgu8"), SubResource("Resource_l3u6p"), SubResource("Resource_qdwjm"), SubResource("Resource_vfrhp")])
+settings2D = SubResource("Resource_umtot")
+metadata/_custom_type_script = "uid://conyevxgcg0rc"
 
-[node name="Kitchen" parent="." instance=ExtResource("10_3ravq")]
+[node name="Kitchen" parent="." instance=ExtResource("3_poqfy")]
 
 [node name="FloorTiie8" parent="Kitchen/Env" index="31"]
 visible = false
@@ -251,7 +336,7 @@ angular_damp = 5.0
 metadata/_edit_group_ = true
 
 [node name="Interactible" type="Node3D" parent="Interactibles/Banana"]
-script = ExtResource("3_g0bew")
+script = ExtResource("4_ikaqs")
 metadata/_custom_type_script = "uid://ciqtxp1oq6pn8"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Interactibles/Banana"]
@@ -279,7 +364,7 @@ mesh = SubResource("ArrayMesh_ycgey")
 skeleton = NodePath("")
 
 [node name="Interactible" type="Node3D" parent="Interactibles/Eggplant"]
-script = ExtResource("3_g0bew")
+script = ExtResource("4_ikaqs")
 metadata/_custom_type_script = "uid://ciqtxp1oq6pn8"
 
 [node name="Egg" type="RigidBody3D" parent="Interactibles"]
@@ -297,12 +382,12 @@ mesh = SubResource("ArrayMesh_to72g")
 skeleton = NodePath("")
 
 [node name="Interactible" type="Node3D" parent="Interactibles/Egg"]
-script = ExtResource("3_g0bew")
+script = ExtResource("4_ikaqs")
 metadata/_custom_type_script = "uid://ciqtxp1oq6pn8"
 
 [node name="Player" type="CharacterBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.53574, 0, 0)
-script = ExtResource("1_ycgey")
+script = ExtResource("7_8njal")
 
 [node name="Mesh" type="MeshInstance3D" parent="Player"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
@@ -313,7 +398,7 @@ skeleton = NodePath("../..")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.46, 0)
 current = true
 fov = 58.2638
-script = ExtResource("2_ycgey")
+script = ExtResource("8_vq21g")
 
 [node name="PickerBody" type="StaticBody3D" parent="Player/Camera3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.9809)
@@ -340,9 +425,9 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-texture = ExtResource("9_tumbf")
+texture = ExtResource("9_wfcuc")
 stretch_mode = 3
-script = ExtResource("10_tumbf")
+script = ExtResource("10_csfdt")
 
 [node name="Info" type="Control" parent="GUI"]
 modulate = Color(1, 1, 1, 0.466667)

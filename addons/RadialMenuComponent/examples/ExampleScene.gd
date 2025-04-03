@@ -11,6 +11,8 @@ var direct_space_state: PhysicsDirectSpaceState3D
 var physic_query: PhysicsRayQueryParameters3D
 var intersect_point: Vector3
 
+@onready var radial_menu: RadialMenu3DFlat = %RadialMenu3DFlat
+
 
 func _ready() -> void:
 	cam = get_viewport().get_camera_3d()
@@ -59,7 +61,7 @@ func check_hovered_interactibles() -> void:
 
 func _debug_radial_menu() -> void:
 	var lb_style: StyleBoxFlat = $GUI/Info/lb_mouse_in_radial.get_theme_stylebox("normal")
-	var intersection: Variant = $RadialMenuComponent._get_mouse_2D_pos_on_plane()
+	var intersection: Variant = radial_menu._get_mouse_2D_pos_on_plane()
 	lb_style.bg_color = Color.SEA_GREEN if intersection else Color.BROWN
 	$GUI/Info/lb_mouse_in_radial.text = "%s" % intersection
 
@@ -90,7 +92,7 @@ func _on_interactible_just_left_clicked(body: PhysicsBody3D) -> void:
 	pin_joint_3d.node_b = pin_joint_3d.get_path_to(hovered_body)
 	
 func _on_interactible_just_right_clicked(body: PhysicsBody3D) -> void:
-	$RadialMenuComponent.popup(body.global_position)
+	radial_menu.popup(body.global_position)
 func _on_interactible_just_hovered(body: PhysicsBody3D) -> void:
 	hovered_body = body
 
