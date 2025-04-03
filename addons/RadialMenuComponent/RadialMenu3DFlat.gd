@@ -2,24 +2,40 @@
 @icon("icon_radial_3d_2d.svg")
 class_name RadialMenu3DFlat extends Node3D
 
-
-@export var engine_preview: bool = true: set = _set_engine_preview
-@export var reset_nodes: bool = false:
-	set(val):
-		reset_nodes = val
-		if is_node_ready():
-			create_nodes()
-			setup_nodes()
+#@export var reset_nodes: bool = false:
+	#set(val):
+		#reset_nodes = val
+		#if is_node_ready():
+			#_clear_nodes()
+			#await get_tree().process_frame
+			#create_nodes()
+			#setup_nodes()
 @export var items: Array[RadialMenuItem]
+@export var suppress_warnings := false:
+	set(val):
+		suppress_warnings = val
+		update_configuration_warnings()
+
+@export_group("Editor Preview", "preview_")
+@export var preview_draw: bool = false:
+	set(val):
+		preview_draw = val
+		if radial_menu_2d:
+			radial_menu_2d.preview_draw = preview_draw
+@export var preview_movement: bool = false:
+	set(val):
+		preview_movement = val
+		set_process(preview_movement)
+
+@export_group("Settings")
 @export var settings2D := RadialMenuSettings.new():
 	set(val):
 		settings2D = val
+		if not Engine.is_editor_hint():
+			return
 		if not is_node_ready():
 			await ready
 		radial_menu_2d.settings = settings2D
-
-
-@export_group("Settings")
 ## This will set the mouse mode on popup()
 @export var mouse_mode: Input.MouseMode = Input.MOUSE_MODE_VISIBLE
 ## The resolution of the [SubViewport] in pixels used for rendering the 2D UI
@@ -46,10 +62,11 @@ var _cam: Camera3D:
 			return EditorInterface.get_editor_viewport_3d().get_camera_3d()
 		return get_viewport().get_camera_3d()
 
-var _plane: MeshInstance3D
 var _plane_material: StandardMaterial3D:
 	get():
 		return _plane.get_surface_override_material(0)
+
+var _plane: MeshInstance3D
 var _mesh: PlaneMesh
 var sub_viewport: SubViewport
 var radial_menu_2d: RadialMenu2D
@@ -58,6 +75,8 @@ var radial_menu_2d: RadialMenu2D
 #region Functional variables
 var previous_mouse_mode: Input.MouseMode
 var tw: Tween
+var items_validated: bool
+var _is_editor: bool
 #endregion
 
 signal option_selected(selected: int)
@@ -65,24 +84,44 @@ signal option_selected(selected: int)
 
 #region Init
 func _ready() -> void:
+	_is_editor = Engine.is_editor_hint()
+	if _is_editor:
+		EditorInterface.get_inspector().property_edited.connect(_on_property_edited)
+	_clear_nodes()
 	create_nodes()
 	setup_nodes()
 	_connect_signals()
 	
-	if not Engine.is_editor_hint():
+	#fetch_nodes()
+	if !_is_editor:
 		hide()
 
 
-func create_nodes() -> void:
+func fetch_nodes() -> void:
+	_plane = get_node_or_null("Plane")
+	if _plane:
+		_mesh = _plane.mesh
+		sub_viewport = get_node_or_null("Plane/SubViewport")
+		radial_menu_2d = get_node_or_null("Plane/SubViewport/RadialMenu2D")
+	else:
+		_clear_nodes()
+		create_nodes()
+		setup_nodes()
+		_connect_signals()
+
+
+func _clear_nodes() -> void:
 	for child in get_children(true):
-		child.queue_free()
-	
+		child.free()
+
+
+func create_nodes() -> void:
 	_plane = MeshInstance3D.new()
 	_plane.name = "Plane"
 	_mesh = PlaneMesh.new()
 	_mesh.orientation = PlaneMesh.FACE_Z
 	_plane.mesh = _mesh
-	_plane.set_surface_override_material(0, load("res://addons/RadialMenuComponent/RadialMenuPlane.material").duplicate())
+	_plane.set_surface_override_material(0, load("res://addons/RadialMenuComponent/RadialMenuPlane.material").duplicate(true))
 	
 	sub_viewport = SubViewport.new()
 	sub_viewport.name = "SubViewport"
@@ -93,29 +132,52 @@ func create_nodes() -> void:
 	sub_viewport.add_child(radial_menu_2d)
 	_plane.add_child(sub_viewport)
 	add_child(_plane)
-	#_plane_material.albedo_texture = sub_viewport.get_texture()
 
 
 func setup_nodes() -> void:
 	_mesh.size = ui_dimension * Vector2.ONE
-	_plane_material.no_depth_test = draw_on_top
 	sub_viewport.size = ui_resolution * Vector2i.ONE
-	_plane_material.albedo_texture.viewport_path = get_path_to(sub_viewport)
 	radial_menu_2d.position = Vector2.ZERO
 	radial_menu_2d.size = sub_viewport.size
 	radial_menu_2d.set_anchors_preset(Control.PRESET_FULL_RECT)
 	radial_menu_2d.items = items
+	_plane_material.no_depth_test = draw_on_top
+	_plane_material.albedo_texture = sub_viewport.get_texture()
+	if _is_editor:
+		_plane_material.albedo_texture.viewport_path = get_path_to(sub_viewport)
+	#else:
+		#_plane_material.albedo_texture.viewport_path = self.get_path_to(sub_viewport)
+	#print("viewport path: ", _plane_material.albedo_texture.viewport_path)
 
 
 func _connect_signals() -> void:
 	radial_menu_2d.slot_selected.connect(_on_slot_selected)
 	visibility_changed.connect(_on_visibility_changed)
+
+
+func validate_items() -> bool:
+	if items.is_empty():
+		items_validated = false
+		return false
+	
+	for item: RadialMenuItem in items:
+		if not item:
+			items_validated = false
+			return false
+		if not item.image:
+			items_validated = false
+			return false
+	
+	items_validated = true
+	return items_validated
 #endregion
 
 
 #region Update
 func _process(delta: float) -> void:
-	if not Engine.is_editor_hint() or not engine_preview:
+	if not Engine.is_editor_hint() or not preview_movement:
+		return
+	if not items_validated:
 		return
 	
 	_face_camera()
@@ -132,6 +194,9 @@ func _process(delta: float) -> void:
 
 #region Main functions
 func popup(_pop_global_position: Vector3) -> void:
+	if not _plane:
+		push_warning("RadialMenu3DFlat: nodes not initialized correctly.")
+		return
 	previous_mouse_mode = Input.mouse_mode
 	Input.mouse_mode = mouse_mode
 	
@@ -148,7 +213,8 @@ func popup(_pop_global_position: Vector3) -> void:
 	show()
 	_plane.scale = Vector3.ZERO
 	
-	if tw: tw.kill()
+	if tw:
+		tw.kill()
 	
 	tw = create_tween()
 	tw.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
@@ -169,10 +235,16 @@ func close_popup() -> void:
 
 #region Update
 func _face_camera() -> void:
+	if not _plane:
+		push_warning("RadialMenu3DFlat: nodes not initialized correctly.")
+		return
 	_plane.global_rotation = _cam.global_rotation
 	
-	if !tilt_with_mouse: return
-	
+	if tilt_with_mouse: 
+		_tilt()
+
+
+func _tilt() -> void:
 	# tilt _plane with mouse
 	var m_pos: Vector2 = get_viewport().get_mouse_position()
 	var tilt: Vector2 = m_pos - Vector2(get_viewport().size)/2.0
@@ -223,6 +295,9 @@ func _get_mouse_2D_pos_on_plane() -> Variant:
 
 
 func _get_mouse_on_projection_plane() -> Variant:
+	if not _plane:
+		push_warning("RadialMenu3DFlat: nodes not initialized correctly.")
+		return
 	if _plane.scale == Vector3.ZERO:
 		return
 	var from: Vector3
@@ -262,15 +337,6 @@ func _get_mouse_on_projection_plane() -> Variant:
 #endregion
 
 
-#region Setters
-func _set_engine_preview(value: bool) -> void:
-	engine_preview = value
-	set_process(engine_preview)
-	if radial_menu_2d:
-		radial_menu_2d.engine_preview = engine_preview
-#endregion
-
-
 #region Signals
 func _on_visibility_changed() -> void:
 	if visible:
@@ -280,4 +346,22 @@ func _on_visibility_changed() -> void:
 func _on_slot_selected(index: int) -> void:
 	option_selected.emit(index)
 	close_popup()
+
+
+func _on_property_edited(property: StringName) -> void:
+	if property == &"items":
+		update_configuration_warnings()
+#endregion
+
+
+#region Warnings
+func _get_configuration_warnings() -> PackedStringArray:
+	var warnings = PackedStringArray()
+	if not validate_items() and not suppress_warnings:
+		warnings.append(
+"""The 'items' list doesn't contain valid items.
+If you add items using a script using RadialMenu.add_item(RadialMenuItem)
+you can toggle 'suppress_warnings'"""
+)
+	return warnings
 #endregion

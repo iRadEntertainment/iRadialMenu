@@ -1,30 +1,38 @@
-[gd_scene load_steps=11 format=3 uid="uid://cyhhnf5n85ctn"]
+[gd_scene load_steps=13 format=3 uid="uid://cyhhnf5n85ctn"]
 
 [ext_resource type="Script" uid="uid://conyevxgcg0rc" path="res://addons/RadialMenuComponent/RadialMenu3DFlat.gd" id="1_xa0mt"]
 [ext_resource type="Script" uid="uid://bh7dqd6irweox" path="res://addons/RadialMenuComponent/RadialMenuItem.gd" id="2_aeisu"]
-[ext_resource type="Texture2D" uid="uid://d0pl6sa1q4xxr" path="res://addons/RadialMenuComponent/examples/assets/Icons/eating.svg" id="3_b735g"]
+[ext_resource type="Texture2D" uid="uid://cg16vj463vrw1" path="res://addons/RadialMenuComponent/examples/assets/Icons/grab.svg" id="3_ou5d3"]
+[ext_resource type="Texture2D" uid="uid://n2xcx1tvmmo6" path="res://addons/RadialMenuComponent/examples/assets/Icons/fridge.svg" id="3_pi13m"]
 [ext_resource type="Texture2D" uid="uid://n4qnbdn57bda" path="res://addons/RadialMenuComponent/examples/assets/Icons/carrot.svg" id="4_b735g"]
 [ext_resource type="Script" uid="uid://dc0nfn1i4kqbg" path="res://addons/RadialMenuComponent/RadialMenuSettings.gd" id="5_5xg8d"]
 [ext_resource type="Texture2D" uid="uid://daaotfj34f52k" path="res://addons/RadialMenuComponent/examples/assets/Icons/chicken-leg.svg" id="5_pi13m"]
 
-[sub_resource type="Resource" id="Resource_5xg8d"]
+[sub_resource type="Resource" id="Resource_eqjm5"]
 script = ExtResource("2_aeisu")
-option_name = "Eat"
-image = ExtResource("3_b735g")
+option_name = "Grab"
+image = ExtResource("3_ou5d3")
 callback = Callable()
 metadata/_custom_type_script = "uid://bh7dqd6irweox"
 
-[sub_resource type="Resource" id="Resource_pi13m"]
+[sub_resource type="Resource" id="Resource_aeisu"]
 script = ExtResource("2_aeisu")
 option_name = "Carrot"
 image = ExtResource("4_b735g")
 callback = Callable()
 metadata/_custom_type_script = "uid://bh7dqd6irweox"
 
-[sub_resource type="Resource" id="Resource_eqjm5"]
+[sub_resource type="Resource" id="Resource_3k7j8"]
 script = ExtResource("2_aeisu")
 option_name = "Chicken"
 image = ExtResource("5_pi13m")
+callback = Callable()
+metadata/_custom_type_script = "uid://bh7dqd6irweox"
+
+[sub_resource type="Resource" id="Resource_4qi88"]
+script = ExtResource("2_aeisu")
+option_name = "Fridge"
+image = ExtResource("3_pi13m")
 callback = Callable()
 metadata/_custom_type_script = "uid://bh7dqd6irweox"
 
@@ -36,7 +44,7 @@ bg_circle_color = Color(0.164706, 0.219608, 0.231373, 0.666667)
 bg_full_circle = false
 resolution = 64
 dim_autosize = true
-dim_outer_radius = 0
+dim_outer_radius = 256
 dim_center_offset = Vector2(0, 0)
 dim_inner_radius_ratio = 0.6
 hover_color = Color(0.745098, 0.211765, 0.156863, 1)
@@ -76,7 +84,8 @@ metadata/_custom_type_script = "uid://dc0nfn1i4kqbg"
 
 [node name="example_3D_flat" type="Node3D"]
 script = ExtResource("1_xa0mt")
-items = Array[ExtResource("2_aeisu")]([SubResource("Resource_5xg8d"), SubResource("Resource_pi13m"), SubResource("Resource_eqjm5")])
+items = Array[ExtResource("2_aeisu")]([SubResource("Resource_eqjm5"), SubResource("Resource_aeisu"), SubResource("Resource_3k7j8"), SubResource("Resource_4qi88"), null])
+preview_draw = true
 settings2D = SubResource("Resource_ou5d3")
 distance_from_camera = 0.6
-tilt_strength = 0.0
+tilt_strength = 0.14

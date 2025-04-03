@@ -6,12 +6,18 @@
 @icon("icon_radial_2d.svg")
 class_name RadialMenu2D extends Control
 
-@export var engine_preview := true: set = _set_engine_preview
+@export var preview_draw := true: set = _set_preview_draw
+@export var suppress_warnings := false:
+	set(val):
+		suppress_warnings = val
+		update_configuration_warnings()
+# @export_tool_button("Check items", "Button") var trigger_warnings = func(): update_configuration_warnings()
 @export var items: Array[RadialMenuItem] = []
 @export var settings := RadialMenuSettings.new()
 
 #region Functional variables
 var selected_idx: int = -1
+var items_validated: bool = false
 
 var start_angle_offset_radiants: float
 var center := Vector2.ZERO
@@ -37,9 +43,28 @@ signal selection_canceled
 #region Init
 func _ready() -> void:
 	_is_editor = Engine.is_editor_hint()
+	if _is_editor:
+		EditorInterface.get_inspector().property_edited.connect(_on_property_edited)
 	gui_input.connect(_gui_input)
 	await get_tree().process_frame
 	queue_redraw()
+
+
+func validate_items() -> bool:
+	if items.is_empty():
+		items_validated = false
+		return false
+	
+	for item: RadialMenuItem in items:
+		if not item:
+			items_validated = false
+			return false
+		if not item.image:
+			items_validated = false
+			return false
+	
+	items_validated = true
+	return items_validated
 #endregion
 
 
@@ -65,7 +90,7 @@ func _input(event: InputEvent) -> void:
 
 #region Update
 func update() -> void:
-	if items.is_empty(): return
+	if !validate_items(): return
 	_calculate_size_values()
 	queue_redraw()
 
@@ -94,7 +119,8 @@ func _calculate_size_values() -> void:
 
 
 func _draw() -> void:
-	if items.is_empty(): return
+	if !items_validated:
+		return
 	
 	_draw_background()
 	_draw_reticle()
@@ -257,7 +283,7 @@ func _draw_icons() -> void:
 
 func _process(delta: float) -> void:
 	if not is_visible_in_tree(): return
-	if !engine_preview: return
+	if !preview_draw: return
 	# pointer position is the position of the mouse or controller action compared to the center
 	var pointer_pos: Vector2 = get_local_mouse_position() - center
 	var controller_vector: Vector2 = Input.get_vector(
@@ -277,6 +303,13 @@ func _process(delta: float) -> void:
 #endregion
 
 
+#region Signals
+func _on_property_edited(property: StringName) -> void:
+	if property == &"items":
+		update_configuration_warnings()
+#endregion
+
+
 #region Getters/Setters
 func _get_auto_circle_radius() -> int:
 	if size.x < size.y:
@@ -284,8 +317,8 @@ func _get_auto_circle_radius() -> int:
 	return int(size.y / 2.0)
 
 
-func _set_engine_preview(value: bool) -> void:
-	engine_preview = value
+func _set_preview_draw(value: bool) -> void:
+	preview_draw = value
 	set_process(value)
 #endregion
 
@@ -311,11 +344,14 @@ func get_selection_at_position(_pointer_pos: Vector2) -> int:
 
 
 func select() -> void: # select currently hovered element
+	if not items_validated:
+		return
 	if selected_idx == -1:
 		selection_canceled.emit()
 	else:
 		slot_selected.emit(selected_idx)
 		var item: RadialMenuItem = items[selected_idx]
+		print("Slot selected: %s" % item.option_name)
 		if item.callback:
 			item.callback.call_deferred()
 	
@@ -367,6 +403,18 @@ static func uv_from_sector_poly(_sector_poly_size: int) -> PackedVector2Array:
 
 #endregion
 
+
+#region Warnings
+func _get_configuration_warnings() -> PackedStringArray:
+	var warnings = PackedStringArray()
+	if not validate_items() and not suppress_warnings:
+		warnings.append(
+"""The 'items' list doesn't contain valid items.
+If you add items using a script using RadialMenu.add_item(RadialMenuItem)
+you can toggle 'suppress_warnings'"""
+)
+	return warnings
+#endregion
 
 ##region Conditional properties
 #func _validate_property(property: Dictionary) -> void:

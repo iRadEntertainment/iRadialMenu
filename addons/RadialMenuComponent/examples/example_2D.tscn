@@ -1,30 +1,21 @@
-[gd_scene load_steps=11 format=3 uid="uid://bwc8b2udlcvuq"]
+[gd_scene load_steps=8 format=3 uid="uid://bwc8b2udlcvuq"]
 
 [ext_resource type="Script" uid="uid://da4pf8umd7lhq" path="res://addons/RadialMenuComponent/RadialMenu2D.gd" id="1_agg0q"]
 [ext_resource type="Script" uid="uid://bh7dqd6irweox" path="res://addons/RadialMenuComponent/RadialMenuItem.gd" id="2_uu7ei"]
-[ext_resource type="Texture2D" uid="uid://cg16vj463vrw1" path="res://addons/RadialMenuComponent/examples/assets/Icons/grab.svg" id="3_bf82l"]
-[ext_resource type="Texture2D" uid="uid://bqi8wq6o4grn2" path="res://addons/RadialMenuComponent/examples/assets/Icons/throwing-ball.svg" id="4_agg0q"]
-[ext_resource type="Texture2D" uid="uid://d0pl6sa1q4xxr" path="res://addons/RadialMenuComponent/examples/assets/Icons/eating.svg" id="5_uu7ei"]
+[ext_resource type="Texture2D" uid="uid://hsk5btc5b2jy" path="res://addons/RadialMenuComponent/icon_radial_2d.svg" id="3_0sdxx"]
 [ext_resource type="Script" uid="uid://dc0nfn1i4kqbg" path="res://addons/RadialMenuComponent/RadialMenuSettings.gd" id="6_uu7ei"]
 
-[sub_resource type="Resource" id="Resource_s8fc6"]
+[sub_resource type="Resource" id="Resource_agg0q"]
 script = ExtResource("2_uu7ei")
-option_name = "Grab"
-image = ExtResource("3_bf82l")
+option_name = ""
+image = ExtResource("3_0sdxx")
 callback = Callable()
 metadata/_custom_type_script = "uid://bh7dqd6irweox"
 
-[sub_resource type="Resource" id="Resource_bf82l"]
+[sub_resource type="Resource" id="Resource_0sdxx"]
 script = ExtResource("2_uu7ei")
-option_name = "Throw"
-image = ExtResource("4_agg0q")
-callback = Callable()
-metadata/_custom_type_script = "uid://bh7dqd6irweox"
-
-[sub_resource type="Resource" id="Resource_m2ejf"]
-script = ExtResource("2_uu7ei")
-option_name = "Eat"
-image = ExtResource("5_uu7ei")
+option_name = ""
+image = ExtResource("3_0sdxx")
 callback = Callable()
 metadata/_custom_type_script = "uid://bh7dqd6irweox"
 
@@ -82,6 +73,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_agg0q")
-items = Array[ExtResource("2_uu7ei")]([SubResource("Resource_s8fc6"), SubResource("Resource_bf82l"), SubResource("Resource_m2ejf")])
+items = Array[ExtResource("2_uu7ei")]([SubResource("Resource_agg0q"), SubResource("Resource_0sdxx"), null])
 settings = SubResource("Resource_r5tc8")
 metadata/_custom_type_script = "uid://da4pf8umd7lhq"
