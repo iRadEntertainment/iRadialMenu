@@ -1,7 +1,6 @@
 # Radial Menu Component for Godot 4
 
-![Godot 4 Compatible](https://img.shields.io/badge/Godot-4.x-blue?logo=godot-engine&style=flat-square)  
-![MIT License](https://img.shields.io/badge/License-MIT-green?style=flat-square)
+![Godot 4 Compatible](https://img.shields.io/badge/Godot-4.4-478CBF?logo=godotengine) ![MIT License](https://img.shields.io/badge/License-MIT-green) [![Credits](https://img.shields.io/badge/Credits-blue)](./CREDITS.md)
 
 A Godot 4 addon that provides customizable radial menu components for your projects. This addon simplifies the creation of radial menus, making it easy to implement intuitive and visually appealing UI elements.
 
