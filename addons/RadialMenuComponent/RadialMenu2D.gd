@@ -8,16 +8,30 @@ class_name RadialMenu2D extends Control
 
 const SQRT_2: float = 1.4142
 
+## If `true`, enables preview drawing in the editor. [br]
+## When set, the radial menu will redraw itself in the editor to show a preview of its layout. [br]
+## This is useful for visualizing changes to the menu's settings or items.
 @export var preview_draw := true: set = _set_preview_draw
+
+## If `true`, suppresses configuration warnings in the editor. [br]
+## When set, the editor will not display warnings about invalid or incomplete menu items. [br]
+## This is useful when dynamically adding items via script and you want to avoid warnings during development.
 @export var suppress_warnings := false:
 	set(val):
 		suppress_warnings = val
 		update_configuration_warnings()
-# @export_tool_button("Check items", "Button") var trigger_warnings = func(): update_configuration_warnings()
+
+## The list of menu items to display. Each item must be a [code]RadialMenuItem[/code]. [br]
+## When set, the menu will update its layout to include the new items. [br]
+## Each item in the array should define properties such as `option_name`, `description`, and `image`.
 @export var items: Array[RadialMenuItem] = []:
 	set(val):
 		items = val
 		update()
+
+## The settings resource for configuring the appearance and behavior of the radial menu. [br]
+## When set, the menu will apply the new settings and redraw itself. [br]
+## The settings include properties such as dimensions, colors, and input actions.
 @export var settings := RadialMenuSettings.new():
 	set(val):
 		settings = val
@@ -130,6 +144,10 @@ func _input(event: InputEvent) -> void:
 		var pointer_vector: Vector2 = ui_input_vector_to_pointer_position(controller_vector)
 
 
+## Hovers over the menu item at the given local position. [br]
+## This function calculates the pointer's position relative to the menu center [br]
+## and determines which menu item (if any) is being hovered over.
+## @param _pos The local position to hover over.
 func hover_at_local_position(_pos: Vector2) -> void:
 	var pointer_pos: Vector2 = _pos - center
 	hover_at_centered_pointer_position(pointer_pos)
@@ -150,6 +168,9 @@ func hover_at_centered_pointer_position(_pointer_pos: Vector2) -> void:
 
 
 #region Update
+## Updates the radial menu's layout and redraws it. [br]
+## This function recalculates the menu's size, position, and item layout [br]
+## based on the current settings and items.
 func update() -> void:
 	if !validate_items():
 		return
@@ -400,12 +421,20 @@ func _on_settings_changed() -> void:
 
 
 #region Getters/Setters
+## Calculates and returns the auto circle radius based on the control's size. [br]
+## This is used when the `dim_autosize` setting is enabled to dynamically [br]
+## adjust the menu's outer radius.
+## @return The calculated radius as an integer.
 func _get_auto_circle_radius() -> int:
 	if size.x < size.y:
 		return int(size.x / 2.0)
 	return int(size.y / 2.0)
 
 
+## Sets the preview drawing state. [br]
+## When enabled, the menu will continuously redraw itself in the editor [br]
+## to reflect changes to its layout or settings.
+## @param value If `true`, enables preview drawing.
 func _set_preview_draw(value: bool) -> void:
 	preview_draw = value
 	set_process(value)
@@ -413,6 +442,11 @@ func _set_preview_draw(value: bool) -> void:
 
 
 #region Utilities
+## Gets the index of the menu item at the given pointer position. [br]
+## This function determines which menu item (if any) is located at the [br]
+## specified pointer position relative to the menu center.
+## @param _pointer_pos The pointer position relative to the menu center.
+## @return The index of the menu item, or -1 if no item is selected.
 func get_selection_at_position(_pointer_pos: Vector2) -> int:
 	var angle: float = wrapf(_pointer_pos.angle() - start_angle_offset_radiants, 0.0, TAU)
 	var _pointer_radius: float = _pointer_pos.length()
@@ -432,6 +466,9 @@ func get_selection_at_position(_pointer_pos: Vector2) -> int:
 	return -1
 
 
+## Selects the currently hovered menu item and emits the [signal selected]. [br]
+## This function triggers the callback associated with the selected item [br]
+## and resets the selection state.
 func select() -> void: # select currently hovered element
 	if selected_idx == -1:
 		cancel()
@@ -445,11 +482,18 @@ func select() -> void: # select currently hovered element
 	selected_idx = -1
 
 
+## Cancels the current selection and emits the [signal canceled]. [br]
+## This function clears the current selection and redraws the menu.
 func cancel() -> void:
 	selected_idx = -1
 	canceled.emit()
 
 
+## Converts a UI input vector to a pointer position. [br]
+## This function maps a directional input (e.g., from a joystick) to a [br]
+## position within the radial menu.
+## @param _ui_input_vector The input vector.
+## @return The pointer position as a [code]Vector2[/code].
 func ui_input_vector_to_pointer_position(_ui_input_vector: Vector2) -> Vector2:
 	return _ui_input_vector * settings.dim_outer_radius
 
@@ -485,6 +529,18 @@ func draw_item_image_at_position(
 	draw_set_transform(Vector2.ZERO)
 
 
+## Gets the points of a sector (pie slice) in a circle. [br]
+## This function calculates the vertices of a sector based on the given parameters. [br]
+## It is useful for drawing pie slices or dividing a circle into segments. [br]
+## The sector is defined by its center, inner and outer radii, and angular range.
+## @param _center The center of the circle as a [code]Vector2[/code].
+## @param _angle_center The angle at the center of the sector in radians.
+## @param _angle_width The width of the sector in radians.
+## @param _inner_radius The inner radius of the sector.
+## @param _outer_radius The outer radius of the sector.
+## @param _resolution The number of points used to approximate the sector's curve. Higher values result in smoother curves.
+## @return A [code]PackedVector2Array[/code] containing the points of the sector. [br]
+## The array includes points for both the inner and outer edges of the sector.
 static func get_sector_points(
 			_center: Vector2,
 			_angle_center: float,
@@ -514,6 +570,11 @@ static func get_sector_points(
 	return inner_p
 
 
+## Generates UV coordinates for a sector polygon. [br]
+## This function creates UV mapping for a sector polygon, which can be used [br]
+## to apply textures to the sector.
+## @param _sector_poly_size The number of points in the sector polygon.
+## @return A [code]PackedVector2Array[/code] containing the UV coordinates.
 static func uv_from_sector_poly(_sector_poly_size: int) -> PackedVector2Array:
 	var uv_poly := PackedVector2Array()
 	var half_size: float = float(_sector_poly_size/2.0)
@@ -530,6 +591,11 @@ static func uv_from_sector_poly(_sector_poly_size: int) -> PackedVector2Array:
 	return uv_poly
 
 
+## Resizes a rectangle to fit within a given dimension while maintaining its aspect ratio. [br]
+## This function is useful for scaling images or UI elements to fit within a specific size.
+## @param _original_rect The original rectangle to resize.
+## @param _dimension The target dimension (width or height).
+## @return A [code]Rect2[/code] representing the resized rectangle.
 static func resized_rect_to_dimension(_original_rect: Rect2, _dimension: int) -> Rect2:
 	var _resized_rect := Rect2()
 	var _is_taller_than_larger: bool = _original_rect.size.x < _original_rect.size.y
@@ -550,6 +616,7 @@ you can toggle 'suppress_warnings'"""
 )
 	return warnings
 #endregion
+
 
 ##region Conditional properties
 #func _validate_property(property: Dictionary) -> void:

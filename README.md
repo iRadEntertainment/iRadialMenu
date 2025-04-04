@@ -8,10 +8,11 @@ A Godot 4 addon that provides customizable radial menu components for your proje
 ## Features
 
 - Fully customizable radial menus.
-- Support for dynamic menu items.
+- Support for dynamic menu items using the `RadialMenuItem` resource.
 - Easy integration into existing projects.
 - Adjustable radius, angles, and item spacing.
 - Works seamlessly with Godot 4's scene system.
+- Includes a 3D version (`RadialMenu3DFlat`) for projecting radial menus in 3D space.
 
 ## Installation
 
@@ -21,12 +22,39 @@ A Godot 4 addon that provides customizable radial menu components for your proje
 
 ## Usage
 
-1. Add the `RadialMenu2D` or `RadialMenu3DFlat` node to your scene.
+### RadialMenu2D
+
+1. Add the `RadialMenu2D` node to your scene.
 2. Create an array of `RadialMenuItem` resources, each representing a menu item. Configure their properties such as `option_name`, `description`, `image`, and `callback_name`.
-3. Assign the array of `RadialMenuItem` resources to the `items` property of the `RadialMenu` node.
-4. Customize the appearance and behavior of the radial menu by creating and assigning a `RadialMenuSettings` resource to the `settings` property of the `RadialMenu` node.
+3. Assign the array of `RadialMenuItem` resources to the `items` property of the `RadialMenu2D` node.
+4. Customize the appearance and behavior of the radial menu by creating and assigning a `RadialMenuSettings` resource to the `settings` property of the `RadialMenu2D` node.
 5. Both the `items` and `settings` properties are exposed in the Godot inspector, allowing you to edit them directly in the editor or via code.
 6. Use the signals `selected`, `selection_changed`, and `canceled` to handle user interactions with the menu.
+
+### RadialMenu3DFlat
+
+1. Add the `RadialMenu3DFlat` node to your 3D scene.
+2. Configure the `items` property with an array of `RadialMenuItem` resources.
+3. Customize the 2D appearance of the menu using the `settings2D` property, which accepts a `RadialMenuSettings` resource.
+4. Adjust 3D-specific properties such as `ui_resolution`, `ui_dimension`, `distance_from_camera`, and `tilt_with_mouse` to control how the menu is projected in 3D space.
+5. Use the `popup` and `close_popup` methods to display or hide the menu in the 3D world.
+
+### RadialMenuItem
+
+The `RadialMenuItem` resource represents a single menu item. It includes the following properties:
+- `option_name`: The name of the menu option.
+- `description`: A description of the menu option.
+- `image`: A texture to display for the menu item.
+- `callback_name`: The name of the callback function to invoke when the item is selected.
+
+### RadialMenuSettings
+
+The `RadialMenuSettings` resource allows you to configure the appearance and behavior of the radial menu. Key properties include:
+- `start_angle_offset`: Adjusts the starting angle of the menu.
+- `bg_circle_color`: Sets the background color of the menu.
+- `hover_color`: Defines the color of the hovered menu item.
+- `reticle_outer_enabled`: Enables or disables the outer reticle.
+- `item_auto_size`: Automatically sizes menu items based on the menu dimensions.
 
 For detailed examples, check the `examples/` folder in this repository.
 
