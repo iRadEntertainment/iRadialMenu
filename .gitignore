@@ -1,11 +1,4 @@
 # Godot 4+ specific ignores
 .godot/
 /android/
-addons/RadialMenuComponent/examples/assets/earend.kra
-addons/RadialMenuComponent/examples/assets/earend.kra~
-addons/RadialMenuComponent/examples/assets/hypnotick.kra
-addons/RadialMenuComponent/examples/assets/hypnotick.png
-addons/RadialMenuComponent/examples/assets/hypnotick.png.import
-addons/RadialMenuComponent/examples/assets/justcovino.kra
-addons/RadialMenuComponent/examples/assets/justcovino.png
-addons/RadialMenuComponent/examples/assets/justcovino.png.import
+*.kra

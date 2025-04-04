@@ -1,4 +1,4 @@
-[gd_scene load_steps=49 format=4 uid="uid://c2n486inebntt"]
+[gd_scene load_steps=51 format=4 uid="uid://c2n486inebntt"]
 
 [ext_resource type="Script" uid="uid://5nupk7xpupoh" path="res://addons/RadialMenuComponent/examples/ExampleScene.gd" id="1_0d7d0"]
 [ext_resource type="Script" uid="uid://conyevxgcg0rc" path="res://addons/RadialMenuComponent/RadialMenu3DFlat.gd" id="2_2m568"]
@@ -11,6 +11,7 @@
 [ext_resource type="Material" uid="uid://da7ju4dwr7lua" path="res://addons/RadialMenuComponent/examples/assets/outline_next_pass.tres" id="6_k3ah0"]
 [ext_resource type="Script" uid="uid://bh7dqd6irweox" path="res://addons/RadialMenuComponent/RadialMenuItem.gd" id="6_poqfy"]
 [ext_resource type="Script" uid="uid://coduooiqlcoy7" path="res://addons/RadialMenuComponent/examples/player.gd" id="7_8njal"]
+[ext_resource type="Texture2D" uid="uid://dj3tyyuh2y0y8" path="res://addons/RadialMenuComponent/examples/assets/earend.png" id="7_tfodv"]
 [ext_resource type="Texture2D" uid="uid://qnc1cglx888q" path="res://addons/RadialMenuComponent/examples/assets/hypnotick.png" id="7_vq21g"]
 [ext_resource type="Script" uid="uid://dc0nfn1i4kqbg" path="res://addons/RadialMenuComponent/RadialMenuSettings.gd" id="8_drjwn"]
 [ext_resource type="Script" uid="uid://dfe4ptnify0dt" path="res://addons/RadialMenuComponent/examples/camera_3d.gd" id="8_vq21g"]
@@ -49,6 +50,14 @@ script = ExtResource("6_poqfy")
 option_name = "Chicken"
 description = "A juicy juicy chicken leg"
 image = ExtResource("5_k3ah0")
+callback_name = ""
+metadata/_custom_type_script = "uid://bh7dqd6irweox"
+
+[sub_resource type="Resource" id="Resource_drjwn"]
+script = ExtResource("6_poqfy")
+option_name = "Earend"
+description = "A bear it's a bear it's a bear"
+image = ExtResource("7_tfodv")
 callback_name = ""
 metadata/_custom_type_script = "uid://bh7dqd6irweox"
 
@@ -320,7 +329,7 @@ corner_radius_bottom_left = 8
 
 [node name="ExampleScene" type="Node3D"]
 script = ExtResource("1_0d7d0")
-main_radial_menu_items = Array[ExtResource("6_poqfy")]([SubResource("Resource_wfcuc"), SubResource("Resource_csfdt"), SubResource("Resource_8njal"), SubResource("Resource_vq21g")])
+main_radial_menu_items = Array[ExtResource("6_poqfy")]([SubResource("Resource_wfcuc"), SubResource("Resource_csfdt"), SubResource("Resource_8njal"), SubResource("Resource_vq21g"), SubResource("Resource_drjwn")])
 
 [node name="RadialMenu3DFlat" type="Node3D" parent="."]
 unique_name_in_owner = true
