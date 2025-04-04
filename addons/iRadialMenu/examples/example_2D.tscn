@@ -1,0 +1,106 @@
+[gd_scene load_steps=14 format=3 uid="uid://bwc8b2udlcvuq"]
+
+[ext_resource type="Script" uid="uid://da4pf8umd7lhq" path="res://addons/iRadialMenu/RadialMenu2D.gd" id="1_agg0q"]
+[ext_resource type="Script" uid="uid://bh7dqd6irweox" path="res://addons/iRadialMenu/RadialMenuItem.gd" id="2_uu7ei"]
+[ext_resource type="Texture2D" uid="uid://n4qnbdn57bda" path="res://addons/iRadialMenu/examples/assets/Icons/carrot.svg" id="3_uu7ei"]
+[ext_resource type="Texture2D" uid="uid://cg16vj463vrw1" path="res://addons/iRadialMenu/examples/assets/Icons/grab.svg" id="4_bf82l"]
+[ext_resource type="Texture2D" uid="uid://dse1m6m5e7p34" path="res://addons/iRadialMenu/examples/assets/Icons/sandwich.svg" id="5_m2ejf"]
+[ext_resource type="Texture2D" uid="uid://clncuqbgdp68s" path="res://addons/iRadialMenu/examples/assets/Icons/fruit-bowl.svg" id="6_bf82l"]
+[ext_resource type="Script" uid="uid://dc0nfn1i4kqbg" path="res://addons/iRadialMenu/RadialMenuSettings.gd" id="6_uu7ei"]
+[ext_resource type="FontFile" uid="uid://b54iuyamwm2nt" path="res://addons/iRadialMenu/examples/assets/Font/Cleanow.ttf" id="8_m2ejf"]
+
+[sub_resource type="Resource" id="Resource_agg0q"]
+script = ExtResource("2_uu7ei")
+option_name = "Carrot"
+description = "A delicious Carrot"
+image = ExtResource("3_uu7ei")
+callback_name = ""
+metadata/_custom_type_script = "uid://bh7dqd6irweox"
+
+[sub_resource type="Resource" id="Resource_0sdxx"]
+script = ExtResource("2_uu7ei")
+option_name = "Grab"
+description = "Pick up {}"
+image = ExtResource("4_bf82l")
+callback_name = ""
+metadata/_custom_type_script = "uid://bh7dqd6irweox"
+
+[sub_resource type="Resource" id="Resource_s8fc6"]
+script = ExtResource("2_uu7ei")
+option_name = "Sandwich"
+description = "Hungry?"
+image = ExtResource("5_m2ejf")
+callback_name = ""
+metadata/_custom_type_script = "uid://bh7dqd6irweox"
+
+[sub_resource type="Resource" id="Resource_m2ejf"]
+script = ExtResource("2_uu7ei")
+option_name = ""
+description = ""
+image = ExtResource("6_bf82l")
+callback_name = ""
+metadata/_custom_type_script = "uid://bh7dqd6irweox"
+
+[sub_resource type="Resource" id="Resource_r5tc8"]
+script = ExtResource("6_uu7ei")
+start_angle_offset = 0.0
+first_item_centered = false
+bg_circle_color = Color(0.164706, 0.219608, 0.231373, 0.666667)
+bg_full_circle = false
+resolution = 64
+dim_autosize = true
+dim_outer_radius = 512
+dim_center_offset = Vector2(0, 0)
+dim_inner_radius_ratio = 0.67
+hover_preview_in_center = true
+hover_color = Color(0.745098, 0.211765, 0.156863, 1)
+hover_child_modulate = Color(1, 1, 1, 1)
+hover_offset_start = 0
+hover_offset_end = 0
+hover_size_factor = 1.0
+hover_offset = Vector2(0, 0)
+hover_children_radial_offset = 0.0
+reticle_outer_enabled = false
+reticle_inner_enabled = false
+reticle_separator_enabled = false
+reticle_outer_width = 6
+reticle_inner_width = 6
+reticle_separator_width = 66
+reticle_separator_type = 0
+reticle_outer_color = Color(0.745098, 0.211765, 0.156863, 1)
+reticle_inner_color = Color(0.745098, 0.211765, 0.156863, 1)
+reticle_separator_color = Color(0.745098, 0.211765, 0.156863, 1)
+reticle_antialiased = true
+item_auto_size = false
+item_size = 138
+item_auto_size_factor = 1.0
+item_offset = Vector2(0, 0)
+item_align = false
+item_modulate = Color(1, 1, 1, 0.509804)
+text_font = ExtResource("8_m2ejf")
+text_font_size_name = 26
+text_font_size_description = 22
+text_font_color_name = Color(1, 1, 1, 1)
+text_font_color_description = Color(1, 1, 1, 1)
+select_action_name = "ui_select"
+action_released = false
+move_forward_action_name = ""
+move_left_action_name = ""
+move_back_action_name = ""
+move_right_action_name = ""
+keep_selection_outside = true
+controller_enabled = false
+controller_deadzone = 0.0
+metadata/_custom_type_script = "uid://dc0nfn1i4kqbg"
+
+[node name="example_2D" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_agg0q")
+items = Array[ExtResource("2_uu7ei")]([SubResource("Resource_agg0q"), SubResource("Resource_0sdxx"), SubResource("Resource_s8fc6"), SubResource("Resource_m2ejf")])
+settings = SubResource("Resource_r5tc8")
+metadata/_custom_type_script = "uid://da4pf8umd7lhq"

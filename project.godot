@@ -23,4 +23,4 @@ window/stretch/mode="canvas_items"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/RadialMenuComponent/plugin.cfg")
+enabled=PackedStringArray("res://addons/iRadialMenu/plugin.cfg")
