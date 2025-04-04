@@ -10,10 +10,10 @@ config_version=5
 
 [application]
 
-config/name="Radial Menu 3D Plugin"
+config/name="iRadial Menu"
 run/main_scene="uid://c2n486inebntt"
 config/features=PackedStringArray("4.4", "Forward Plus")
-config/icon="res://icon.svg"
+config/icon="uid://b21v3xndx75sm"
 
 [display]
 
