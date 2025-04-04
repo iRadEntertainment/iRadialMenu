@@ -13,6 +13,7 @@ A Godot 4 addon that provides customizable radial menu components for your proje
 - Adjustable radius, angles, and item spacing.
 - Works seamlessly with Godot 4's scene system.
 - Includes a 3D version (`RadialMenu3DFlat`) for projecting radial menus in 3D space.
+- Signals for selection, cancellation, and hover changes.
 
 ## Installation
 
@@ -21,6 +22,13 @@ A Godot 4 addon that provides customizable radial menu components for your proje
 3. You can now use the RadialMenu Nodes.
 
 ## Usage
+
+### Quick Start
+
+1. Add a `RadialMenu2D` or `RadialMenu3DFlat` node to your scene.
+2. Create an array of `RadialMenuItem` resources and assign it to the `items` property.
+3. Customize the menu's appearance and behavior using the `RadialMenuSettings` resource.
+4. Use the `selected`, `selection_changed`, and `canceled` signals to handle user interactions.
 
 ### RadialMenu2D
 
