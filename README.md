@@ -85,10 +85,22 @@ Special thanks to the Godot community for their support and inspiration.
 
 The 2D part of the `RadialMenu2D.gd` class is based on the work of [diklor](https://github.com/diklor/advanced_radial_menu).
 
-Thanks to Andrea Di Bartolo (SirAeron), a 3D modeller, for providing assets for the example scene. Check out his portfolio at [ArtStation](https://www.artstation.com/andreadbx).
+Thanks to Andrea Di Bartolo (SirAeron), a 3D modeller, for providing assets for the example scene. Check out his portfolio at [andreadbx](https://www.artstation.com/andreadbx).
 
 Some of the food item assets are from the [Food Kit](https://kenney.nl/assets/food-kit) by [Kenney](https://kenney.nl/).  
 ![Kenney Logo](https://kenney.nl/data/images/kenney-logo.png)
 
 This plugin was developed for the [Radial Menu Game Jam #1](https://itch.io/jam/radial-menu-game-jam-1) hosted on itch.io.  
 ![Radial Menu Game Jam Logo](https://img.itch.zone/aW1hZ2UvMTg4NzQyLzEwOTYyNjkucG5n/original/2b3FJ9.png)
+
+### Featured Game Development Streamers
+
+In the example scene there is an easter egg (the main menu) where you can have a look at the face of all the following game-dev streamers
+
+[![finisfine](https://static-cdn.jtvnw.net/jtv_user_pictures/a6c0a845-1a54-4c09-94c4-ffe02ae7e1b2-profile_image-70x70.png)](https://www.twitch.tv/finisfine)
+[![HypnotiK_Games](https://static-cdn.jtvnw.net/jtv_user_pictures/27029693-20ae-4ae3-9b77-a26435afb142-profile_image-70x70.png)](https://www.twitch.tv/hypnotik_games)
+[![JustCovino](https://static-cdn.jtvnw.net/jtv_user_pictures/aa289863-84af-4115-8c86-b14c40c8f49a-profile_image-70x70.png)](https://www.twitch.tv/justcovino)
+[![Earend](https://static-cdn.jtvnw.net/jtv_user_pictures/earend-profile_image-8a1bb1ba3edb4b4a-70x70.jpeg)](https://www.twitch.tv/earend)
+[![Seano4D](https://static-cdn.jtvnw.net/jtv_user_pictures/8e6809ec-e7a2-46a5-8af3-15554d12e23f-profile_image-70x70.png)](https://www.twitch.tv/seano4d)
+[![AnihanShard](https://static-cdn.jtvnw.net/jtv_user_pictures/6a730e3a-7925-41ce-9505-cbd5a00e7536-profile_image-70x70.png)](https://www.twitch.tv/anihanshard)
+[![WardstoneStudio](https://static-cdn.jtvnw.net/jtv_user_pictures/e0fba9f5-6a15-4d37-b898-b285414e72a8-profile_image-70x70.jpeg)](https://www.twitch.tv/wardstonestudio)
