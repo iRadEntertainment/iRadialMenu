@@ -49,15 +49,27 @@ class_name RadialMenu3DFlat extends Node3D
 ## This will set the mouse mode on popup()
 @export var mouse_mode: Input.MouseMode = Input.MOUSE_MODE_VISIBLE
 ## The resolution of the [SubViewport] in pixels used for rendering the 2D UI
-@export var ui_resolution: int = 512
+@export var ui_resolution: int = 512:
+	set(val):
+		ui_resolution = val
+		if sub_viewport:
+			sub_viewport.size = ui_resolution * Vector2i.ONE
 ## The dimension in world units of the [PlaneMesh] used for projecting the 2D interface
-@export var ui_dimension: float = 0.4
+@export var ui_dimension: float = 0.4:
+	set(val):
+		ui_dimension = val
+		if _mesh:
+			_mesh.size = ui_dimension * Vector2.ONE
 ## If [code]true[/code] will place the radial_menu_2d at [code]distance_from_camera[/code] from the current world [Camera]
 @export var fix_distance: bool = true
 ## The distance from the current [Camera] in 3D world units
 @export var distance_from_camera: float = 1.0
 ## If [code]true[/code] it will ignore the depth test for rendering the Menu
-@export var draw_on_top: bool = true
+@export var draw_on_top: bool = true:
+	set(val):
+		draw_on_top = val
+		if _plane_material:
+			_plane_material.no_depth_test = draw_on_top
 ## If [code]true[/code] blocks the signals to propagate behind the Menu
 @export var prevent_propagate: bool = true
 ## If [code]true[/code] will tilt the Plane following the mouse position
@@ -72,7 +84,9 @@ var _cam: Camera3D:
 
 var _plane_material: StandardMaterial3D:
 	get():
-		return _plane.get_surface_override_material(0)
+		if _plane:
+			return _plane.get_surface_override_material(0)
+		return null
 
 var _plane: MeshInstance3D
 var _mesh: PlaneMesh
@@ -219,6 +233,12 @@ func _process(_delta: float) -> void:
 
 
 #region Main functions
+func popup_screen_center() -> void:
+	var center_pos: Vector3 = _cam.global_position
+	center_pos += -_cam.global_transform.basis.z * distance_from_camera
+	popup(center_pos)
+
+
 func popup(_pop_global_position: Vector3) -> void:
 	if not _plane:
 		push_warning("RadialMenu3DFlat: nodes not initialized correctly.")
@@ -297,7 +317,7 @@ func _input(event: InputEvent) -> void:
 		
 		# set event as handled
 		if prevent_propagate:
-			get_viewport().set_input_as_handled()
+			viewport.set_input_as_handled()
 		
 		# push the event to the subviewport converted to 2D space
 		var event_2d := event.duplicate(true)

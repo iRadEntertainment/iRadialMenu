@@ -1,36 +1,24 @@
-[gd_scene load_steps=44 format=4 uid="uid://c2n486inebntt"]
+[gd_scene load_steps=49 format=4 uid="uid://c2n486inebntt"]
 
 [ext_resource type="Script" uid="uid://5nupk7xpupoh" path="res://addons/RadialMenuComponent/examples/ExampleScene.gd" id="1_0d7d0"]
 [ext_resource type="Script" uid="uid://conyevxgcg0rc" path="res://addons/RadialMenuComponent/RadialMenu3DFlat.gd" id="2_2m568"]
 [ext_resource type="PackedScene" uid="uid://bho2erxj4orht" path="res://addons/RadialMenuComponent/examples/assets/Meshes/Scenes/Kitchen.tscn" id="3_poqfy"]
-[ext_resource type="Texture2D" uid="uid://n4qnbdn57bda" path="res://addons/RadialMenuComponent/examples/assets/Icons/carrot.svg" id="4_hicoi"]
 [ext_resource type="Script" uid="uid://ciqtxp1oq6pn8" path="res://addons/RadialMenuComponent/examples/Interactible.gd" id="4_ikaqs"]
 [ext_resource type="Texture2D" uid="uid://c3cfjrof6lu1y" path="res://addons/RadialMenuComponent/examples/assets/kenney_food-kit/Models/GLB format/Textures/colormap.png" id="5_hicoi"]
 [ext_resource type="Texture2D" uid="uid://daaotfj34f52k" path="res://addons/RadialMenuComponent/examples/assets/Icons/chicken-leg.svg" id="5_k3ah0"]
 [ext_resource type="Texture2D" uid="uid://c7r6ekev731ku" path="res://addons/RadialMenuComponent/examples/assets/finisfine.png" id="6_8njal"]
+[ext_resource type="Texture2D" uid="uid://r0mv248riaf6" path="res://addons/RadialMenuComponent/examples/assets/justcovino.png" id="6_csfdt"]
 [ext_resource type="Material" uid="uid://da7ju4dwr7lua" path="res://addons/RadialMenuComponent/examples/assets/outline_next_pass.tres" id="6_k3ah0"]
 [ext_resource type="Script" uid="uid://bh7dqd6irweox" path="res://addons/RadialMenuComponent/RadialMenuItem.gd" id="6_poqfy"]
 [ext_resource type="Script" uid="uid://coduooiqlcoy7" path="res://addons/RadialMenuComponent/examples/player.gd" id="7_8njal"]
+[ext_resource type="Texture2D" uid="uid://qnc1cglx888q" path="res://addons/RadialMenuComponent/examples/assets/hypnotick.png" id="7_vq21g"]
 [ext_resource type="Script" uid="uid://dc0nfn1i4kqbg" path="res://addons/RadialMenuComponent/RadialMenuSettings.gd" id="8_drjwn"]
 [ext_resource type="Script" uid="uid://dfe4ptnify0dt" path="res://addons/RadialMenuComponent/examples/camera_3d.gd" id="8_vq21g"]
+[ext_resource type="FontFile" uid="uid://b470w3xkdybjb" path="res://addons/RadialMenuComponent/examples/assets/Font/Cleanow.otf" id="9_vq21g"]
 [ext_resource type="Texture2D" uid="uid://cano4dpv3hnje" path="res://addons/RadialMenuComponent/examples/assets/icon_crossair.png" id="9_wfcuc"]
 [ext_resource type="Script" uid="uid://0ln1m70wl35q" path="res://addons/RadialMenuComponent/examples/reticle.gd" id="10_csfdt"]
-
-[sub_resource type="Resource" id="Resource_8njal"]
-script = ExtResource("6_poqfy")
-option_name = ""
-description = ""
-image = ExtResource("4_hicoi")
-callback_name = ""
-metadata/_custom_type_script = "uid://bh7dqd6irweox"
-
-[sub_resource type="Resource" id="Resource_vq21g"]
-script = ExtResource("6_poqfy")
-option_name = "Chicken"
-description = ""
-image = ExtResource("5_k3ah0")
-callback_name = ""
-metadata/_custom_type_script = "uid://bh7dqd6irweox"
+[ext_resource type="Texture2D" uid="uid://cg16vj463vrw1" path="res://addons/RadialMenuComponent/examples/assets/Icons/grab.svg" id="14_csfdt"]
+[ext_resource type="Texture2D" uid="uid://d0pl6sa1q4xxr" path="res://addons/RadialMenuComponent/examples/assets/Icons/eating.svg" id="15_tfodv"]
 
 [sub_resource type="Resource" id="Resource_wfcuc"]
 script = ExtResource("6_poqfy")
@@ -40,17 +28,42 @@ image = ExtResource("6_8njal")
 callback_name = ""
 metadata/_custom_type_script = "uid://bh7dqd6irweox"
 
+[sub_resource type="Resource" id="Resource_csfdt"]
+script = ExtResource("6_poqfy")
+option_name = "HypnotiK"
+description = "The amazingness"
+image = ExtResource("7_vq21g")
+callback_name = ""
+metadata/_custom_type_script = "uid://bh7dqd6irweox"
+
+[sub_resource type="Resource" id="Resource_8njal"]
+script = ExtResource("6_poqfy")
+option_name = "Covino"
+description = "Just FFS"
+image = ExtResource("6_csfdt")
+callback_name = ""
+metadata/_custom_type_script = "uid://bh7dqd6irweox"
+
+[sub_resource type="Resource" id="Resource_vq21g"]
+script = ExtResource("6_poqfy")
+option_name = "Chicken"
+description = "A juicy juicy chicken leg"
+image = ExtResource("5_k3ah0")
+callback_name = ""
+metadata/_custom_type_script = "uid://bh7dqd6irweox"
+
 [sub_resource type="Resource" id="Resource_2m568"]
 script = ExtResource("8_drjwn")
 start_angle_offset = 0.0
 first_item_centered = false
 bg_circle_color = Color(0.164706, 0.219608, 0.231373, 0.666667)
-bg_full_circle = false
+bg_full_circle = true
 resolution = 64
 dim_autosize = true
 dim_outer_radius = 256
 dim_center_offset = Vector2(0, 0)
-dim_inner_radius_ratio = 0.6
+dim_inner_radius_ratio = 0.51
+hover_preview_in_center = null
 hover_color = Color(0.745098, 0.211765, 0.156863, 1)
 hover_child_modulate = Color(0.164706, 0.219608, 0.231373, 1)
 hover_offset_start = 0
@@ -69,12 +82,17 @@ reticle_outer_color = Color(0.745098, 0.211765, 0.156863, 1)
 reticle_inner_color = Color(0.745098, 0.211765, 0.156863, 1)
 reticle_separator_color = Color(0.745098, 0.211765, 0.156863, 1)
 reticle_antialiased = true
-item_auto_size = false
+item_auto_size = true
 item_size = 48
-item_auto_size_factor = 1.0
+item_auto_size_factor = 1.015
 item_offset = Vector2(0, 0)
 item_align = false
 item_modulate = Color(1, 1, 1, 1)
+text_font = ExtResource("9_vq21g")
+text_font_size_name = 30
+text_font_size_description = 14
+text_font_color_name = Color(0.745098, 0.211765, 0.156863, 1)
+text_font_color_description = Color(0.745098, 0.211765, 0.156863, 1)
 select_action_name = "ui_select"
 action_released = false
 move_forward_action_name = ""
@@ -90,24 +108,19 @@ rough = true
 bounce = 0.04
 absorbent = true
 
-[sub_resource type="Resource" id="Resource_ikaqs"]
+[sub_resource type="Resource" id="Resource_3lgu8"]
 script = ExtResource("6_poqfy")
-option_name = ""
-description = ""
+option_name = "Grab"
+description = "A delicious aubergine"
+image = ExtResource("14_csfdt")
 callback_name = ""
 metadata/_custom_type_script = "uid://bh7dqd6irweox"
 
-[sub_resource type="Resource" id="Resource_hicoi"]
+[sub_resource type="Resource" id="Resource_l3u6p"]
 script = ExtResource("6_poqfy")
-option_name = ""
-description = ""
-callback_name = ""
-metadata/_custom_type_script = "uid://bh7dqd6irweox"
-
-[sub_resource type="Resource" id="Resource_k3ah0"]
-script = ExtResource("6_poqfy")
-option_name = ""
-description = ""
+option_name = "Eat"
+description = "Hungry?"
+image = ExtResource("15_tfodv")
 callback_name = ""
 metadata/_custom_type_script = "uid://bh7dqd6irweox"
 
@@ -158,7 +171,7 @@ shadow_mesh = SubResource("ArrayMesh_0rmsr")
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_3ravq"]
 rough = true
-bounce = 0.04
+bounce = 0.08
 absorbent = true
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_dfrf6"]
@@ -204,6 +217,10 @@ _surfaces = [{
 }]
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_73cv1")
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_csfdt"]
+rough = true
+bounce = 0.17
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_dfrf6"]
 radius = 0.0708658
@@ -303,17 +320,18 @@ corner_radius_bottom_left = 8
 
 [node name="ExampleScene" type="Node3D"]
 script = ExtResource("1_0d7d0")
+main_radial_menu_items = Array[ExtResource("6_poqfy")]([SubResource("Resource_wfcuc"), SubResource("Resource_csfdt"), SubResource("Resource_8njal"), SubResource("Resource_vq21g")])
 
 [node name="RadialMenu3DFlat" type="Node3D" parent="."]
 unique_name_in_owner = true
-transform = Transform3D(-0.676683, 0, -0.736274, 0, 1, 0, 0.736274, 0, -0.676683, 0, 1.10471, 0)
+transform = Transform3D(-0.676683, 0, -0.736274, 0, 1, 0, 0.736274, 0, -0.676683, 1.69359, 1.06802, 2.33204)
 script = ExtResource("2_2m568")
 reset_nodes = true
-items = Array[ExtResource("6_poqfy")]([SubResource("Resource_8njal"), SubResource("Resource_vq21g"), SubResource("Resource_wfcuc")])
+items = Array[ExtResource("6_poqfy")]([SubResource("Resource_wfcuc"), SubResource("Resource_csfdt"), SubResource("Resource_8njal"), SubResource("Resource_vq21g")])
 suppress_warnings = true
 preview_draw = true
-preview_movement = true
 settings2D = SubResource("Resource_2m568")
+ui_dimension = 0.75
 metadata/_custom_type_script = "uid://conyevxgcg0rc"
 
 [node name="Kitchen" parent="." instance=ExtResource("3_poqfy")]
@@ -355,8 +373,9 @@ angular_damp = 5.0
 metadata/_edit_group_ = true
 
 [node name="Interactible" type="Node3D" parent="Interactibles/Banana"]
+transform = Transform3D(1, 0, -1.78814e-07, 0, 1, 0, 1.78814e-07, 0, 1, -0.0141935, 0.0982668, -0.0605726)
 script = ExtResource("4_ikaqs")
-radial_items = Array[ExtResource("6_poqfy")]([SubResource("Resource_ikaqs"), SubResource("Resource_hicoi"), SubResource("Resource_k3ah0")])
+radial_items = Array[ExtResource("6_poqfy")]([SubResource("Resource_3lgu8"), SubResource("Resource_l3u6p")])
 metadata/_custom_type_script = "uid://ciqtxp1oq6pn8"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Interactibles/Banana"]
@@ -374,6 +393,12 @@ physics_material_override = SubResource("PhysicsMaterial_3ravq")
 angular_damp = 5.0
 metadata/_edit_group_ = true
 
+[node name="Interactible" type="Node3D" parent="Interactibles/Eggplant"]
+transform = Transform3D(1, 0, 2.98023e-08, 0, 1, 0, -2.98023e-08, 0, 1, 0, 0, 0)
+script = ExtResource("4_ikaqs")
+radial_items = Array[ExtResource("6_poqfy")]([SubResource("Resource_3lgu8"), SubResource("Resource_l3u6p")])
+metadata/_custom_type_script = "uid://ciqtxp1oq6pn8"
+
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Interactibles/Eggplant"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.0948386, 0)
 shape = SubResource("CylinderShape3D_dfrf6")
@@ -383,15 +408,17 @@ transform = Transform3D(1, 0, 0, 0, 0.145738, 0.989323, 0, -0.989323, 0.145738, 
 mesh = SubResource("ArrayMesh_ycgey")
 skeleton = NodePath("")
 
-[node name="Interactible" type="Node3D" parent="Interactibles/Eggplant"]
-script = ExtResource("4_ikaqs")
-metadata/_custom_type_script = "uid://ciqtxp1oq6pn8"
-
 [node name="Egg" type="RigidBody3D" parent="Interactibles"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.46676, 0.89607, 0.849505)
 mass = 0.05
+physics_material_override = SubResource("PhysicsMaterial_csfdt")
 angular_damp = 5.0
 metadata/_edit_group_ = true
+
+[node name="Interactible" type="Node3D" parent="Interactibles/Egg"]
+script = ExtResource("4_ikaqs")
+radial_items = Array[ExtResource("6_poqfy")]([SubResource("Resource_3lgu8"), SubResource("Resource_l3u6p")])
+metadata/_custom_type_script = "uid://ciqtxp1oq6pn8"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Interactibles/Egg"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.080765, 0)
@@ -400,10 +427,6 @@ shape = SubResource("CapsuleShape3D_dfrf6")
 [node name="Mesh" type="MeshInstance3D" parent="Interactibles/Egg"]
 mesh = SubResource("ArrayMesh_to72g")
 skeleton = NodePath("")
-
-[node name="Interactible" type="Node3D" parent="Interactibles/Egg"]
-script = ExtResource("4_ikaqs")
-metadata/_custom_type_script = "uid://ciqtxp1oq6pn8"
 
 [node name="Player" type="CharacterBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.53574, 0, 0)

@@ -91,6 +91,21 @@ func _input(event: InputEvent) -> void:
 	if not is_visible_in_tree():
 		return
 	
+	# check for mouse
+	if event is InputEventMouseMotion:
+		hover_at_local_position(event.position)
+	if event is InputEventMouseButton:
+		if event.is_pressed() and settings.action_released:
+			return
+		if event.button_index == MOUSE_BUTTON_LEFT:
+			if selected_idx != -1:
+				select()
+			else:
+				cancel()
+		elif event.button_index == MOUSE_BUTTON_RIGHT:
+			cancel()
+	
+	# check for actions
 	if event is InputEventAction:
 		if event.is_pressed() and settings.action_released:
 			return
@@ -103,7 +118,8 @@ func _input(event: InputEvent) -> void:
 		if event.is_action(select_action_name):
 			select()
 	
-	if event is InputEventJoypadMotion:
+	# check for controller
+	if event is InputEventJoypadMotion and settings.controller_enabled:
 		var controller_vector: Vector2 = Input.get_vector(
 			settings.move_left_action_name if !settings.move_left_action_name.is_empty() else &"ui_left",
 			settings.move_right_action_name if !settings.move_right_action_name.is_empty() else &"ui_right",
@@ -321,16 +337,46 @@ func _draw_center_preview() -> void:
 	var _center_rect: Rect2 = resized_rect_to_dimension(_image_rect, _encircled_square_size * settings.hover_size_factor)
 	draw_item_image_at_position(item, Vector2.ZERO, settings.item_modulate, PI/2, _center_rect)
 	
-	# text and description
-	#draw_multiline_string(
-		#
-	#)
-	draw_string(
-		settings.font,
-		Vector2.DOWN * dim_inner_radius + center,
+	# text option name and description
+	var _top_left_pos: Vector2 = Vector2(-_encircled_square_size, -_encircled_square_size)/2.0 + center
+	var _bot_left_pos: Vector2 = Vector2(-_encircled_square_size,  _encircled_square_size)/2.0 + center
+	
+	var _item_name_size: Vector2 = settings.text_font.get_string_size(
 		item.option_name,
-		HORIZONTAL_ALIGNMENT_CENTER
-		)
+		HORIZONTAL_ALIGNMENT_CENTER,
+		_encircled_square_size,
+		settings.text_font_size_name,
+	)
+	draw_string(
+		settings.text_font,
+		_top_left_pos + Vector2.DOWN * _item_name_size.y,
+		item.option_name,
+		HORIZONTAL_ALIGNMENT_CENTER,
+		_encircled_square_size,
+		settings.text_font_size_name,
+		settings.text_font_color_name,
+	)
+	
+	# calculate text occupied space
+	var _description_size: Vector2 = settings.text_font.get_multiline_string_size(
+		item.description,
+		HORIZONTAL_ALIGNMENT_CENTER,
+		_encircled_square_size,
+		settings.text_font_size_description, 3,
+		TextServer.BREAK_WORD_BOUND,
+		TextServer.JUSTIFICATION_WORD_BOUND
+	)
+	draw_multiline_string(
+		settings.text_font,
+		_bot_left_pos + Vector2.UP * _description_size.y,
+		item.description,
+		HORIZONTAL_ALIGNMENT_CENTER,
+		_encircled_square_size,
+		settings.text_font_size_description, 3,
+		settings.text_font_color_description,
+		TextServer.BREAK_WORD_BOUND,
+		TextServer.JUSTIFICATION_WORD_BOUND
+	)
 
 
 func _process(_delta: float) -> void:

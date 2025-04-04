@@ -5,7 +5,7 @@ var hovered_body: PhysicsBody3D
 var picked_body: PhysicsBody3D
 @onready var pin_joint_3d: PinJoint3D = $Player/Camera3D/PickerBody/PinJoint3D
 
-
+@export var main_radial_menu_items: Array[RadialMenuItem]
 @export_flags_3d_physics var interactible_collision_mask = 0xFFFFFFFF
 var cam: Camera3D
 var direct_space_state: PhysicsDirectSpaceState3D
@@ -79,6 +79,11 @@ func _input(event: InputEvent) -> void:
 			var world_pos: Vector3 = screen_to_world_pos(m_pos, 100, cam)
 			for i in randi_range(4, 8):
 				add_banana_to_world(world_pos)
+		if event.is_released() and event.button_index == MOUSE_BUTTON_RIGHT:
+			if !hovered_body:
+				radial_menu.items = main_radial_menu_items
+				radial_menu.popup_screen_center()
+			
 
 
 func add_banana_to_world(_world_pos: Vector3) -> void:

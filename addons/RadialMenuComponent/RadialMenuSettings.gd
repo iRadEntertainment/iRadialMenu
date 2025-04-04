@@ -6,10 +6,6 @@ enum SeparatorType{LINE, SECTOR}
 
 #region exports Apperarance
 @export_group("Appearance")
-@export var font: Font:
-	get():
-		if font: return font
-		return EditorInterface.get_editor_theme().default_font
 @export_range(-180.0, 180.0) var start_angle_offset: float = 0.0 # degrees
 @export var first_item_centered := false
 @export var bg_circle_color := Color("2a383baa")
@@ -53,6 +49,16 @@ enum SeparatorType{LINE, SECTOR}
 @export var item_offset := Vector2.ZERO
 @export var item_align := false
 @export var item_modulate := Color.WHITE
+
+@export_subgroup("Text", "text_")
+@export var text_font: Font:
+	get():
+		if text_font: return text_font
+		return EditorInterface.get_editor_theme().default_font
+@export_range(4, 72, 1) var text_font_size_name: int = 26
+@export_range(4, 72, 1) var text_font_size_description: int = 22
+@export var text_font_color_name: Color = Color.WHITE
+@export var text_font_color_description: Color = Color.WHITE
 #endregion
 
 #region exports Input
