@@ -1,4 +1,4 @@
-[gd_scene load_steps=55 format=4 uid="uid://c2n486inebntt"]
+[gd_scene load_steps=58 format=4 uid="uid://c2n486inebntt"]
 
 [ext_resource type="Script" uid="uid://5nupk7xpupoh" path="res://addons/iRadialMenu/examples/ExampleScene.gd" id="1_0d7d0"]
 [ext_resource type="Script" uid="uid://conyevxgcg0rc" path="res://addons/iRadialMenu/RadialMenu3DFlat.gd" id="2_2m568"]
@@ -17,6 +17,7 @@
 [ext_resource type="Script" uid="uid://dfe4ptnify0dt" path="res://addons/iRadialMenu/examples/camera_3d.gd" id="8_vq21g"]
 [ext_resource type="Texture2D" uid="uid://c1sk6j8seqfg8" path="res://addons/iRadialMenu/examples/assets/FeaturedStreamers/anihanshard.png" id="8_w45ar"]
 [ext_resource type="FontFile" uid="uid://b470w3xkdybjb" path="res://addons/iRadialMenu/examples/assets/Font/Cleanow.otf" id="9_vq21g"]
+[ext_resource type="Texture2D" uid="uid://td3so441brh5" path="res://addons/iRadialMenu/examples/assets/FeaturedStreamers/wardstonestudio.png" id="9_w45ar"]
 [ext_resource type="Texture2D" uid="uid://cano4dpv3hnje" path="res://addons/iRadialMenu/examples/assets/icon_crossair.png" id="9_wfcuc"]
 [ext_resource type="Script" uid="uid://0ln1m70wl35q" path="res://addons/iRadialMenu/examples/reticle.gd" id="10_csfdt"]
 [ext_resource type="Texture2D" uid="uid://cg16vj463vrw1" path="res://addons/iRadialMenu/examples/assets/Icons/grab.svg" id="14_csfdt"]
@@ -67,6 +68,22 @@ script = ExtResource("6_poqfy")
 option_name = "Anihan"
 description = "Happy birthday"
 image = ExtResource("8_w45ar")
+callback_name = ""
+metadata/_custom_type_script = "uid://bh7dqd6irweox"
+
+[sub_resource type="Resource" id="Resource_jsb4a"]
+script = ExtResource("6_poqfy")
+option_name = "Wardstone"
+description = "Studio"
+image = ExtResource("9_w45ar")
+callback_name = ""
+metadata/_custom_type_script = "uid://bh7dqd6irweox"
+
+[sub_resource type="Resource" id="Resource_yhmy5"]
+script = ExtResource("6_poqfy")
+option_name = "Wardstone"
+description = "Studio"
+image = ExtResource("9_w45ar")
 callback_name = ""
 metadata/_custom_type_script = "uid://bh7dqd6irweox"
 
@@ -354,14 +371,14 @@ corner_radius_bottom_left = 8
 
 [node name="ExampleScene" type="Node3D"]
 script = ExtResource("1_0d7d0")
-main_radial_menu_items = Array[ExtResource("6_poqfy")]([SubResource("Resource_wfcuc"), SubResource("Resource_csfdt"), SubResource("Resource_8njal"), SubResource("Resource_drjwn"), SubResource("Resource_2y0qd"), SubResource("Resource_y0hjm")])
+main_radial_menu_items = Array[ExtResource("6_poqfy")]([SubResource("Resource_wfcuc"), SubResource("Resource_csfdt"), SubResource("Resource_8njal"), SubResource("Resource_drjwn"), SubResource("Resource_2y0qd"), SubResource("Resource_y0hjm"), SubResource("Resource_jsb4a")])
 
 [node name="RadialMenu3DFlat" type="Node3D" parent="."]
 unique_name_in_owner = true
 transform = Transform3D(-0.841143, 0, -0.540813, 0, 1, 0, 0.540813, 0, -0.841143, 1.69359, 1.06802, 2.33204)
 script = ExtResource("2_2m568")
 reset_nodes = true
-items = Array[ExtResource("6_poqfy")]([SubResource("Resource_wfcuc"), SubResource("Resource_csfdt"), SubResource("Resource_8njal"), SubResource("Resource_drjwn"), SubResource("Resource_nsecs"), SubResource("Resource_ifmut")])
+items = Array[ExtResource("6_poqfy")]([SubResource("Resource_wfcuc"), SubResource("Resource_yhmy5"), SubResource("Resource_csfdt"), SubResource("Resource_8njal"), SubResource("Resource_drjwn"), SubResource("Resource_nsecs"), SubResource("Resource_ifmut")])
 suppress_warnings = true
 preview_draw = true
 settings2D = SubResource("Resource_2m568")
