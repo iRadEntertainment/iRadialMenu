@@ -6,6 +6,8 @@
 @icon("icon_radial_2d.svg")
 class_name RadialMenu2D extends Control
 
+const SQRT_2: float = 1.4142
+
 @export var preview_draw := true: set = _set_preview_draw
 @export var suppress_warnings := false:
 	set(val):
@@ -29,6 +31,7 @@ var start_angle_offset_radiants: float
 var center := Vector2.ZERO
 var dim_inner_radius: float
 var item_pos_radius: float # center position for items
+var item_auto_dimension_max: int # center position for items
 var items_radial_count: int
 var sector_angle_full: float
 var sector_angle_gap: float
@@ -159,6 +162,8 @@ func _calculate_size_values() -> void:
 	var doughnut_width_full: float = settings.dim_outer_radius - dim_inner_radius
 	var doughnut_width_net: float = doughnut_width_full - settings.reticle_inner_width - settings.reticle_outer_width
 	item_pos_radius = dim_inner_radius + settings.reticle_inner_width + doughnut_width_net / 2.0
+	
+	item_auto_dimension_max = (doughnut_width_net/2.0) * SQRT_2 * settings.item_auto_size_factor
 
 
 func _draw() -> void:
@@ -168,6 +173,7 @@ func _draw() -> void:
 	_draw_reticle()
 	_draw_highlight()
 	_draw_icons()
+	_draw_center_preview()
 
 
 func _draw_background() -> void:
@@ -287,17 +293,8 @@ func _draw_highlight() -> void:
 func _draw_icons() -> void:
 	if settings.first_item_centered:
 		var item: RadialMenuItem = items[0]
-		var texture: Texture2D = item.image
 		var color: Color = settings.hover_child_modulate if selected_idx == 0 else settings.item_modulate
-		var factor := 1.0
-		
-		if settings.item_auto_size:
-			factor = (settings.dim_outer_radius / (settings.item_size * 1.5)) * settings.item_auto_size_factor
-		
-		var rect := Rect2()
-		rect.size = Vector2.ONE * settings.item_size
-		rect.position = center - rect.size/2.0
-		draw_texture_rect(texture, rect, false, color)
+		draw_item_image_at_position(item, Vector2.ZERO, color)
 	
 	for i: int in items_radial_count:
 		var idx: int = i
@@ -305,22 +302,35 @@ func _draw_icons() -> void:
 			idx = i + 1
 		
 		var item: RadialMenuItem = items[idx]
-		var texture: Texture2D = item.image
-		#var settings.item_size
-		var color: Color = settings.hover_child_modulate if selected_idx == idx else settings.item_modulate
-		var factor := 1.0
-		
-		if settings.item_auto_size:
-			factor = (settings.dim_outer_radius / (settings.item_size * 1.5)) * settings.item_auto_size_factor
-		
 		var item_angle_pos: float = i * sector_angle_full + sector_angle_full / 2.0
 		item_angle_pos += start_angle_offset_radiants
-		var rect := Rect2()
-		rect.size = Vector2.ONE * settings.item_size
-		rect.position = Vector2.from_angle(item_angle_pos) * item_pos_radius
-		rect.position += center - rect.size/2.0
+		var image_pos: Vector2 = Vector2.from_angle(item_angle_pos) * item_pos_radius
+		var color: Color = settings.hover_child_modulate if selected_idx == idx else settings.item_modulate
 		
-		draw_texture_rect(texture, rect, false, color)
+		draw_item_image_at_position(item, image_pos, color, item_angle_pos)
+
+
+func _draw_center_preview() -> void:
+	if selected_idx == -1 or settings.first_item_centered:
+		return
+	
+	var item: RadialMenuItem = items[selected_idx]
+	var _encircled_square_size: float = dim_inner_radius * SQRT_2
+	#var _center_rect: Rect2 = Rect2(Vector2.ZERO, Vector2.ONE * _encircled_square_size)
+	var _image_rect: Rect2 = Rect2(Vector2.ZERO ,item.image.get_size())
+	var _center_rect: Rect2 = resized_rect_to_dimension(_image_rect, _encircled_square_size * settings.hover_size_factor)
+	draw_item_image_at_position(item, Vector2.ZERO, settings.item_modulate, PI/2, _center_rect)
+	
+	# text and description
+	#draw_multiline_string(
+		#
+	#)
+	draw_string(
+		settings.font,
+		Vector2.DOWN * dim_inner_radius + center,
+		item.option_name,
+		HORIZONTAL_ALIGNMENT_CENTER
+		)
 
 
 func _process(_delta: float) -> void:
@@ -398,6 +408,37 @@ func ui_input_vector_to_pointer_position(_ui_input_vector: Vector2) -> Vector2:
 	return _ui_input_vector * settings.dim_outer_radius
 
 
+func draw_item_image_at_position(
+			_item: RadialMenuItem,
+			_position: Vector2,
+			_modulate: Color,
+			_item_angle_position: float = 1.5708, # PI/2, 90 degrees
+			_fixed_rect: Rect2 = Rect2()
+		) -> void:
+	
+	var _texture: Texture2D = _item.image
+	if not _texture: return
+	
+	var _rotation: float = 0.0
+	var _rect: Rect2 = Rect2(Vector2.ZERO, _texture.get_size())
+	
+	if _fixed_rect == Rect2():
+		var _rect_dim: float = settings.item_size
+		if settings.item_auto_size and _fixed_rect == Rect2():
+			_rect_dim = item_auto_dimension_max
+		_rect = resized_rect_to_dimension(_rect, _rect_dim)
+	else:
+		_rect = _fixed_rect
+	
+	_rect.position = -_rect.size/2.0
+	if settings.item_align:
+		_rotation = wrapf(_item_angle_position + PI/2, -PI/2, PI/2)
+	
+	draw_set_transform(_position + center, _rotation)
+	draw_texture_rect(_texture, _rect, false, _modulate)
+	draw_set_transform(Vector2.ZERO)
+
+
 static func get_sector_points(
 			_center: Vector2,
 			_angle_center: float,
@@ -441,6 +482,14 @@ static func uv_from_sector_poly(_sector_poly_size: int) -> PackedVector2Array:
 		uv_poly.append(uv_p)
 	
 	return uv_poly
+
+
+static func resized_rect_to_dimension(_original_rect: Rect2, _dimension: int) -> Rect2:
+	var _resized_rect := Rect2()
+	var _is_taller_than_larger: bool = _original_rect.size.x < _original_rect.size.y
+	var ratio: float = float(_dimension)/_original_rect.size.y if _is_taller_than_larger else float(_dimension)/_original_rect.size.x
+	_resized_rect.size = _original_rect.size * ratio
+	return _resized_rect
 #endregion
 
 

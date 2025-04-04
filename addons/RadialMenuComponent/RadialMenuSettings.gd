@@ -6,6 +6,10 @@ enum SeparatorType{LINE, SECTOR}
 
 #region exports Apperarance
 @export_group("Appearance")
+@export var font: Font:
+	get():
+		if font: return font
+		return EditorInterface.get_editor_theme().default_font
 @export_range(-180.0, 180.0) var start_angle_offset: float = 0.0 # degrees
 @export var first_item_centered := false
 @export var bg_circle_color := Color("2a383baa")
@@ -20,6 +24,7 @@ enum SeparatorType{LINE, SECTOR}
 @export_range(0.0, 1.0, 0.01) var dim_inner_radius_ratio: float = 0.6
 
 @export_subgroup("Highlight", "hover_")
+@export var hover_preview_in_center := true
 @export var hover_color := Color("be3628")
 @export var hover_child_modulate := Color("2a383b")
 @export_range(-1024, 1024, 1) var hover_offset_start: int = 0
@@ -44,7 +49,7 @@ enum SeparatorType{LINE, SECTOR}
 @export_subgroup("Items", "item_")
 @export var item_auto_size := false
 @export_range(1, 1024, 1) var item_size: int = 48
-@export_range(0, 2, 0.1) var item_auto_size_factor: float = 1.0
+@export_range(0, 2, 0.001) var item_auto_size_factor: float = 1.0
 @export var item_offset := Vector2.ZERO
 @export var item_align := false
 @export var item_modulate := Color.WHITE
@@ -56,7 +61,7 @@ enum SeparatorType{LINE, SECTOR}
 #@export var focus_action_name := ""
 #@export var focus_action_hold_mode := true
 #@export var center_element_action_name := ""
-@export var action_released := false
+@export var action_released := true
 #@export var one_shot := false
 @export var move_forward_action_name := ""
 @export var move_left_action_name := ""
@@ -64,7 +69,7 @@ enum SeparatorType{LINE, SECTOR}
 @export var move_right_action_name := ""
 
 @export_subgroup("Mouse")
-@export var keep_selection_outside := true
+@export var keep_selection_outside := false
 
 @export_subgroup("Controller")
 @export var controller_enabled := false
