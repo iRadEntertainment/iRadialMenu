@@ -1,20 +1,21 @@
-[gd_scene load_steps=51 format=4 uid="uid://c2n486inebntt"]
+[gd_scene load_steps=55 format=4 uid="uid://c2n486inebntt"]
 
 [ext_resource type="Script" uid="uid://5nupk7xpupoh" path="res://addons/iRadialMenu/examples/ExampleScene.gd" id="1_0d7d0"]
 [ext_resource type="Script" uid="uid://conyevxgcg0rc" path="res://addons/iRadialMenu/RadialMenu3DFlat.gd" id="2_2m568"]
 [ext_resource type="PackedScene" uid="uid://bho2erxj4orht" path="res://addons/iRadialMenu/examples/assets/Meshes/Scenes/Kitchen.tscn" id="3_poqfy"]
 [ext_resource type="Script" uid="uid://ciqtxp1oq6pn8" path="res://addons/iRadialMenu/examples/Interactible.gd" id="4_ikaqs"]
 [ext_resource type="Texture2D" uid="uid://bvev6t4nelw1u" path="res://addons/iRadialMenu/examples/assets/kenney_food-kit/Models/GLB format/Textures/colormap.png" id="5_hicoi"]
-[ext_resource type="Texture2D" uid="uid://daaotfj34f52k" path="res://addons/iRadialMenu/examples/assets/Icons/chicken-leg.svg" id="5_k3ah0"]
-[ext_resource type="Texture2D" uid="uid://c7r6ekev731ku" path="res://addons/iRadialMenu/examples/assets/finisfine.png" id="6_8njal"]
-[ext_resource type="Texture2D" uid="uid://r0mv248riaf6" path="res://addons/iRadialMenu/examples/assets/justcovino.png" id="6_csfdt"]
+[ext_resource type="Texture2D" uid="uid://c7r6ekev731ku" path="res://addons/iRadialMenu/examples/assets/FeaturedStreamers/finisfine.png" id="6_8njal"]
+[ext_resource type="Texture2D" uid="uid://r0mv248riaf6" path="res://addons/iRadialMenu/examples/assets/FeaturedStreamers/justcovino.png" id="6_csfdt"]
 [ext_resource type="Material" uid="uid://da7ju4dwr7lua" path="res://addons/iRadialMenu/examples/assets/outline_next_pass.tres" id="6_k3ah0"]
 [ext_resource type="Script" uid="uid://bh7dqd6irweox" path="res://addons/iRadialMenu/RadialMenuItem.gd" id="6_poqfy"]
 [ext_resource type="Script" uid="uid://coduooiqlcoy7" path="res://addons/iRadialMenu/examples/player.gd" id="7_8njal"]
-[ext_resource type="Texture2D" uid="uid://dj3tyyuh2y0y8" path="res://addons/iRadialMenu/examples/assets/earend.png" id="7_tfodv"]
-[ext_resource type="Texture2D" uid="uid://qnc1cglx888q" path="res://addons/iRadialMenu/examples/assets/hypnotick.png" id="7_vq21g"]
+[ext_resource type="Texture2D" uid="uid://dxcjipp87ryac" path="res://addons/iRadialMenu/examples/assets/FeaturedStreamers/seano4d.png" id="7_sbpof"]
+[ext_resource type="Texture2D" uid="uid://dj3tyyuh2y0y8" path="res://addons/iRadialMenu/examples/assets/FeaturedStreamers/earend.png" id="7_tfodv"]
+[ext_resource type="Texture2D" uid="uid://qnc1cglx888q" path="res://addons/iRadialMenu/examples/assets/FeaturedStreamers/hypnotick.png" id="7_vq21g"]
 [ext_resource type="Script" uid="uid://dc0nfn1i4kqbg" path="res://addons/iRadialMenu/RadialMenuSettings.gd" id="8_drjwn"]
 [ext_resource type="Script" uid="uid://dfe4ptnify0dt" path="res://addons/iRadialMenu/examples/camera_3d.gd" id="8_vq21g"]
+[ext_resource type="Texture2D" uid="uid://c1sk6j8seqfg8" path="res://addons/iRadialMenu/examples/assets/FeaturedStreamers/anihanshard.png" id="8_w45ar"]
 [ext_resource type="FontFile" uid="uid://b470w3xkdybjb" path="res://addons/iRadialMenu/examples/assets/Font/Cleanow.otf" id="9_vq21g"]
 [ext_resource type="Texture2D" uid="uid://cano4dpv3hnje" path="res://addons/iRadialMenu/examples/assets/icon_crossair.png" id="9_wfcuc"]
 [ext_resource type="Script" uid="uid://0ln1m70wl35q" path="res://addons/iRadialMenu/examples/reticle.gd" id="10_csfdt"]
@@ -45,19 +46,43 @@ image = ExtResource("6_csfdt")
 callback_name = ""
 metadata/_custom_type_script = "uid://bh7dqd6irweox"
 
-[sub_resource type="Resource" id="Resource_vq21g"]
-script = ExtResource("6_poqfy")
-option_name = "Chicken"
-description = "A juicy juicy chicken leg"
-image = ExtResource("5_k3ah0")
-callback_name = ""
-metadata/_custom_type_script = "uid://bh7dqd6irweox"
-
 [sub_resource type="Resource" id="Resource_drjwn"]
 script = ExtResource("6_poqfy")
 option_name = "Earend"
 description = "A bear it's a bear it's a bear"
 image = ExtResource("7_tfodv")
+callback_name = ""
+metadata/_custom_type_script = "uid://bh7dqd6irweox"
+
+[sub_resource type="Resource" id="Resource_2y0qd"]
+script = ExtResource("6_poqfy")
+option_name = "Seano4D"
+description = "Balls"
+image = ExtResource("7_sbpof")
+callback_name = ""
+metadata/_custom_type_script = "uid://bh7dqd6irweox"
+
+[sub_resource type="Resource" id="Resource_y0hjm"]
+script = ExtResource("6_poqfy")
+option_name = "Anihan"
+description = "Happy birthday"
+image = ExtResource("8_w45ar")
+callback_name = ""
+metadata/_custom_type_script = "uid://bh7dqd6irweox"
+
+[sub_resource type="Resource" id="Resource_nsecs"]
+script = ExtResource("6_poqfy")
+option_name = "Seano4D"
+description = "Balls"
+image = ExtResource("7_sbpof")
+callback_name = ""
+metadata/_custom_type_script = "uid://bh7dqd6irweox"
+
+[sub_resource type="Resource" id="Resource_ifmut"]
+script = ExtResource("6_poqfy")
+option_name = "Anihan"
+description = "Happy birthday"
+image = ExtResource("8_w45ar")
 callback_name = ""
 metadata/_custom_type_script = "uid://bh7dqd6irweox"
 
@@ -329,14 +354,14 @@ corner_radius_bottom_left = 8
 
 [node name="ExampleScene" type="Node3D"]
 script = ExtResource("1_0d7d0")
-main_radial_menu_items = Array[ExtResource("6_poqfy")]([SubResource("Resource_wfcuc"), SubResource("Resource_csfdt"), SubResource("Resource_8njal"), SubResource("Resource_vq21g"), SubResource("Resource_drjwn")])
+main_radial_menu_items = Array[ExtResource("6_poqfy")]([SubResource("Resource_wfcuc"), SubResource("Resource_csfdt"), SubResource("Resource_8njal"), SubResource("Resource_drjwn"), SubResource("Resource_2y0qd"), SubResource("Resource_y0hjm")])
 
 [node name="RadialMenu3DFlat" type="Node3D" parent="."]
 unique_name_in_owner = true
 transform = Transform3D(-0.841143, 0, -0.540813, 0, 1, 0, 0.540813, 0, -0.841143, 1.69359, 1.06802, 2.33204)
 script = ExtResource("2_2m568")
 reset_nodes = true
-items = Array[ExtResource("6_poqfy")]([SubResource("Resource_wfcuc"), SubResource("Resource_csfdt"), SubResource("Resource_8njal"), SubResource("Resource_drjwn"), SubResource("Resource_vq21g")])
+items = Array[ExtResource("6_poqfy")]([SubResource("Resource_wfcuc"), SubResource("Resource_csfdt"), SubResource("Resource_8njal"), SubResource("Resource_drjwn"), SubResource("Resource_nsecs"), SubResource("Resource_ifmut")])
 suppress_warnings = true
 preview_draw = true
 settings2D = SubResource("Resource_2m568")
@@ -471,6 +496,7 @@ shape = SubResource("CapsuleShape3D_ycgey")
 [node name="GUI" type="CanvasLayer" parent="."]
 
 [node name="Reticle" type="TextureRect" parent="GUI"]
+unique_name_in_owner = true
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0

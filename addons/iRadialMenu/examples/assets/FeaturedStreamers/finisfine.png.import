@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://qnc1cglx888q"
-path="res://.godot/imported/hypnotick.png-c5d09320d0039c50250363a41b8bae55.ctex"
+uid="uid://c7r6ekev731ku"
+path="res://.godot/imported/finisfine.png-f54bcb8d40d96e9fde415e60c9907391.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/iRadialMenu/examples/assets/hypnotick.png"
-dest_files=["res://.godot/imported/hypnotick.png-c5d09320d0039c50250363a41b8bae55.ctex"]
+source_file="res://addons/iRadialMenu/examples/assets/FeaturedStreamers/finisfine.png"
+dest_files=["res://.godot/imported/finisfine.png-f54bcb8d40d96e9fde415e60c9907391.ctex"]
 
 [params]
 

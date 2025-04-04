@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c7r6ekev731ku"
-path="res://.godot/imported/finisfine.png-3bd5f7c00abcc03e72de4a2ba1ed0ffa.ctex"
+uid="uid://c1sk6j8seqfg8"
+path="res://.godot/imported/anihanshard.png-1438e81814390e982fc527f82cfab89e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/iRadialMenu/examples/assets/finisfine.png"
-dest_files=["res://.godot/imported/finisfine.png-3bd5f7c00abcc03e72de4a2ba1ed0ffa.ctex"]
+source_file="res://addons/iRadialMenu/examples/assets/FeaturedStreamers/anihanshard.png"
+dest_files=["res://.godot/imported/anihanshard.png-1438e81814390e982fc527f82cfab89e.ctex"]
 
 [params]
 

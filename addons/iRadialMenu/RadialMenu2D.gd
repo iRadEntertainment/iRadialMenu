@@ -35,7 +35,8 @@ const SQRT_2: float = 1.4142
 @export var settings := RadialMenuSettings.new():
 	set(val):
 		settings = val
-		settings.changed.connect(_on_settings_changed)
+		if !settings.changed.is_connected(_on_settings_changed):
+			settings.changed.connect(_on_settings_changed)
 
 #region Functional variables
 var selected_idx: int = -1
@@ -172,6 +173,7 @@ func hover_at_centered_pointer_position(_pointer_pos: Vector2) -> void:
 ## This function recalculates the menu's size, position, and item layout [br]
 ## based on the current settings and items.
 func update() -> void:
+	
 	if !validate_items():
 		return
 	_calculate_size_values()
@@ -205,6 +207,8 @@ func _calculate_size_values() -> void:
 
 func _draw() -> void:
 	if !items_validated:
+		return
+	if size == Vector2.ZERO:
 		return
 	_draw_background()
 	_draw_reticle()

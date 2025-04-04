@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dj3tyyuh2y0y8"
-path="res://.godot/imported/earend.png-20c1ceef63c8215ef6754f71d92eb62a.ctex"
+path="res://.godot/imported/earend.png-3e852cf20bb3cb00cbc91dd9921ca8fb.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/iRadialMenu/examples/assets/earend.png"
-dest_files=["res://.godot/imported/earend.png-20c1ceef63c8215ef6754f71d92eb62a.ctex"]
+source_file="res://addons/iRadialMenu/examples/assets/FeaturedStreamers/earend.png"
+dest_files=["res://.godot/imported/earend.png-3e852cf20bb3cb00cbc91dd9921ca8fb.ctex"]
 
 [params]
 

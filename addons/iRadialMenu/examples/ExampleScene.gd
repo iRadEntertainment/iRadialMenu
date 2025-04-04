@@ -26,6 +26,8 @@ func _ready() -> void:
 		interactible.just_left_clicked.connect(_on_interactible_just_left_clicked)
 		interactible.just_right_clicked.connect(_on_interactible_just_right_clicked)
 		interactible.just_hovered.connect(_on_interactible_just_hovered)
+	
+	radial_menu.visibility_changed.connect(_on_radial_menu_visibility_changed)
 
 
 func _process(_delta: float) -> void:
@@ -106,6 +108,10 @@ func _on_interactible_just_right_clicked(interactible: Interactible, body: Physi
 
 func _on_interactible_just_hovered(interactible: Interactible, body: PhysicsBody3D) -> void:
 	hovered_body = body
+
+
+func _on_radial_menu_visibility_changed() -> void:
+	%Reticle.visible = !radial_menu.visible
 
 
 static func screen_to_world_pos(screen_pos: Vector2, distance_m: float, cam: Camera3D) -> Variant:

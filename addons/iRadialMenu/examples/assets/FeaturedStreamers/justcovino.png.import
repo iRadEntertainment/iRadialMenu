@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://r0mv248riaf6"
-path="res://.godot/imported/justcovino.png-189e2ffe024ad86167c348d4d4450600.ctex"
+path="res://.godot/imported/justcovino.png-8fbd0972d6db09d23f90360636b65a42.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/iRadialMenu/examples/assets/justcovino.png"
-dest_files=["res://.godot/imported/justcovino.png-189e2ffe024ad86167c348d4d4450600.ctex"]
+source_file="res://addons/iRadialMenu/examples/assets/FeaturedStreamers/justcovino.png"
+dest_files=["res://.godot/imported/justcovino.png-8fbd0972d6db09d23f90360636b65a42.ctex"]
 
 [params]
 
