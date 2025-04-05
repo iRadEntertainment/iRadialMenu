@@ -82,7 +82,7 @@ metadata/_custom_type_script = "uid://bh7dqd6irweox"
 [sub_resource type="Resource" id="Resource_yhmy5"]
 script = ExtResource("6_poqfy")
 option_name = "Wardstone"
-description = "Studio"
+description = "Cool shirts"
 image = ExtResource("9_w45ar")
 callback_name = ""
 metadata/_custom_type_script = "uid://bh7dqd6irweox"
@@ -375,12 +375,13 @@ main_radial_menu_items = Array[ExtResource("6_poqfy")]([SubResource("Resource_wf
 
 [node name="RadialMenu3DFlat" type="Node3D" parent="."]
 unique_name_in_owner = true
-transform = Transform3D(-0.841143, 0, -0.540813, 0, 1, 0, 0.540813, 0, -0.841143, 1.69359, 1.06802, 2.33204)
+transform = Transform3D(-0.841143, 0, -0.540813, 0, 1, 0, 0.540813, 0, -0.841143, 0.101578, 1.06802, -0.107262)
 script = ExtResource("2_2m568")
 reset_nodes = true
 items = Array[ExtResource("6_poqfy")]([SubResource("Resource_wfcuc"), SubResource("Resource_yhmy5"), SubResource("Resource_csfdt"), SubResource("Resource_8njal"), SubResource("Resource_drjwn"), SubResource("Resource_nsecs"), SubResource("Resource_ifmut")])
 suppress_warnings = true
 preview_draw = true
+preview_movement = true
 settings2D = SubResource("Resource_2m568")
 ui_dimension = 0.75
 metadata/_custom_type_script = "uid://conyevxgcg0rc"

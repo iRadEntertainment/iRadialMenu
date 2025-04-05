@@ -2,9 +2,15 @@
 
 ![Godot 4 Compatible](https://img.shields.io/badge/Godot-4.4-478CBF?logo=godotengine) ![MIT License](https://img.shields.io/badge/License-MIT-green) [![Credits](https://img.shields.io/badge/Credits-blue)](./CREDITS.md)
 
-A Godot 4 addon that provides customizable radial menu components for your projects. This addon simplifies the creation of radial menus, making it easy to implement intuitive and visually appealing UI elements.
+![iRadialMenuIcon](icon_plugin.svg)
+
+A Godot 4 addon that provides customizable radial menu components for your projects. Easy drag and drop nodes for 2D and 3D scenes. Conveniently packed settings and menu items list. Use it as is, or dive in and customize the code to your need. A special care has been given to the code to feel more intuitive to touch and modify.
+
+![ExamplePreview](media/readme-example.mp4)
 
 ## Features
+
+![Engine_preview](media/readme-2d_settings.gif)
 
 - Fully customizable radial menus.
 - Support for dynamic menu items using the `RadialMenuItem` resource.
@@ -21,6 +27,8 @@ A Godot 4 addon that provides customizable radial menu components for your proje
 3. You can now use the RadialMenu Nodes.
 
 ## Usage
+
+![Engine_preview](media/readme-editor_preview.gif)
 
 ### Quick Start
 
@@ -91,7 +99,7 @@ Some of the food item assets are from the [Food Kit](https://kenney.nl/assets/fo
 ![Kenney Logo](https://kenney.nl/data/images/kenney-logo.png)
 
 This plugin was developed for the [Radial Menu Game Jam #1](https://itch.io/jam/radial-menu-game-jam-1) hosted on itch.io.  
-![Radial Menu Game Jam Logo](https://img.itch.zone/aW1hZ2UvMTg4NzQyLzEwOTYyNjkucG5n/original/2b3FJ9.png)
+![Radial Menu Game Jam Logo](https://img.itch.zone/aW1hZ2UyL2phbS80MDUxMDEvMjA0NTMxOTkucG5n/original/v608wf.png)
 
 ### Featured Game Development Streamers
 
