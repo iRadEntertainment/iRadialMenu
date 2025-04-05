@@ -1,12 +1,12 @@
-# Radial Menu Component for Godot 4
-
 ![Godot 4 Compatible](https://img.shields.io/badge/Godot-4.4-478CBF?logo=godotengine) ![MIT License](https://img.shields.io/badge/License-MIT-green) [![Credits](https://img.shields.io/badge/Credits-blue)](./CREDITS.md)
 
-![iRadialMenuIcon](icon_plugin.svg)
+<center><img src="icon_plugin.svg" alt="iRadialMenuIcon" /></center>
+
+# Radial Menu Component for Godot 4
 
 A Godot 4 addon that provides customizable radial menu components for your projects. Easy drag and drop nodes for 2D and 3D scenes. Conveniently packed settings and menu items list. Use it as is, or dive in and customize the code to your need. A special care has been given to the code to feel more intuitive to touch and modify.
 
-![ExamplePreview](media/readme-example.mp4)
+![ExamplePreview](media/readme-example.gif)
 
 ## Features
 
@@ -56,6 +56,8 @@ A Godot 4 addon that provides customizable radial menu components for your proje
 
 ### RadialMenuItem
 
+![RadialMenuItem_script](media/readme-item_script.png)
+
 The `RadialMenuItem` resource represents a single menu item. It includes the following properties:
 - `option_name`: The name of the menu option.
 - `description`: A description of the menu option.
@@ -87,23 +89,38 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE.md) fi
 
 ## Acknowledgments
 
-A big thank you to the Twitch community for their support, feedback, and encouragement during the development of this project.  
-![Twitch Profile](https://static-cdn.jtvnw.net/jtv_user_pictures/your-profile-image.png)  
+<div align="center">
+    <a href="https://twitch.tv/iraddev">
+        <img src="https://static-cdn.jtvnw.net/jtv_user_pictures/cceb39b3-01c2-41b2-9309-a9c9697372cb-profile_image-70x70.png" alt="iRadDev" />
+    </a>
+</div>
+
 Special thanks to the Godot community for their support and inspiration.
+A big thank you to the Twitch community for their support, feedback, and encouragement during the development of this project.
 
-The 2D part of the `RadialMenu2D.gd` class is based on the work of [diklor](https://github.com/diklor/advanced_radial_menu).
+- The 2D part of the `RadialMenu2D.gd` class is based on the work of [diklor](https://github.com/diklor/advanced_radial_menu).
 
-Thanks to Andrea Di Bartolo (SirAeron), a 3D modeller, for providing assets for the example scene. Check out his portfolio at [andreadbx](https://www.artstation.com/andreadbx).
+- Thanks to Andrea "SirAeron" Di Bartolo, for providing 3D model assets for the example scene. Check out his portfolio on [Artstation](https://www.artstation.com/andreadbx).
 
-Some of the food item assets are from the [Food Kit](https://kenney.nl/assets/food-kit) by [Kenney](https://kenney.nl/).  
-![Kenney Logo](https://kenney.nl/data/images/kenney-logo.png)
+- Some of the food item assets are from the [Food Kit](https://kenney.nl/assets/food-kit) by [Kenney](https://kenney.nl/).  
 
-This plugin was developed for the [Radial Menu Game Jam #1](https://itch.io/jam/radial-menu-game-jam-1) hosted on itch.io.  
-![Radial Menu Game Jam Logo](https://img.itch.zone/aW1hZ2UyL2phbS80MDUxMDEvMjA0NTMxOTkucG5n/original/v608wf.png)
+<div align="center">
+    <a href="https://kenney.nl/">
+        <img src="https://kenney.nl/data/img/logo@2.png" alt="Kenney Logo" style="max-width: 128px;" />
+    </a>
+</div>
+
+- This plugin was developed for the [Radial Menu Game Jam #1](https://itch.io/jam/radial-menu-game-jam-1) hosted on itch.io.  
+
+<div align="center">
+    <a href="https://itch.io/jam/radial-menu-game-jam-1">
+        <img src="https://img.itch.zone/aW1hZ2UyL2phbS80MDUxMDEvMjA0NTMxOTkucG5n/original/v608wf.png" alt="Radial Menu Game Jam Logo" style="max-height: 256px" />
+    </a>
+</div>
 
 ### Featured Game Development Streamers
 
-In the example scene there is an easter egg (the main menu) where you can have a look at the face of all the following game-dev streamers
+In the example scene there is an _easter egg_ (the main menu) where you can have a look at the face of all the following game-dev streamers
 
 [![finisfine](https://static-cdn.jtvnw.net/jtv_user_pictures/a6c0a845-1a54-4c09-94c4-ffe02ae7e1b2-profile_image-70x70.png)](https://www.twitch.tv/finisfine)
 [![HypnotiK_Games](https://static-cdn.jtvnw.net/jtv_user_pictures/27029693-20ae-4ae3-9b77-a26435afb142-profile_image-70x70.png)](https://www.twitch.tv/hypnotik_games)
