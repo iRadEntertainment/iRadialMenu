@@ -20,14 +20,10 @@ enum SeparatorType{LINE, SECTOR}
 @export_range(0.0, 1.0, 0.01) var dim_inner_radius_ratio: float = 0.6
 
 @export_subgroup("Highlight", "hover_")
-@export var hover_preview_in_center := true
 @export var hover_color := Color("be3628")
 @export var hover_child_modulate := Color("2a383b")
-@export_range(-1024, 1024, 1) var hover_offset_start: int = 0
-@export_range(-1024, 1024, 1) var hover_offset_end: int = 0
 @export_range(0.1, 3.0, 0.001) var hover_size_factor: float = 1.0
-@export var hover_offset := Vector2.ZERO
-@export_range(-10, 10) var hover_children_radial_offset: float = 0.0
+@export_range(-1.0, 1.0, 0.001) var hover_radial_offset: float = 0.0
 
 @export_subgroup("Reticle", "reticle_")
 @export var reticle_outer_enabled := true
@@ -43,22 +39,24 @@ enum SeparatorType{LINE, SECTOR}
 @export var reticle_antialiased := true
 
 @export_subgroup("Items", "item_")
+@export var item_align := false
 @export var item_auto_size := false
 @export_range(1, 1024, 1) var item_size: int = 48
 @export_range(0, 2, 0.001) var item_auto_size_factor: float = 1.0
 @export var item_offset := Vector2.ZERO
-@export var item_align := false
 @export var item_modulate := Color.WHITE
 
-@export_subgroup("Text", "text_")
-@export var text_font: Font:
+@export_subgroup("Preview", "preview_")
+@export var preview_show := true
+@export_range(0.01, 2.0, 0.01) var preview_size_factor: float = 0.8
+@export var preview_font: Font:
 	get():
-		if text_font: return text_font
+		if preview_font: return preview_font
 		return EditorInterface.get_editor_theme().default_font
-@export_range(4, 72, 1) var text_font_size_name: int = 26
-@export_range(4, 72, 1) var text_font_size_description: int = 22
-@export var text_font_color_name: Color = Color.WHITE
-@export var text_font_color_description: Color = Color.WHITE
+@export_range(4, 72, 1) var preview_font_size_name: int = 26
+@export_range(4, 72, 1) var preview_font_size_description: int = 22
+@export var preview_font_color_name: Color = Color.WHITE
+@export var preview_font_color_description: Color = Color.WHITE
 #endregion
 
 #region exports Input

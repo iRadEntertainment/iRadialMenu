@@ -41,19 +41,20 @@ const SQRT_2: float = 1.4142
 #region Functional variables
 var selected_idx: int = -1
 var items_validated: bool = false
-
+# calculated is _calculate_size_values
 var start_angle_offset_radiants: float
 var center := Vector2.ZERO
 var dim_inner_radius: float
 var item_pos_radius: float # center position for items
-var item_auto_dimension_max: int # center position for items
+var item_auto_dimension_max: int
 var items_radial_count: int
 var sector_angle_full: float
 var sector_angle_gap: float
 var sector_angle_net: float
 var sector_resolution: int
-
+# preview in editor
 var _is_editor := true
+#input
 var _is_focus_action_pressed := false
 #endregion
 
@@ -214,7 +215,8 @@ func _draw() -> void:
 	_draw_reticle()
 	_draw_highlight()
 	_draw_icons()
-	_draw_center_preview()
+	if settings.preview_show and !settings.first_item_centered:
+		_draw_center_preview()
 
 
 func _draw_background() -> void:
@@ -335,70 +337,84 @@ func _draw_icons() -> void:
 	if settings.first_item_centered:
 		var item: RadialMenuItem = items[0]
 		var color: Color = settings.hover_child_modulate if selected_idx == 0 else settings.item_modulate
-		draw_item_image_at_position(item, Vector2.ZERO, color)
+		draw_item_image_at_position(0, Vector2.ZERO, color)
 	
 	for i: int in items_radial_count:
 		var idx: int = i
 		if settings.first_item_centered:
 			idx = i + 1
+		var is_hovered: bool = idx == selected_idx
 		
-		var item: RadialMenuItem = items[idx]
 		var item_angle_pos: float = i * sector_angle_full + sector_angle_full / 2.0
 		item_angle_pos += start_angle_offset_radiants
 		var image_pos: Vector2 = Vector2.from_angle(item_angle_pos) * item_pos_radius
-		var color: Color = settings.hover_child_modulate if selected_idx == idx else settings.item_modulate
+		if is_hovered:
+			image_pos *= 1 + settings.hover_radial_offset
 		
-		draw_item_image_at_position(item, image_pos, color, item_angle_pos)
+		if settings.item_offset != Vector2.ZERO:
+			var rotated_offset: Vector2 = settings.item_offset.rotated(item_angle_pos)
+			image_pos += rotated_offset
+		
+		var color: Color = settings.hover_child_modulate if is_hovered else settings.item_modulate
+		
+		draw_item_image_at_position(idx, image_pos, color, item_angle_pos)
 
 
 func _draw_center_preview() -> void:
-	if selected_idx == -1 or settings.first_item_centered:
+	if selected_idx == -1:
 		return
 	
 	var item: RadialMenuItem = items[selected_idx]
 	var _encircled_square_size: float = dim_inner_radius * SQRT_2
-	#var _center_rect: Rect2 = Rect2(Vector2.ZERO, Vector2.ONE * _encircled_square_size)
 	var _image_rect: Rect2 = Rect2(Vector2.ZERO ,item.image.get_size())
-	var _center_rect: Rect2 = resized_rect_to_dimension(_image_rect, _encircled_square_size * settings.hover_size_factor)
-	draw_item_image_at_position(item, Vector2.ZERO, settings.item_modulate, PI/2, _center_rect)
+	#var _center_rect: Rect2 = resized_rect_to_dimension(_image_rect, _encircled_square_size * settings.hover_size_factor)
+	
+	# calculate text occupied space
+	var _item_name_size: Vector2 = settings.preview_font.get_string_size(
+		item.option_name,
+		HORIZONTAL_ALIGNMENT_CENTER,
+		_encircled_square_size,
+		settings.preview_font_size_name,
+	)
+	var _description_size: Vector2 = settings.preview_font.get_multiline_string_size(
+		item.description,
+		HORIZONTAL_ALIGNMENT_CENTER,
+		_encircled_square_size,
+		settings.preview_font_size_description, 3,
+		TextServer.BREAK_WORD_BOUND,
+		TextServer.JUSTIFICATION_WORD_BOUND
+	)
+	
+	var _icon_size: float = _encircled_square_size - _item_name_size.y - _description_size.y
+	_icon_size *= settings.preview_size_factor
+	var _icon_preview_rect: Rect2 = resized_rect_to_dimension(
+		_image_rect,
+		_icon_size
+	)
+	draw_item_image_at_position(selected_idx, Vector2.ZERO, settings.item_modulate, PI/2, _icon_preview_rect)
 	
 	# text option name and description
 	var _top_left_pos: Vector2 = Vector2(-_encircled_square_size, -_encircled_square_size)/2.0 + center
 	var _bot_left_pos: Vector2 = Vector2(-_encircled_square_size,  _encircled_square_size)/2.0 + center
 	
-	var _item_name_size: Vector2 = settings.text_font.get_string_size(
-		item.option_name,
-		HORIZONTAL_ALIGNMENT_CENTER,
-		_encircled_square_size,
-		settings.text_font_size_name,
-	)
 	draw_string(
-		settings.text_font,
+		settings.preview_font,
 		_top_left_pos + Vector2.DOWN * _item_name_size.y,
 		item.option_name,
 		HORIZONTAL_ALIGNMENT_CENTER,
 		_encircled_square_size,
-		settings.text_font_size_name,
-		settings.text_font_color_name,
+		settings.preview_font_size_name,
+		settings.preview_font_color_name,
 	)
 	
-	# calculate text occupied space
-	var _description_size: Vector2 = settings.text_font.get_multiline_string_size(
-		item.description,
-		HORIZONTAL_ALIGNMENT_CENTER,
-		_encircled_square_size,
-		settings.text_font_size_description, 3,
-		TextServer.BREAK_WORD_BOUND,
-		TextServer.JUSTIFICATION_WORD_BOUND
-	)
 	draw_multiline_string(
-		settings.text_font,
+		settings.preview_font,
 		_bot_left_pos + Vector2.UP * _description_size.y,
 		item.description,
 		HORIZONTAL_ALIGNMENT_CENTER,
 		_encircled_square_size,
-		settings.text_font_size_description, 3,
-		settings.text_font_color_description,
+		settings.preview_font_size_description, 3,
+		settings.preview_font_color_description,
 		TextServer.BREAK_WORD_BOUND,
 		TextServer.JUSTIFICATION_WORD_BOUND
 	)
@@ -503,13 +519,15 @@ func ui_input_vector_to_pointer_position(_ui_input_vector: Vector2) -> Vector2:
 
 
 func draw_item_image_at_position(
-			_item: RadialMenuItem,
+			_item_idx: int,
 			_position: Vector2,
 			_modulate: Color,
 			_item_angle_position: float = 1.5708, # PI/2, 90 degrees
 			_fixed_rect: Rect2 = Rect2()
 		) -> void:
 	
+	var _item: RadialMenuItem = items[_item_idx]
+	var _is_selected: bool = selected_idx == _item_idx
 	var _texture: Texture2D = _item.image
 	if not _texture: return
 	
@@ -517,9 +535,13 @@ func draw_item_image_at_position(
 	var _rect: Rect2 = Rect2(Vector2.ZERO, _texture.get_size())
 	
 	if _fixed_rect == Rect2():
-		var _rect_dim: float = settings.item_size
-		if settings.item_auto_size and _fixed_rect == Rect2():
+		var _rect_dim: float
+		if settings.item_auto_size:
 			_rect_dim = item_auto_dimension_max
+		else:
+			_rect_dim = settings.item_size
+		if _is_selected:
+			_rect_dim *= settings.hover_size_factor
 		_rect = resized_rect_to_dimension(_rect, _rect_dim)
 	else:
 		_rect = _fixed_rect
