@@ -12,6 +12,8 @@
 ## Assets
 - **[Kenney](https://kenney.nl/)**  
   Some of the food item assets are from the [Food Kit](https://kenney.nl/assets/food-kit).
+- **[Game Icons](https://game-icons.net/)**  
+  Some of the icons used in the example scenes are from Game Icons.
 
 ## Community
 - **Twitch Community**  

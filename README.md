@@ -91,5 +91,7 @@ Thanks to Andrea Di Bartolo (SirAeron), a 3D modeller, for providing assets for 
 Some of the food item assets are from the [Food Kit](https://kenney.nl/assets/food-kit) by [Kenney](https://kenney.nl/).  
 ![Kenney Logo](https://kenney.nl/data/images/kenney-logo.png)
 
+Some of the icons used in the example scenes are from [Game Icons](https://game-icons.net/).
+
 This plugin was developed for the [Radial Menu Game Jam #1](https://itch.io/jam/radial-menu-game-jam-1) hosted on itch.io.  
 ![Radial Menu Game Jam Logo](https://img.itch.zone/aW1hZ2UvMTg4NzQyLzEwOTYyNjkucG5n/original/2b3FJ9.png)
