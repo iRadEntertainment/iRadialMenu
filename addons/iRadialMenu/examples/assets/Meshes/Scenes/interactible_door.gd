@@ -7,13 +7,13 @@ var tw: Tween
 func _ready() -> void:
 	super()
 	var item_open := RadialMenuItem.new()
-	item_open.image = load("res://addons/iRadialMenu/examples/assets/Icons/door-handle.svg")
-	item_open.option_name = "Open/Close"
+	item_open.texture = load("res://addons/iRadialMenu/examples/assets/Icons/door-handle.svg")
+	item_open.name = "Open/Close"
 	item_open.description = "Swing, swing!"
 	item_open.callback = open_close_door
 	var item_exit := RadialMenuItem.new()
-	item_exit.image = load("res://addons/iRadialMenu/examples/assets/Icons/exit_door.svg")
-	item_exit.option_name = "Exit"
+	item_exit.texture = load("res://addons/iRadialMenu/examples/assets/Icons/exit_door.svg")
+	item_exit.name = "Exit"
 	item_exit.description = "Enough of this demo!"
 	item_exit.callback = quit_game
 	
@@ -23,7 +23,6 @@ func _ready() -> void:
 
 func open_close_door() -> void:
 	is_open = !is_open
-	
 	if tw:
 		tw.kill()
 	

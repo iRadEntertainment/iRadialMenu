@@ -25,7 +25,7 @@ func _input(event: InputEvent) -> void:
 	
 	# toggle capture
 	if event is InputEventKey:
-		if event.is_pressed() and !event.is_echo() and event.keycode == KEY_CTRL:
+		if event.is_pressed() and !event.is_echo() and event.keycode == KEY_Q:
 			if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
 				Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 			elif Input.mouse_mode == Input.MOUSE_MODE_VISIBLE:

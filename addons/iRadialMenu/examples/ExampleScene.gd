@@ -4,7 +4,7 @@ extends Node3D
 var hovered_body: PhysicsBody3D
 var picked_body: PhysicsBody3D
 
-@export var main_radial_menu_items: Array[RadialMenuItem]
+var main_radial_menu_items: Array[RadialMenuItem]
 @export_flags_3d_physics var interactible_collision_mask = 0xFFFFFFFF
 var cam: Camera3D
 var direct_space_state: PhysicsDirectSpaceState3D
@@ -15,6 +15,7 @@ var intersect_point: Vector3
 
 
 func _ready() -> void:
+	main_radial_menu_items = radial_menu.items
 	cam = get_viewport().get_camera_3d()
 	direct_space_state = get_world_3d().direct_space_state
 	physic_query = PhysicsRayQueryParameters3D.new()

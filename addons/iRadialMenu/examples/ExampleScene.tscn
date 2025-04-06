@@ -3,101 +3,87 @@
 [ext_resource type="Script" uid="uid://5nupk7xpupoh" path="res://addons/iRadialMenu/examples/ExampleScene.gd" id="1_0d7d0"]
 [ext_resource type="Script" uid="uid://conyevxgcg0rc" path="res://addons/iRadialMenu/RadialMenu3DFlat.gd" id="2_2m568"]
 [ext_resource type="PackedScene" uid="uid://bho2erxj4orht" path="res://addons/iRadialMenu/examples/assets/Meshes/Scenes/Kitchen.tscn" id="3_poqfy"]
+[ext_resource type="Texture2D" uid="uid://qnc1cglx888q" path="res://addons/iRadialMenu/examples/assets/FeaturedStreamers/hypnotik.png" id="4_a2djn"]
 [ext_resource type="Texture2D" uid="uid://c7r6ekev731ku" path="res://addons/iRadialMenu/examples/assets/FeaturedStreamers/finisfine.png" id="6_8njal"]
 [ext_resource type="Texture2D" uid="uid://r0mv248riaf6" path="res://addons/iRadialMenu/examples/assets/FeaturedStreamers/justcovino.png" id="6_csfdt"]
 [ext_resource type="Script" uid="uid://bh7dqd6irweox" path="res://addons/iRadialMenu/RadialMenuItem.gd" id="6_poqfy"]
 [ext_resource type="Script" uid="uid://coduooiqlcoy7" path="res://addons/iRadialMenu/examples/player.gd" id="7_8njal"]
 [ext_resource type="Texture2D" uid="uid://dxcjipp87ryac" path="res://addons/iRadialMenu/examples/assets/FeaturedStreamers/seano4d.png" id="7_sbpof"]
 [ext_resource type="Texture2D" uid="uid://dj3tyyuh2y0y8" path="res://addons/iRadialMenu/examples/assets/FeaturedStreamers/earend.png" id="7_tfodv"]
-[ext_resource type="Texture2D" uid="uid://qnc1cglx888q" path="res://addons/iRadialMenu/examples/assets/FeaturedStreamers/hypnotick.png" id="7_vq21g"]
 [ext_resource type="Script" uid="uid://dc0nfn1i4kqbg" path="res://addons/iRadialMenu/RadialMenuSettings.gd" id="8_drjwn"]
 [ext_resource type="Script" uid="uid://dfe4ptnify0dt" path="res://addons/iRadialMenu/examples/camera_3d.gd" id="8_vq21g"]
 [ext_resource type="Texture2D" uid="uid://c1sk6j8seqfg8" path="res://addons/iRadialMenu/examples/assets/FeaturedStreamers/anihanshard.png" id="8_w45ar"]
 [ext_resource type="Texture2D" uid="uid://td3so441brh5" path="res://addons/iRadialMenu/examples/assets/FeaturedStreamers/wardstonestudio.png" id="9_w45ar"]
 [ext_resource type="Texture2D" uid="uid://cano4dpv3hnje" path="res://addons/iRadialMenu/examples/assets/icon_crossair.png" id="9_wfcuc"]
 [ext_resource type="Script" uid="uid://0ln1m70wl35q" path="res://addons/iRadialMenu/examples/reticle.gd" id="10_csfdt"]
+[ext_resource type="Texture2D" uid="uid://b6gk0n6l6kqnq" path="res://addons/iRadialMenu/examples/assets/FeaturedStreamers/fullbocksoo.png" id="11_sbpof"]
 [ext_resource type="FontFile" uid="uid://b54iuyamwm2nt" path="res://addons/iRadialMenu/examples/assets/Font/Cleanow.ttf" id="12_w45ar"]
 [ext_resource type="PackedScene" uid="uid://b13m3vwlu5qmi" path="res://addons/iRadialMenu/examples/instances/banana.tscn" id="16_v3qm4"]
 [ext_resource type="PackedScene" uid="uid://r8y6mw3lgltc" path="res://addons/iRadialMenu/examples/instances/eggplant.tscn" id="17_sbpof"]
+[ext_resource type="PackedScene" uid="uid://cns6hh6ht6373" path="res://addons/iRadialMenu/examples/instances/kani_plush.tscn" id="17_w45ar"]
 [ext_resource type="PackedScene" uid="uid://bbshegy0bcf3t" path="res://addons/iRadialMenu/examples/instances/egg.tscn" id="18_w45ar"]
 
 [sub_resource type="Resource" id="Resource_wfcuc"]
 script = ExtResource("6_poqfy")
-option_name = "Fin"
+name = "Fin"
 description = "is fine"
-image = ExtResource("6_8njal")
-callback_name = ""
-metadata/_custom_type_script = "uid://bh7dqd6irweox"
-
-[sub_resource type="Resource" id="Resource_csfdt"]
-script = ExtResource("6_poqfy")
-option_name = "HypnotiK"
-description = "The amazingness"
-image = ExtResource("7_vq21g")
-callback_name = ""
-metadata/_custom_type_script = "uid://bh7dqd6irweox"
-
-[sub_resource type="Resource" id="Resource_8njal"]
-script = ExtResource("6_poqfy")
-option_name = "Covino"
-description = "Just FFS"
-image = ExtResource("6_csfdt")
-callback_name = ""
-metadata/_custom_type_script = "uid://bh7dqd6irweox"
-
-[sub_resource type="Resource" id="Resource_drjwn"]
-script = ExtResource("6_poqfy")
-option_name = "Earend"
-description = "A bear it's a bear it's a bear"
-image = ExtResource("7_tfodv")
-callback_name = ""
-metadata/_custom_type_script = "uid://bh7dqd6irweox"
-
-[sub_resource type="Resource" id="Resource_2y0qd"]
-script = ExtResource("6_poqfy")
-option_name = "Seano4D"
-description = "Balls"
-image = ExtResource("7_sbpof")
-callback_name = ""
-metadata/_custom_type_script = "uid://bh7dqd6irweox"
-
-[sub_resource type="Resource" id="Resource_y0hjm"]
-script = ExtResource("6_poqfy")
-option_name = "Anihan"
-description = "Happy birthday"
-image = ExtResource("8_w45ar")
-callback_name = ""
-metadata/_custom_type_script = "uid://bh7dqd6irweox"
-
-[sub_resource type="Resource" id="Resource_jsb4a"]
-script = ExtResource("6_poqfy")
-option_name = "Wardstone"
-description = "Studio"
-image = ExtResource("9_w45ar")
+texture = ExtResource("6_8njal")
 callback_name = ""
 metadata/_custom_type_script = "uid://bh7dqd6irweox"
 
 [sub_resource type="Resource" id="Resource_yhmy5"]
 script = ExtResource("6_poqfy")
-option_name = "Wardstone"
+name = "Wardstone"
 description = "Cool shirts"
-image = ExtResource("9_w45ar")
+texture = ExtResource("9_w45ar")
+callback_name = ""
+metadata/_custom_type_script = "uid://bh7dqd6irweox"
+
+[sub_resource type="Resource" id="Resource_csfdt"]
+script = ExtResource("6_poqfy")
+name = "HypnotiK"
+description = "The amazingness"
+texture = ExtResource("4_a2djn")
+callback_name = ""
+metadata/_custom_type_script = "uid://bh7dqd6irweox"
+
+[sub_resource type="Resource" id="Resource_8njal"]
+script = ExtResource("6_poqfy")
+name = "JustCovino"
+description = "Just FFS"
+texture = ExtResource("6_csfdt")
+callback_name = ""
+metadata/_custom_type_script = "uid://bh7dqd6irweox"
+
+[sub_resource type="Resource" id="Resource_drjwn"]
+script = ExtResource("6_poqfy")
+name = "Earend"
+description = "A bear it's a bear it's a bear"
+texture = ExtResource("7_tfodv")
 callback_name = ""
 metadata/_custom_type_script = "uid://bh7dqd6irweox"
 
 [sub_resource type="Resource" id="Resource_nsecs"]
 script = ExtResource("6_poqfy")
-option_name = "Seano4D"
+name = "Seano4D"
 description = "Balls"
-image = ExtResource("7_sbpof")
+texture = ExtResource("7_sbpof")
 callback_name = ""
 metadata/_custom_type_script = "uid://bh7dqd6irweox"
 
 [sub_resource type="Resource" id="Resource_ifmut"]
 script = ExtResource("6_poqfy")
-option_name = "Anihan"
+name = "AnihanShard"
 description = "Happy birthday"
-image = ExtResource("8_w45ar")
+texture = ExtResource("8_w45ar")
+callback_name = ""
+metadata/_custom_type_script = "uid://bh7dqd6irweox"
+
+[sub_resource type="Resource" id="Resource_w45ar"]
+script = ExtResource("6_poqfy")
+name = "FoolBox"
+description = "furuba"
+texture = ExtResource("11_sbpof")
 callback_name = ""
 metadata/_custom_type_script = "uid://bh7dqd6irweox"
 
@@ -204,17 +190,14 @@ corner_radius_bottom_left = 8
 
 [node name="ExampleScene" type="Node3D"]
 script = ExtResource("1_0d7d0")
-main_radial_menu_items = Array[ExtResource("6_poqfy")]([SubResource("Resource_wfcuc"), SubResource("Resource_csfdt"), SubResource("Resource_8njal"), SubResource("Resource_drjwn"), SubResource("Resource_2y0qd"), SubResource("Resource_y0hjm"), SubResource("Resource_jsb4a")])
 
 [node name="RadialMenu3DFlat" type="Node3D" parent="."]
 unique_name_in_owner = true
 transform = Transform3D(-0.841143, 0, -0.540813, 0, 1, 0, 0.540813, 0, -0.841143, 0.101578, 1.06802, -0.107262)
 script = ExtResource("2_2m568")
-reset_nodes = true
-items = Array[ExtResource("6_poqfy")]([SubResource("Resource_wfcuc"), SubResource("Resource_yhmy5"), SubResource("Resource_csfdt"), SubResource("Resource_8njal"), SubResource("Resource_drjwn"), SubResource("Resource_nsecs"), SubResource("Resource_ifmut")])
+items = Array[ExtResource("6_poqfy")]([SubResource("Resource_wfcuc"), SubResource("Resource_yhmy5"), SubResource("Resource_csfdt"), SubResource("Resource_8njal"), SubResource("Resource_drjwn"), SubResource("Resource_nsecs"), SubResource("Resource_ifmut"), SubResource("Resource_w45ar")])
 suppress_warnings = true
 preview_draw = true
-preview_movement = true
 settings2D = SubResource("Resource_2m568")
 ui_dimension = 0.75
 metadata/_custom_type_script = "uid://conyevxgcg0rc"
@@ -263,6 +246,9 @@ shape = SubResource("CapsuleShape3D_ycgey")
 
 [node name="Interactibles" type="Node3D" parent="."]
 unique_name_in_owner = true
+
+[node name="kani_plush" parent="Interactibles" instance=ExtResource("17_w45ar")]
+transform = Transform3D(-0.497125, 0, 0.867679, 0, 1, 0, -0.867679, 0, -0.497125, -2.48253, 0.705798, -1.51069)
 
 [node name="Banana" parent="Interactibles" instance=ExtResource("16_v3qm4")]
 transform = Transform3D(0.61114, 0, -0.791522, 0, 1, 0, 0.791522, 0, 0.61114, 1.73181, 0.89607, 2.49227)
