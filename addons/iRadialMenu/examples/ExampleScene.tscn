@@ -16,10 +16,10 @@
 [ext_resource type="Script" uid="uid://dc0nfn1i4kqbg" path="res://addons/iRadialMenu/RadialMenuSettings.gd" id="8_drjwn"]
 [ext_resource type="Script" uid="uid://dfe4ptnify0dt" path="res://addons/iRadialMenu/examples/camera_3d.gd" id="8_vq21g"]
 [ext_resource type="Texture2D" uid="uid://c1sk6j8seqfg8" path="res://addons/iRadialMenu/examples/assets/FeaturedStreamers/anihanshard.png" id="8_w45ar"]
-[ext_resource type="FontFile" uid="uid://b470w3xkdybjb" path="res://addons/iRadialMenu/examples/assets/Font/Cleanow.otf" id="9_vq21g"]
 [ext_resource type="Texture2D" uid="uid://td3so441brh5" path="res://addons/iRadialMenu/examples/assets/FeaturedStreamers/wardstonestudio.png" id="9_w45ar"]
 [ext_resource type="Texture2D" uid="uid://cano4dpv3hnje" path="res://addons/iRadialMenu/examples/assets/icon_crossair.png" id="9_wfcuc"]
 [ext_resource type="Script" uid="uid://0ln1m70wl35q" path="res://addons/iRadialMenu/examples/reticle.gd" id="10_csfdt"]
+[ext_resource type="FontFile" uid="uid://b54iuyamwm2nt" path="res://addons/iRadialMenu/examples/assets/Font/Cleanow.ttf" id="12_w45ar"]
 [ext_resource type="Texture2D" uid="uid://cg16vj463vrw1" path="res://addons/iRadialMenu/examples/assets/Icons/grab.svg" id="14_csfdt"]
 [ext_resource type="Texture2D" uid="uid://d0pl6sa1q4xxr" path="res://addons/iRadialMenu/examples/assets/Icons/eating.svg" id="15_tfodv"]
 
@@ -139,7 +139,7 @@ item_auto_size_factor = 1.015
 item_offset = Vector2(0, 0)
 item_align = false
 item_modulate = Color(1, 1, 1, 1)
-text_font = ExtResource("9_vq21g")
+text_font = ExtResource("12_w45ar")
 text_font_size_name = 30
 text_font_size_description = 14
 text_font_color_name = Color(0.745098, 0.211765, 0.156863, 1)
