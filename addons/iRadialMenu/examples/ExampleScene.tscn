@@ -113,15 +113,11 @@ resolution = 64
 dim_autosize = true
 dim_outer_radius = 256
 dim_center_offset = Vector2(0, 0)
-dim_inner_radius_ratio = 0.51
-hover_preview_in_center = true
+dim_inner_radius_ratio = 0.53
 hover_color = Color(0.745098, 0.211765, 0.156863, 1)
 hover_child_modulate = Color(0.164706, 0.219608, 0.231373, 1)
-hover_offset_start = 0
-hover_offset_end = 0
 hover_size_factor = 1.0
-hover_offset = Vector2(0, 0)
-hover_children_radial_offset = 0.0
+hover_radial_offset = 0.0
 reticle_outer_enabled = true
 reticle_inner_enabled = true
 reticle_separator_enabled = true
@@ -133,17 +129,19 @@ reticle_outer_color = Color(0.745098, 0.211765, 0.156863, 1)
 reticle_inner_color = Color(0.745098, 0.211765, 0.156863, 1)
 reticle_separator_color = Color(0.745098, 0.211765, 0.156863, 1)
 reticle_antialiased = true
+item_align = false
 item_auto_size = true
 item_size = 48
 item_auto_size_factor = 1.015
 item_offset = Vector2(0, 0)
-item_align = false
 item_modulate = Color(1, 1, 1, 1)
-text_font = ExtResource("12_w45ar")
-text_font_size_name = 30
-text_font_size_description = 14
-text_font_color_name = Color(0.745098, 0.211765, 0.156863, 1)
-text_font_color_description = Color(0.745098, 0.211765, 0.156863, 1)
+preview_show = true
+preview_size_factor = 0.8
+preview_font = ExtResource("12_w45ar")
+preview_font_size_name = 26
+preview_font_size_description = 22
+preview_font_color_name = Color(1, 1, 1, 1)
+preview_font_color_description = Color(1, 1, 1, 1)
 select_action_name = "ui_select"
 action_released = false
 move_forward_action_name = ""
@@ -388,33 +386,6 @@ metadata/_custom_type_script = "uid://conyevxgcg0rc"
 
 [node name="Kitchen" parent="." instance=ExtResource("3_poqfy")]
 
-[node name="FloorTiie8" parent="Kitchen/Env" index="31"]
-visible = false
-
-[node name="FloorTiie9" parent="Kitchen/Env" index="32"]
-visible = false
-
-[node name="FloorTiie10" parent="Kitchen/Env" index="33"]
-visible = false
-
-[node name="FloorTiie11" parent="Kitchen/Env" index="34"]
-visible = false
-
-[node name="FloorTiie12" parent="Kitchen/Env" index="35"]
-visible = false
-
-[node name="FloorTiie13" parent="Kitchen/Env" index="36"]
-visible = false
-
-[node name="FloorTiie14" parent="Kitchen/Env" index="37"]
-visible = false
-
-[node name="FloorTiie10" parent="Kitchen" index="5"]
-visible = false
-
-[node name="FloorTiie11" parent="Kitchen" index="6"]
-visible = false
-
 [node name="Interactibles" type="Node3D" parent="."]
 
 [node name="Banana" type="RigidBody3D" parent="Interactibles"]
@@ -482,6 +453,7 @@ skeleton = NodePath("")
 
 [node name="Player" type="CharacterBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.53574, 0, 0)
+input_ray_pickable = false
 script = ExtResource("7_8njal")
 
 [node name="Mesh" type="MeshInstance3D" parent="Player"]
@@ -555,5 +527,3 @@ grow_horizontal = 0
 grow_vertical = 0
 theme_override_styles/normal = SubResource("StyleBoxFlat_tumbf")
 text = "Use CTRL to toggle between Mouse Capture"
-
-[editable path="Kitchen"]

@@ -2,9 +2,11 @@ extends CharacterBody3D
 
 #@onready var ray_cast_3d: RayCast3D = $Camera3D/RayCast3D
 
-
+var inputs_enabled: bool = true
 
 func _input(event: InputEvent) -> void:
+	if !inputs_enabled:
+		return
 	if Input.mouse_mode != Input.MOUSE_MODE_CAPTURED:
 		return
 	if event is InputEventMouseMotion:
@@ -13,10 +15,11 @@ func _input(event: InputEvent) -> void:
 
 func _physics_process(_delta: float) -> void:
 	move_char()
-	#check_interactibles()
 
 
 func move_char() -> void:
+	if !inputs_enabled:
+		return
 	var direction = Vector3(
 		float(Input.is_physical_key_pressed(KEY_D)) - float(Input.is_physical_key_pressed(KEY_A)),
 		float(Input.is_physical_key_pressed(KEY_E)) - float(Input.is_physical_key_pressed(KEY_Q)),

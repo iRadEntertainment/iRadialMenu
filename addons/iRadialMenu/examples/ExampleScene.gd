@@ -59,6 +59,8 @@ func check_hovered_interactibles() -> void:
 	if hovered_body:
 		is_interactible = hovered_body.has_node(^"Interactible")
 		intersect_point = res.position
+	if not is_interactible:
+		hovered_body = null
 	$GUI/Reticle.crossair_type = 1 if is_interactible else 0
 
 
@@ -82,7 +84,7 @@ func _input(event: InputEvent) -> void:
 			for i in randi_range(4, 8):
 				add_banana_to_world(world_pos)
 		if event.is_released() and event.button_index == MOUSE_BUTTON_RIGHT:
-			if !hovered_body:
+			if !hovered_body and !radial_menu.visible:
 				radial_menu.items = main_radial_menu_items
 				radial_menu.popup_screen_center()
 			
@@ -102,8 +104,9 @@ func _on_interactible_just_left_clicked(interactible: Interactible, body: Physic
 
 
 func _on_interactible_just_right_clicked(interactible: Interactible, body: PhysicsBody3D) -> void:
+	if radial_menu.visible: return
 	radial_menu.items = interactible.radial_items
-	radial_menu.popup(body.global_position)
+	radial_menu.popup_screen_center()
 
 
 func _on_interactible_just_hovered(interactible: Interactible, body: PhysicsBody3D) -> void:
@@ -112,6 +115,7 @@ func _on_interactible_just_hovered(interactible: Interactible, body: PhysicsBody
 
 func _on_radial_menu_visibility_changed() -> void:
 	%Reticle.visible = !radial_menu.visible
+	$Player.inputs_enabled = !radial_menu.visible
 
 
 static func screen_to_world_pos(screen_pos: Vector2, distance_m: float, cam: Camera3D) -> Variant:
