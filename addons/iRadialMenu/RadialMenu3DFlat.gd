@@ -2,14 +2,15 @@
 @icon("icon_radial_3d_2d.svg")
 class_name RadialMenu3DFlat extends Node3D
 
-@export var reset_nodes: bool = false:
-	set(val):
-		reset_nodes = val
-		if is_node_ready():
-			_clear_nodes()
-			await get_tree().process_frame
-			create_nodes()
-			setup_nodes()
+#debug
+#@export var reset_nodes: bool = false:
+	#set(val):
+		#reset_nodes = val
+		#if is_node_ready():
+			#_clear_nodes()
+			#await get_tree().process_frame
+			#create_nodes()
+			#setup_nodes()
 @export var items: Array[RadialMenuItem]:
 	set(val):
 		items = val
@@ -111,7 +112,7 @@ var _is_editor: bool
 #endregion
 
 #region Signals
-signal selected(selected_idx: int)
+signal selected(selected_idx: int, selected_item_name: String)
 signal selection_changed(selected_idx: int)
 signal canceled
 #endregion
@@ -190,7 +191,7 @@ func setup_nodes() -> void:
 func _connect_signals() -> void:
 	radial_menu_2d.selected.connect(_on_selected)
 	radial_menu_2d.canceled.connect(_on_canceled)
-	radial_menu_2d.selected.connect(_on_selection_changed)
+	radial_menu_2d.selection_changed.connect(_on_selection_changed)
 	visibility_changed.connect(_on_visibility_changed)
 
 
@@ -201,9 +202,6 @@ func validate_items() -> bool:
 	
 	for item: RadialMenuItem in items:
 		if not item:
-			items_validated = false
-			return false
-		if not item.image:
 			items_validated = false
 			return false
 	
@@ -391,8 +389,8 @@ func _on_visibility_changed() -> void:
 		_face_camera()
 
 
-func _on_selected(selected_idx: int) -> void:
-	selected.emit(selected_idx)
+func _on_selected(selected_idx: int, selected_item_name: String) -> void:
+	selected.emit(selected_idx, selected_item_name)
 	close_popup()
 
 

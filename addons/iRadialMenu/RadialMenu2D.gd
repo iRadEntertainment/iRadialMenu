@@ -9,7 +9,7 @@ class_name RadialMenu2D extends Control
 const SQRT_2: float = 1.4142
 
 ## If `true`, enables preview drawing in the editor. [br]
-## When set, the radial menu will redraw itself in the editor to show a preview of its layout. [br]
+## When set, the radial menu will redraw itself in the editor to show a preview of its layout using [code]_process[/code][br]
 ## This is useful for visualizing changes to the menu's settings or items.
 @export var preview_draw := true: set = _set_preview_draw
 
@@ -40,18 +40,18 @@ const SQRT_2: float = 1.4142
 
 #region Functional variables
 var selected_idx: int = -1
-var items_validated: bool = false
+var _items_validated: bool = false
 # calculated is _calculate_size_values
-var start_angle_offset_radiants: float
+var _start_angle_offset_radiants: float
 var center := Vector2.ZERO
-var dim_inner_radius: float
+var _dim_inner_radius: float
 var item_pos_radius: float # center position for items
-var item_auto_dimension_max: int
-var items_radial_count: int
-var sector_angle_full: float
-var sector_angle_gap: float
-var sector_angle_net: float
-var sector_resolution: int
+var _item_auto_dimension_max: int
+var _items_radial_count: int
+var _sector_angle_full: float
+var _sector_angle_gap: float
+var _sector_angle_net: float
+var _sector_resolution: int
 # preview in editor
 var _is_editor := true
 #input
@@ -77,19 +77,16 @@ func _ready() -> void:
 
 func validate_items() -> bool:
 	if items.is_empty():
-		items_validated = false
+		_items_validated = false
 		return false
 	
 	for item: RadialMenuItem in items:
 		if not item:
-			items_validated = false
+			_items_validated = false
 			return false
-		#if not item.texture:
-			#items_validated = false
-			#return false
 	
-	items_validated = true
-	return items_validated
+	_items_validated = true
+	return _items_validated
 #endregion
 
 
@@ -174,7 +171,6 @@ func hover_at_centered_pointer_position(_pointer_pos: Vector2) -> void:
 ## This function recalculates the menu's size, position, and item layout [br]
 ## based on the current settings and items.
 func update() -> void:
-	
 	if !validate_items():
 		return
 	_calculate_size_values()
@@ -186,29 +182,29 @@ func _calculate_size_values() -> void:
 	center = (size / 2.0) + settings.dim_center_offset
 	if settings.dim_autosize:
 		settings.dim_outer_radius = _get_auto_circle_radius()
-	dim_inner_radius = int(settings.dim_outer_radius * settings.dim_inner_radius_ratio)
-	dim_inner_radius = clamp(dim_inner_radius, 4, settings.dim_outer_radius - (settings.reticle_outer_width + settings.reticle_inner_width) )
-	start_angle_offset_radiants = deg_to_rad(settings.start_angle_offset)
+	_dim_inner_radius = int(settings.dim_outer_radius * settings.dim_inner_radius_ratio)
+	_dim_inner_radius = clamp(_dim_inner_radius, 4, settings.dim_outer_radius - (settings.reticle_outer_width + settings.reticle_inner_width) )
+	_start_angle_offset_radiants = deg_to_rad(settings.start_angle_offset)
 	
 	# sectors
-	items_radial_count = items.size() if !settings.first_item_centered else items.size() - 1
-	items_radial_count == 0
-	sector_angle_full = TAU/items_radial_count
-	sector_resolution = max(int(settings.resolution / items_radial_count), 2)
+	_items_radial_count = items.size() if !settings.first_item_centered else items.size() - 1
+	_items_radial_count == 0
+	_sector_angle_full = TAU/_items_radial_count
+	_sector_resolution = max(int(settings.resolution / _items_radial_count), 2)
 	
-	sector_angle_gap = settings.reticle_separator_width / dim_inner_radius
-	sector_angle_net = sector_angle_full - sector_angle_gap
+	_sector_angle_gap = settings.reticle_separator_width / _dim_inner_radius
+	_sector_angle_net = _sector_angle_full - _sector_angle_gap
 	
 	# items
-	var doughnut_width_full: float = settings.dim_outer_radius - dim_inner_radius
+	var doughnut_width_full: float = settings.dim_outer_radius - _dim_inner_radius
 	var doughnut_width_net: float = doughnut_width_full - settings.reticle_inner_width - settings.reticle_outer_width
-	item_pos_radius = dim_inner_radius + settings.reticle_inner_width + doughnut_width_net / 2.0
+	item_pos_radius = _dim_inner_radius + settings.reticle_inner_width + doughnut_width_net / 2.0
 	
-	item_auto_dimension_max = (doughnut_width_net/2.0) * SQRT_2 * settings.item_auto_size_factor
+	_item_auto_dimension_max = (doughnut_width_net/2.0) * SQRT_2 * settings.item_auto_size_factor
 
 
 func _draw() -> void:
-	if !items_validated:
+	if !_items_validated:
 		return
 	if size == Vector2.ZERO:
 		return
@@ -224,37 +220,37 @@ func _draw_background() -> void:
 	if settings.first_item_centered or settings.bg_full_circle:
 		draw_circle(center, settings.dim_outer_radius, settings.bg_circle_color, true, -1, settings.reticle_antialiased)
 	elif settings.bg_texture:
-		for i in items_radial_count:
-			var angle_center_selected: float = i * sector_angle_full + sector_angle_full/2.0 + start_angle_offset_radiants
+		for i in _items_radial_count:
+			var angle_center_selected: float = i * _sector_angle_full + _sector_angle_full/2.0 + _start_angle_offset_radiants
 			var poly: PackedVector2Array = get_sector_points(
 				center,
 				angle_center_selected,
-				sector_angle_net,
-				dim_inner_radius,
+				_sector_angle_net,
+				_dim_inner_radius,
 				settings.dim_outer_radius,
-				sector_resolution
+				_sector_resolution
 			)
 			var uv_poly: PackedVector2Array = uv_from_sector_poly(poly.size())
 			draw_polygon(poly, [settings.bg_circle_color], uv_poly, settings.bg_texture)
 	elif settings.reticle_separator_type == RadialMenuSettings.SeparatorType.SECTOR and !settings.reticle_separator_enabled:
-		for i in items_radial_count:
-			var angle_center_selected: float = i * sector_angle_full + sector_angle_full/2.0 + start_angle_offset_radiants
+		for i in _items_radial_count:
+			var angle_center_selected: float = i * _sector_angle_full + _sector_angle_full/2.0 + _start_angle_offset_radiants
 			var poly: PackedVector2Array = get_sector_points(
 				center,
 				angle_center_selected,
-				sector_angle_net,
-				dim_inner_radius,
+				_sector_angle_net,
+				_dim_inner_radius,
 				settings.dim_outer_radius,
-				sector_resolution
+				_sector_resolution
 			)
 			draw_polygon(poly, [settings.bg_circle_color])
 	else:
 		# draw a doughnut
 		var poly_right: PackedVector2Array = get_sector_points(
-			center, 0, PI, dim_inner_radius, settings.dim_outer_radius, int(settings.resolution/2)
+			center, 0, PI, _dim_inner_radius, settings.dim_outer_radius, int(settings.resolution/2)
 		)
 		var poly_left: PackedVector2Array = get_sector_points(
-			center, PI, PI, dim_inner_radius, settings.dim_outer_radius, int(settings.resolution/2)
+			center, PI, PI, _dim_inner_radius, settings.dim_outer_radius, int(settings.resolution/2)
 		)
 		draw_polygon(poly_right, [settings.bg_circle_color])
 		draw_polygon(poly_left, [settings.bg_circle_color])
@@ -267,7 +263,7 @@ func _draw_reticle() -> void:
 	if settings.reticle_inner_enabled:
 		draw_arc(
 			center,
-			dim_inner_radius + settings.reticle_inner_width/2.0,
+			_dim_inner_radius + settings.reticle_inner_width/2.0,
 			arc_start_angle,
 			arc_end_angle,
 			settings.resolution,
@@ -290,24 +286,24 @@ func _draw_reticle() -> void:
 	if settings.reticle_separator_enabled:
 		match settings.reticle_separator_type:
 			RadialMenuSettings.SeparatorType.LINE:
-				for i in items_radial_count:
-					var point := Vector2.from_angle(i * sector_angle_full + start_angle_offset_radiants)
+				for i in _items_radial_count:
+					var point := Vector2.from_angle(i * _sector_angle_full + _start_angle_offset_radiants)
 					draw_line(
-						center + point * (dim_inner_radius + settings.reticle_inner_width/2.0),
+						center + point * (_dim_inner_radius + settings.reticle_inner_width/2.0),
 						center + point * (settings.dim_outer_radius - settings.reticle_outer_width/2.0),
 						settings.reticle_separator_color,
 						settings.reticle_separator_width,
 						settings.reticle_antialiased
 					)
 			RadialMenuSettings.SeparatorType.SECTOR:
-				var res: int = int(settings.resolution/items_radial_count)
-				for i in items_radial_count:
-					var angle_center = i * sector_angle_full + start_angle_offset_radiants
+				var res: int = int(settings.resolution/_items_radial_count)
+				for i in _items_radial_count:
+					var angle_center = i * _sector_angle_full + _start_angle_offset_radiants
 					var poly: PackedVector2Array = get_sector_points(
 						center,
 						angle_center,
-						sector_angle_gap,
-						dim_inner_radius,
+						_sector_angle_gap,
+						_dim_inner_radius,
 						settings.dim_outer_radius,
 						res
 					)
@@ -318,18 +314,18 @@ func _draw_highlight() -> void:
 	if selected_idx == -1:
 		return
 	if selected_idx == 0 and settings.first_item_centered:
-		draw_circle(center, dim_inner_radius, settings.hover_color)
+		draw_circle(center, _dim_inner_radius, settings.hover_color)
 		return
 	
 	var idx: int = selected_idx if !settings.first_item_centered else selected_idx - 1
-	var angle_center_selected: float = idx * sector_angle_full + sector_angle_full/2.0 + start_angle_offset_radiants
+	var angle_center_selected: float = idx * _sector_angle_full + _sector_angle_full/2.0 + _start_angle_offset_radiants
 	var poly: PackedVector2Array = get_sector_points(
 		center,
 		angle_center_selected,
-		sector_angle_net if settings.reticle_separator_type == RadialMenuSettings.SeparatorType.SECTOR else sector_angle_full,
-		dim_inner_radius,
+		_sector_angle_net if settings.reticle_separator_type == RadialMenuSettings.SeparatorType.SECTOR else _sector_angle_full,
+		_dim_inner_radius,
 		settings.dim_outer_radius,
-		sector_resolution
+		_sector_resolution
 	)
 	draw_polygon(poly, [settings.hover_color])
 
@@ -340,25 +336,17 @@ func _draw_icons() -> void:
 		var color: Color = settings.hover_child_modulate if selected_idx == 0 else settings.item_modulate
 		draw_item_image_at_position(0, Vector2.ZERO, color)
 	
-	for i: int in items_radial_count:
+	for i: int in _items_radial_count:
 		var idx: int = i
 		if settings.first_item_centered:
 			idx = i + 1
+		
 		var is_hovered: bool = idx == selected_idx
-		
-		var item_angle_pos: float = i * sector_angle_full + sector_angle_full / 2.0
-		item_angle_pos += start_angle_offset_radiants
-		var image_pos: Vector2 = Vector2.from_angle(item_angle_pos) * item_pos_radius
-		if is_hovered:
-			image_pos *= 1 + settings.hover_radial_offset
-		
-		if settings.item_offset != Vector2.ZERO:
-			var rotated_offset: Vector2 = settings.item_offset.rotated(item_angle_pos)
-			image_pos += rotated_offset
-		
+		var item_pos: Vector2 = get_item_position_2d(idx)
+		var item_angle_pos: float = i * _sector_angle_full + _sector_angle_full / 2.0
 		var color: Color = settings.hover_child_modulate if is_hovered else settings.item_modulate
 		
-		draw_item_image_at_position(i, image_pos, color, item_angle_pos)
+		draw_item_image_at_position(i, item_pos, color, item_angle_pos)
 
 
 func _draw_center_preview() -> void:
@@ -366,7 +354,7 @@ func _draw_center_preview() -> void:
 		return
 	
 	var item: RadialMenuItem = items[selected_idx]
-	var _encircled_square_size: float = dim_inner_radius * SQRT_2
+	var _encircled_square_size: float = _dim_inner_radius * SQRT_2
 	var _image_rect: Rect2 = Rect2()
 	if item.texture:
 		_image_rect = Rect2(Vector2.ZERO ,item.texture.get_size())
@@ -445,20 +433,20 @@ func _on_settings_changed() -> void:
 
 
 #region Getters/Setters
-## Calculates and returns the auto circle radius based on the control's size. [br]
-## This is used when the `dim_autosize` setting is enabled to dynamically [br]
-## adjust the menu's outer radius.
-## @return The calculated radius as an integer.
+# Calculates and returns the auto circle radius based on the control's size. [br]
+# This is used when the `dim_autosize` setting is enabled to dynamically [br]
+# adjust the menu's outer radius.
+# @return The calculated radius as an integer.
 func _get_auto_circle_radius() -> int:
 	if size.x < size.y:
 		return int(size.x / 2.0)
 	return int(size.y / 2.0)
 
 
-## Sets the preview drawing state. [br]
-## When enabled, the menu will continuously redraw itself in the editor [br]
-## to reflect changes to its layout or settings.
-## @param value If `true`, enables preview drawing.
+# Sets the preview drawing state. [br]
+# When enabled, the menu will continuously redraw itself in the editor [br]
+# to reflect changes to its layout or settings.
+# @param value If `true`, enables preview drawing.
 func _set_preview_draw(value: bool) -> void:
 	preview_draw = value
 	set_process(value)
@@ -472,17 +460,17 @@ func _set_preview_draw(value: bool) -> void:
 ## @param _pointer_pos The pointer position relative to the menu center.
 ## @return The index of the menu item, or -1 if no item is selected.
 func get_selection_at_position(_pointer_pos: Vector2) -> int:
-	var angle: float = wrapf(_pointer_pos.angle() - start_angle_offset_radiants, 0.0, TAU)
+	var angle: float = wrapf(_pointer_pos.angle() - _start_angle_offset_radiants, 0.0, TAU)
 	var _pointer_radius: float = _pointer_pos.length()
 	var is_in_outer_circle: bool = _pointer_radius < settings.dim_outer_radius
-	var is_in_inner_circle: bool = _pointer_radius < dim_inner_radius
+	var is_in_inner_circle: bool = _pointer_radius < _dim_inner_radius
 	var is_in_doughnut: bool = is_in_outer_circle and not is_in_inner_circle
 	
 	if settings.first_item_centered and is_in_inner_circle:
 		return 0
 	
 	if settings.keep_selection_outside or is_in_doughnut:
-		var idx: int = floor((angle / TAU) * items_radial_count)
+		var idx: int = floor((angle / TAU) * _items_radial_count)
 		if settings.first_item_centered:
 			idx += 1
 		return idx
@@ -493,7 +481,9 @@ func get_selection_at_position(_pointer_pos: Vector2) -> int:
 ## Selects the currently hovered menu item and emits the [signal selected]. [br]
 ## This function triggers the callback associated with the selected item [br]
 ## and resets the selection state.
-func select() -> void: # select currently hovered element
+func select(_override_idx: int = -1) -> void: # select currently hovered element
+	if _override_idx != -1:
+		selected_idx = _override_idx
 	if selected_idx == -1:
 		cancel()
 	else:
@@ -545,7 +535,7 @@ func draw_item_image_at_position(
 	if _fixed_rect == Rect2():
 		var _rect_dim: float
 		if settings.item_auto_size:
-			_rect_dim = item_auto_dimension_max
+			_rect_dim = _item_auto_dimension_max
 		else:
 			_rect_dim = settings.item_size
 		if _is_selected:
@@ -563,10 +553,37 @@ func draw_item_image_at_position(
 	draw_set_transform(Vector2.ZERO)
 
 
+## Gets the item position in the Control node.
+## [code]_item_idx[/code] has to be a valid index for the item list. Returns null if no item is found index is invalid
+func get_item_position_2d(_item_idx: int) -> Variant:
+	if _item_idx >= items.size():
+		return
+	if settings.first_item_centered and _item_idx == 0:
+		return center
+	
+	var is_hovered: bool = _item_idx == selected_idx
+	
+	var i: int = _item_idx
+	if settings.first_item_centered:
+		i -= 1
+	var item_angle_pos: float = i * _sector_angle_full + _sector_angle_full / 2.0
+	item_angle_pos += _start_angle_offset_radiants
+	
+	var item_pos: Vector2 = Vector2.from_angle(item_angle_pos) * item_pos_radius
+	if is_hovered:
+		item_pos *= 1 + settings.hover_radial_offset
+	
+	if settings.item_offset != Vector2.ZERO:
+		var rotated_offset: Vector2 = settings.item_offset.rotated(item_angle_pos)
+		item_pos += rotated_offset
+	
+	return item_pos
+
+
 ## Gets the points of a sector (pie slice) in a circle. [br]
 ## This function calculates the vertices of a sector based on the given parameters. [br]
 ## It is useful for drawing pie slices or dividing a circle into segments. [br]
-## The sector is defined by its center, inner and outer radii, and angular range.
+## The sector is defined by its center, inner and outer radii, and angular range.[br]
 ## @param _center The center of the circle as a [code]Vector2[/code].
 ## @param _angle_center The angle at the center of the sector in radians.
 ## @param _angle_width The width of the sector in radians.
@@ -576,7 +593,7 @@ func draw_item_image_at_position(
 ## @return A [code]PackedVector2Array[/code] containing the points of the sector. [br]
 ## The array includes points for both the inner and outer edges of the sector.
 static func get_sector_points(
-			_center: Vector2,
+			_sector_center: Vector2,
 			_angle_center: float,
 			_angle_width: float,
 			_inner_radius: float,
@@ -596,8 +613,8 @@ static func get_sector_points(
 		var t := float(i) / _resolution
 		var angle := lerp(start_angle, end_angle, t)
 		var dir := Vector2.from_angle(angle)
-		inner_p.append(dir * _inner_radius + _center)
-		outer_p.append(dir * _outer_radius + _center)
+		inner_p.append(dir * _inner_radius + _sector_center)
+		outer_p.append(dir * _outer_radius + _sector_center)
 	
 	outer_p.reverse()
 	inner_p.append_array(outer_p)
