@@ -23,7 +23,7 @@ const SQRT_2: float = 1.4142
 
 ## The list of menu items to display. Each item must be a [code]RadialMenuItem[/code]. [br]
 ## When set, the menu will update its layout to include the new items. [br]
-## Each item in the array should define properties such as `option_name`, `description`, and `image`.
+## Each item in the array should define properties such as `name`, `description`, and `image`.
 @export var items: Array[RadialMenuItem] = []:
 	set(val):
 		items = val
@@ -59,7 +59,7 @@ var _is_focus_action_pressed := false
 #endregion
 
 #region Signals
-signal selected(selected_idx: int)
+signal selected(selected_idx: int, selected_item_name: String)
 signal selection_changed(selected_idx: int)
 signal canceled
 #endregion
@@ -84,9 +84,9 @@ func validate_items() -> bool:
 		if not item:
 			items_validated = false
 			return false
-		if not item.image:
-			items_validated = false
-			return false
+		#if not item.texture:
+			#items_validated = false
+			#return false
 	
 	items_validated = true
 	return items_validated
@@ -192,6 +192,7 @@ func _calculate_size_values() -> void:
 	
 	# sectors
 	items_radial_count = items.size() if !settings.first_item_centered else items.size() - 1
+	items_radial_count == 0
 	sector_angle_full = TAU/items_radial_count
 	sector_resolution = max(int(settings.resolution / items_radial_count), 2)
 	
@@ -357,7 +358,7 @@ func _draw_icons() -> void:
 		
 		var color: Color = settings.hover_child_modulate if is_hovered else settings.item_modulate
 		
-		draw_item_image_at_position(idx, image_pos, color, item_angle_pos)
+		draw_item_image_at_position(i, image_pos, color, item_angle_pos)
 
 
 func _draw_center_preview() -> void:
@@ -366,12 +367,14 @@ func _draw_center_preview() -> void:
 	
 	var item: RadialMenuItem = items[selected_idx]
 	var _encircled_square_size: float = dim_inner_radius * SQRT_2
-	var _image_rect: Rect2 = Rect2(Vector2.ZERO ,item.image.get_size())
+	var _image_rect: Rect2 = Rect2()
+	if item.texture:
+		_image_rect = Rect2(Vector2.ZERO ,item.texture.get_size())
 	#var _center_rect: Rect2 = resized_rect_to_dimension(_image_rect, _encircled_square_size * settings.hover_size_factor)
 	
 	# calculate text occupied space
 	var _item_name_size: Vector2 = settings.preview_font.get_string_size(
-		item.option_name,
+		item.name,
 		HORIZONTAL_ALIGNMENT_CENTER,
 		_encircled_square_size,
 		settings.preview_font_size_name,
@@ -385,13 +388,14 @@ func _draw_center_preview() -> void:
 		TextServer.JUSTIFICATION_WORD_BOUND
 	)
 	
-	var _icon_size: float = _encircled_square_size - _item_name_size.y - _description_size.y
-	_icon_size *= settings.preview_size_factor
-	var _icon_preview_rect: Rect2 = resized_rect_to_dimension(
-		_image_rect,
-		_icon_size
-	)
-	draw_item_image_at_position(selected_idx, Vector2.ZERO, settings.item_modulate, PI/2, _icon_preview_rect)
+	if item.texture:
+		var _icon_size: float = _encircled_square_size - _item_name_size.y - _description_size.y
+		_icon_size *= settings.preview_size_factor
+		var _icon_preview_rect: Rect2 = resized_rect_to_dimension(
+			_image_rect,
+			_icon_size
+		)
+		draw_item_image_at_position(selected_idx, Vector2.ZERO, settings.item_modulate, PI/2, _icon_preview_rect)
 	
 	# text option name and description
 	var _top_left_pos: Vector2 = Vector2(-_encircled_square_size, -_encircled_square_size)/2.0 + center
@@ -400,7 +404,7 @@ func _draw_center_preview() -> void:
 	draw_string(
 		settings.preview_font,
 		_top_left_pos + Vector2.DOWN * _item_name_size.y,
-		item.option_name,
+		item.name,
 		HORIZONTAL_ALIGNMENT_CENTER,
 		_encircled_square_size,
 		settings.preview_font_size_name,
@@ -423,7 +427,7 @@ func _draw_center_preview() -> void:
 func _process(_delta: float) -> void:
 	if !_is_editor:
 		return
-	if preview_draw and self == EditorInterface.get_edited_scene_root():
+	if preview_draw and !EditorInterface.get_edited_scene_root() is RadialMenu3DFlat:
 		hover_at_local_position(get_local_mouse_position())
 		update()
 #endregion
@@ -493,10 +497,14 @@ func select() -> void: # select currently hovered element
 	if selected_idx == -1:
 		cancel()
 	else:
-		selected.emit(selected_idx)
 		var item: RadialMenuItem = items[selected_idx]
-		print("Slot selected: %s" % item.option_name)
-		if item.callback:
+		selected.emit(selected_idx, item.name)
+		if item.callback_name:
+			if has_method(item.callback_name):
+				call_deferred(item.callback_name)
+			else:
+				push_warning("Item %d (%s) has a callback_name but no method has been found. Make sure to extend this class and add the method to the extended script" % [selected_idx, item.name])
+		elif item.callback:
 			item.callback.call_deferred()
 	
 	selected_idx = -1
@@ -528,7 +536,7 @@ func draw_item_image_at_position(
 	
 	var _item: RadialMenuItem = items[_item_idx]
 	var _is_selected: bool = selected_idx == _item_idx
-	var _texture: Texture2D = _item.image
+	var _texture: Texture2D = _item.texture
 	if not _texture: return
 	
 	var _rotation: float = 0.0
@@ -576,6 +584,7 @@ static func get_sector_points(
 			_resolution: int,
 		) -> PackedVector2Array:
 	
+	_angle_width = clamp(_angle_width, 0, TAU - .00001)
 	var half_width: float = _angle_width * 0.5
 	var start_angle: float = _angle_center - half_width
 	var end_angle: float = _angle_center + half_width

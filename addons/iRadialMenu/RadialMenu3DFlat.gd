@@ -323,6 +323,8 @@ func _input(event: InputEvent) -> void:
 		var event_2d := event.duplicate(true)
 		event_2d.position = m_pos
 		sub_viewport.push_input(event_2d)
+	else:
+		sub_viewport.push_input(event)
 #endregion
 
 

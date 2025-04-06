@@ -1,52 +1,40 @@
-[gd_scene load_steps=16 format=3 uid="uid://bwc8b2udlcvuq"]
+[gd_scene load_steps=12 format=3 uid="uid://bwc8b2udlcvuq"]
 
 [ext_resource type="Script" uid="uid://da4pf8umd7lhq" path="res://addons/iRadialMenu/RadialMenu2D.gd" id="1_agg0q"]
 [ext_resource type="Script" uid="uid://bh7dqd6irweox" path="res://addons/iRadialMenu/RadialMenuItem.gd" id="2_uu7ei"]
 [ext_resource type="Texture2D" uid="uid://n4qnbdn57bda" path="res://addons/iRadialMenu/examples/assets/Icons/carrot.svg" id="3_uu7ei"]
-[ext_resource type="Texture2D" uid="uid://cg16vj463vrw1" path="res://addons/iRadialMenu/examples/assets/Icons/grab.svg" id="4_bf82l"]
-[ext_resource type="Texture2D" uid="uid://dse1m6m5e7p34" path="res://addons/iRadialMenu/examples/assets/Icons/sandwich.svg" id="5_m2ejf"]
-[ext_resource type="Texture2D" uid="uid://d3jyjuyulbl08" path="res://addons/iRadialMenu/examples/assets/Icons/cooking-pot.svg" id="6_47sim"]
+[ext_resource type="Texture2D" uid="uid://dcd8i2yeqmq6x" path="res://addons/iRadialMenu/examples/assets/Icons/door-handle.svg" id="4_giqb8"]
 [ext_resource type="Script" uid="uid://dc0nfn1i4kqbg" path="res://addons/iRadialMenu/RadialMenuSettings.gd" id="6_uu7ei"]
-[ext_resource type="Texture2D" uid="uid://bqi8wq6o4grn2" path="res://addons/iRadialMenu/examples/assets/Icons/throwing-ball.svg" id="7_ta8vc"]
 [ext_resource type="FontFile" uid="uid://b54iuyamwm2nt" path="res://addons/iRadialMenu/examples/assets/Font/Cleanow.ttf" id="8_m2ejf"]
 
 [sub_resource type="Resource" id="Resource_agg0q"]
 script = ExtResource("2_uu7ei")
-option_name = "Carrot"
+name = "Carrot"
 description = "A delicious Carrot"
-image = ExtResource("3_uu7ei")
+texture = ExtResource("3_uu7ei")
 callback_name = ""
 metadata/_custom_type_script = "uid://bh7dqd6irweox"
 
-[sub_resource type="Resource" id="Resource_0sdxx"]
+[sub_resource type="Resource" id="Resource_id8lf"]
 script = ExtResource("2_uu7ei")
-option_name = "Grab"
-description = "Pick up {}"
-image = ExtResource("4_bf82l")
-callback_name = ""
-metadata/_custom_type_script = "uid://bh7dqd6irweox"
-
-[sub_resource type="Resource" id="Resource_s8fc6"]
-script = ExtResource("2_uu7ei")
-option_name = "Sandwich"
-description = "Hungry?"
-image = ExtResource("5_m2ejf")
-callback_name = ""
-metadata/_custom_type_script = "uid://bh7dqd6irweox"
-
-[sub_resource type="Resource" id="Resource_io4nw"]
-script = ExtResource("2_uu7ei")
-option_name = ""
+name = "Open Door"
 description = ""
-image = ExtResource("6_47sim")
+texture = ExtResource("4_giqb8")
 callback_name = ""
 metadata/_custom_type_script = "uid://bh7dqd6irweox"
 
-[sub_resource type="Resource" id="Resource_01do5"]
+[sub_resource type="Resource" id="Resource_to6u7"]
 script = ExtResource("2_uu7ei")
-option_name = ""
+name = "Another Carrot"
+description = "Beautiful"
+texture = ExtResource("3_uu7ei")
+callback_name = ""
+metadata/_custom_type_script = "uid://bh7dqd6irweox"
+
+[sub_resource type="Resource" id="Resource_giqb8"]
+script = ExtResource("2_uu7ei")
+name = ""
 description = ""
-image = ExtResource("7_ta8vc")
 callback_name = ""
 metadata/_custom_type_script = "uid://bh7dqd6irweox"
 
@@ -108,6 +96,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_agg0q")
-items = Array[ExtResource("2_uu7ei")]([SubResource("Resource_agg0q"), SubResource("Resource_0sdxx"), SubResource("Resource_s8fc6"), SubResource("Resource_io4nw"), SubResource("Resource_01do5")])
+suppress_warnings = true
+items = Array[ExtResource("2_uu7ei")]([SubResource("Resource_agg0q"), SubResource("Resource_id8lf"), SubResource("Resource_to6u7"), SubResource("Resource_giqb8")])
 settings = SubResource("Resource_r5tc8")
 metadata/_custom_type_script = "uid://da4pf8umd7lhq"

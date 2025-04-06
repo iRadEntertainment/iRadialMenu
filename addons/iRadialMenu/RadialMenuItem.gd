@@ -1,9 +1,11 @@
 @tool
 class_name RadialMenuItem extends Resource
 
-@export var option_name: String = ""
+## Item item name as [String]
+@export var name: String = ""
+## Item item name as [String]
 @export var description: String = ""
-@export var image: Texture2D
+@export var texture: Texture2D
 @export var callback_name: String = ""
 var callback: Callable
 var format_dictionary: Dictionary

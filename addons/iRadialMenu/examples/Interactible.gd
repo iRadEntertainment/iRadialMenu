@@ -52,7 +52,7 @@ func _ready() -> void:
 	#mouse_entered.connect(highlight.bind(true))
 	#mouse_exited.connect(highlight.bind(false))
 	
-	add_to_group("interactibles")
+	add_to_group("interactibles", true)
 	
 	# load and apply next pass material for the highlight
 	next_pass_material = load("res://addons/iRadialMenu/examples/assets/outline_next_pass.tres").duplicate()

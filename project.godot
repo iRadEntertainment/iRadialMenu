@@ -24,3 +24,7 @@ window/stretch/mode="canvas_items"
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/iRadialMenu/plugin.cfg")
+
+[physics]
+
+3d/physics_engine="Jolt Physics"

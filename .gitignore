@@ -16,7 +16,7 @@ data_*/
 mono_crash.*.json
 
 # project-specific ignores
+*.blend*
 .vscode/
 .ignore/
-*.kra
-*.kra~
+*.kra*

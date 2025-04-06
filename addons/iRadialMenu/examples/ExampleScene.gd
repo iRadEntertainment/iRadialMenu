@@ -3,7 +3,6 @@ extends Node3D
 
 var hovered_body: PhysicsBody3D
 var picked_body: PhysicsBody3D
-@onready var pin_joint_3d: PinJoint3D = $Player/Camera3D/PickerBody/PinJoint3D
 
 @export var main_radial_menu_items: Array[RadialMenuItem]
 @export_flags_3d_physics var interactible_collision_mask = 0xFFFFFFFF
@@ -74,8 +73,8 @@ func _debug_radial_menu() -> void:
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
 		if event.is_released() and event.button_index == MOUSE_BUTTON_LEFT:
-			if not pin_joint_3d.node_b.is_empty():
-				pin_joint_3d.node_b = ""
+			if not %PinJoint3D1.node_b.is_empty():
+				%PinJoint3D1.node_b = ""
 		if event.is_pressed() \
 				and event.button_index == MOUSE_BUTTON_MIDDLE \
 				and Input.mouse_mode != Input.MOUSE_MODE_CAPTURED:
@@ -91,19 +90,25 @@ func _input(event: InputEvent) -> void:
 
 
 func add_banana_to_world(_world_pos: Vector3) -> void:
-	var new_banananana: RigidBody3D= $Interactibles/Banana.duplicate()
+	var new_banananana: RigidBody3D = preload("res://addons/iRadialMenu/examples/instances/banana.tscn").instantiate()
 	new_banananana.position = _world_pos
-	$Interactibles.add_child(new_banananana)
+	new_banananana.rotate_y(randf_range(0, TAU))
+	%Interactibles.add_child(new_banananana)
 
 
 func _on_interactible_just_left_clicked(interactible: Interactible, body: PhysicsBody3D) -> void:
-	print(body.name, " left clicked")
-	$Player/Camera3D/PickerBody.global_position = intersect_point
-	pin_joint_3d.node_b = pin_joint_3d.get_path_to(hovered_body)
-	picked_body = hovered_body
+	if not hovered_body:
+		return
+	
+	# pick rigid bodies
+	if body is RigidBody3D:
+		%PickerBody.global_position = intersect_point
+		%PinJoint3D1.node_b = %PinJoint3D1.get_path_to(hovered_body)
+		picked_body = hovered_body
 
 
 func _on_interactible_just_right_clicked(interactible: Interactible, body: PhysicsBody3D) -> void:
+	
 	if radial_menu.visible: return
 	radial_menu.items = interactible.radial_items
 	radial_menu.popup_screen_center()
