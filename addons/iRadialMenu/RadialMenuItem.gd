@@ -10,6 +10,7 @@ class_name RadialMenuItem extends Resource
 ## This text is shown in the center preview when the item is hovered over and
 ## is passed as a parameter in the [signal RadialMenu2D.selected] signal.
 @export var name: String = ""
+
 ## A detailed description of the menu item.
 ## This text is displayed in the center preview when the item is hovered over,
 ## typically shown below the item name to provide additional context.
