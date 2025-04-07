@@ -20,3 +20,4 @@ mono_crash.*.json
 .vscode/
 .ignore/
 *.kra*
+*.mp4

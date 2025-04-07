@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=3 uid="uid://c2n486inebntt"]
+[gd_scene load_steps=46 format=3 uid="uid://c2n486inebntt"]
 
 [ext_resource type="Script" uid="uid://5nupk7xpupoh" path="res://addons/iRadialMenu/examples/ExampleScene.gd" id="1_0d7d0"]
 [ext_resource type="Script" uid="uid://conyevxgcg0rc" path="res://addons/iRadialMenu/RadialMenu3DFlat.gd" id="2_2m568"]
@@ -23,6 +23,8 @@
 [ext_resource type="PackedScene" uid="uid://r8y6mw3lgltc" path="res://addons/iRadialMenu/examples/instances/eggplant.tscn" id="17_sbpof"]
 [ext_resource type="PackedScene" uid="uid://cns6hh6ht6373" path="res://addons/iRadialMenu/examples/instances/kani_plush.tscn" id="17_w45ar"]
 [ext_resource type="PackedScene" uid="uid://bbshegy0bcf3t" path="res://addons/iRadialMenu/examples/instances/egg.tscn" id="18_w45ar"]
+[ext_resource type="Material" uid="uid://mnld3h84hpp2" path="res://addons/iRadialMenu/examples/assets/crt.material" id="24_nsecs"]
+[ext_resource type="VideoStream" uid="uid://b0n7v4j7l8b21" path="res://addons/iRadialMenu/examples/assets/panda_no.ogv" id="24_y0hjm"]
 
 [sub_resource type="Resource" id="Resource_wfcuc"]
 script = ExtResource("6_poqfy")
@@ -197,6 +199,21 @@ corner_radius_top_right = 8
 corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
 
+[sub_resource type="ViewportTexture" id="ViewportTexture_nsecs"]
+viewport_path = NodePath("MeshInstance3D/SubViewport")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ifmut"]
+resource_local_to_scene = true
+albedo_color = Color(0.094685, 0.094685, 0.094685, 1)
+emission_enabled = true
+emission_texture = SubResource("ViewportTexture_nsecs")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_jsb4a"]
+resource_local_to_scene = true
+material = SubResource("StandardMaterial3D_ifmut")
+size = Vector2(0.4, 0.3)
+orientation = 2
+
 [node name="ExampleScene" type="Node3D"]
 script = ExtResource("1_0d7d0")
 
@@ -312,3 +329,34 @@ grow_horizontal = 0
 grow_vertical = 0
 theme_override_styles/normal = SubResource("StyleBoxFlat_tumbf")
 text = "Use CTRL to toggle between Mouse Capture"
+
+[node name="crt_test" type="TextureRect" parent="GUI"]
+visible = false
+material = ExtResource("24_nsecs")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("11_sbpof")
+stretch_mode = 5
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.681692, 0, 0.731639, 0, 1, 0, -0.731639, 0, 0.681692, -2.07433, 1.5425, -2.12524)
+mesh = SubResource("PlaneMesh_jsb4a")
+
+[node name="SubViewport" type="SubViewport" parent="MeshInstance3D"]
+size = Vector2i(640, 400)
+
+[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="MeshInstance3D/SubViewport"]
+material = ExtResource("24_nsecs")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stream = ExtResource("24_y0hjm")
+volume_db = -80.0
+autoplay = true
+expand = true
+loop = true
