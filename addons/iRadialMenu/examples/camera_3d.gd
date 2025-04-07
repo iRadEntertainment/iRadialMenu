@@ -2,6 +2,8 @@ extends Camera3D
 
 @export_range(0, 10, 0.01) var sensitivity : float = 3
 
+var tw: Tween
+@onready var cam_height_default: float = position.y
 
 func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
@@ -25,8 +27,23 @@ func _input(event: InputEvent) -> void:
 	
 	# toggle capture
 	if event is InputEventKey:
-		if event.is_pressed() and !event.is_echo() and event.keycode == KEY_Q:
+		if event.is_echo():
+			return
+		if event.keycode == KEY_Q and event.is_pressed():
 			if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
 				Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 			elif Input.mouse_mode == Input.MOUSE_MODE_VISIBLE:
 				Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+		elif event.keycode == KEY_CTRL:
+			var target_height: float
+			if event.is_pressed():
+				target_height = cam_height_default - 1.2
+			else:
+				target_height = cam_height_default
+				
+			if tw:
+				tw.kill()
+			
+			tw = create_tween()
+			tw.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_SPRING)
+			tw.tween_property(self, ^"position:y", target_height, 0.35)
