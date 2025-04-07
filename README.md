@@ -129,3 +129,9 @@ In the example scene there is an _easter egg_ (the main menu) where you can have
 [![Seano4D](https://static-cdn.jtvnw.net/jtv_user_pictures/8e6809ec-e7a2-46a5-8af3-15554d12e23f-profile_image-70x70.png)](https://www.twitch.tv/seano4d)
 [![AnihanShard](https://static-cdn.jtvnw.net/jtv_user_pictures/6a730e3a-7925-41ce-9505-cbd5a00e7536-profile_image-70x70.png)](https://www.twitch.tv/anihanshard)
 [![WardstoneStudio](https://static-cdn.jtvnw.net/jtv_user_pictures/e0fba9f5-6a15-4d37-b898-b285414e72a8-profile_image-70x70.jpeg)](https://www.twitch.tv/wardstonestudio)
+[![Foolbox](https://static-cdn.jtvnw.net/jtv_user_pictures/4a0085b1-1c8c-4780-899c-2c7c6e2e8e57-profile_image-70x70.png)](https://www.twitch.tv/foolbox)
+[![IrishJohnGames](https://static-cdn.jtvnw.net/jtv_user_pictures/16630846-e4c8-4ff2-82c7-0f02ed2b5ff6-profile_image-70x70.png)](https://www.twitch.tv/irishjohngames)
+
+Cute plush:
+
+[![Kani_dev](https://static-cdn.jtvnw.net/jtv_user_pictures/7e6b3d9f-3498-4662-b71b-19fd314148c3-profile_image-70x70.png)](https://www.twitch.tv/kani_dev)

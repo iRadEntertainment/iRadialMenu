@@ -1,7 +1,9 @@
-[gd_scene load_steps=12 format=4 uid="uid://b13m3vwlu5qmi"]
+[gd_scene load_steps=14 format=4 uid="uid://b13m3vwlu5qmi"]
 
 [ext_resource type="Script" uid="uid://ciqtxp1oq6pn8" path="res://addons/iRadialMenu/examples/Interactible.gd" id="1_8pkpo"]
 [ext_resource type="Script" uid="uid://bh7dqd6irweox" path="res://addons/iRadialMenu/RadialMenuItem.gd" id="2_3yk5e"]
+[ext_resource type="Texture2D" uid="uid://cg16vj463vrw1" path="res://addons/iRadialMenu/examples/assets/Icons/grab.svg" id="3_w7wqs"]
+[ext_resource type="Texture2D" uid="uid://d0pl6sa1q4xxr" path="res://addons/iRadialMenu/examples/assets/Icons/eating.svg" id="4_8bv4b"]
 [ext_resource type="Texture2D" uid="uid://bvev6t4nelw1u" path="res://addons/iRadialMenu/examples/assets/kenney_food-kit/Models/GLB format/Textures/colormap.png" id="5_thcgi"]
 [ext_resource type="Material" uid="uid://da7ju4dwr7lua" path="res://addons/iRadialMenu/examples/assets/outline_next_pass.tres" id="6_3gfou"]
 
@@ -12,15 +14,17 @@ absorbent = true
 
 [sub_resource type="Resource" id="Resource_3lgu8"]
 script = ExtResource("2_3yk5e")
-name = null
-description = "A delicious aubergine"
+name = "Eat"
+description = "Yummy!"
+texture = ExtResource("4_8bv4b")
 callback_name = ""
 metadata/_custom_type_script = "uid://bh7dqd6irweox"
 
 [sub_resource type="Resource" id="Resource_l3u6p"]
 script = ExtResource("2_3yk5e")
-name = null
-description = "Hungry?"
+name = "Grab"
+description = "Where? Why?"
+texture = ExtResource("3_w7wqs")
 callback_name = ""
 metadata/_custom_type_script = "uid://bh7dqd6irweox"
 

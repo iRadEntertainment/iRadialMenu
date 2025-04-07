@@ -1,4 +1,4 @@
-[gd_scene load_steps=47 format=4 uid="uid://bho2erxj4orht"]
+[gd_scene load_steps=46 format=4 uid="uid://bho2erxj4orht"]
 
 [ext_resource type="PackedScene" uid="uid://c35rsgng7lh12" path="res://addons/iRadialMenu/examples/assets/Meshes/GLB/Counter.gltf" id="1_cg6bm"]
 [ext_resource type="PackedScene" uid="uid://b4nbpeht3ov8l" path="res://addons/iRadialMenu/examples/assets/Meshes/GLB/Wall.gltf" id="2_cu21e"]
@@ -12,8 +12,8 @@
 [ext_resource type="PackedScene" uid="uid://batlhhonrrcw3" path="res://addons/iRadialMenu/examples/assets/Meshes/GLB/Chair.gltf" id="10_v5jv7"]
 [ext_resource type="PackedScene" uid="uid://cgp82vwgcxi2h" path="res://addons/iRadialMenu/examples/assets/Meshes/GLB/FloorTiie.gltf" id="12_b7iid"]
 [ext_resource type="PackedScene" uid="uid://dka76jibjmmsd" path="res://addons/iRadialMenu/examples/assets/Meshes/GLB/CeilingLamp.gltf" id="12_ewwjk"]
+[ext_resource type="PackedScene" uid="uid://ceonm0xeawe8q" path="res://addons/iRadialMenu/examples/instances/tv.tscn" id="12_nqa7i"]
 [ext_resource type="Script" uid="uid://dvogolhe7rnik" path="res://addons/iRadialMenu/examples/assets/Meshes/Scenes/interactible_door.gd" id="14_udfqv"]
-[ext_resource type="PackedScene" uid="uid://4bx5x1pj82li" path="res://addons/iRadialMenu/examples/assets/televisionVintage.glb" id="15_bqh5j"]
 [ext_resource type="PackedScene" uid="uid://cj7i7ov2ot5nh" path="res://addons/iRadialMenu/examples/assets/table.glb" id="16_v0i14"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_bqh5j"]
@@ -159,9 +159,6 @@ size = Vector3(1.97314, 1.08472, 0.662964)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_j7g74"]
 size = Vector3(0.8, 0.704785, 1.5)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_fdo0a"]
-size = Vector3(0.400146, 0.262878, 0.245544)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_8ok21"]
 size = Vector3(0.837921, 0.327759, 0.44458)
@@ -405,6 +402,7 @@ metadata/_custom_type_script = "uid://ciqtxp1oq6pn8"
 
 [node name="spawn_position" type="Marker3D" parent="Env/Furnitures/Fridge/Interactible"]
 unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.57628e-07, 1.40556, -0.616796)
 
 [node name="CounterHigh" type="MeshInstance3D" parent="Env/Furnitures"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 2.674, 0, 1.217)
@@ -438,14 +436,8 @@ transform = Transform3D(5.96046e-08, 0, -1, 0, 1, 0, 1, 0, 5.96046e-08, 0.110785
 [node name="Chair5" parent="Env/Furnitures" instance=ExtResource("10_v5jv7")]
 transform = Transform3D(-1.19209e-07, 0, 1, 0, 1, 0, -1, 0, -1.19209e-07, 0.110785, 0, -0.944499)
 
-[node name="TV" type="StaticBody3D" parent="Env/Furnitures"]
+[node name="TV" parent="Env/Furnitures" instance=ExtResource("12_nqa7i")]
 transform = Transform3D(0.791187, 0, 1.83685, 0, 2, 0, -1.83685, 0, 0.791187, -2.43718, 0.656738, -1.70899)
-
-[node name="Mesh" parent="Env/Furnitures/TV" instance=ExtResource("15_bqh5j")]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Env/Furnitures/TV"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.203491, 0.138214, -0.119965)
-shape = SubResource("BoxShape3D_fdo0a")
 
 [node name="Table2" type="StaticBody3D" parent="Env/Furnitures"]
 transform = Transform3D(-8.74228e-08, 0, -2, 0, 2, 0, 2, 0, -8.74228e-08, -2.90738, -1.19209e-07, -2.87322)

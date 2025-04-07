@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://ceonm0xeawe8q"]
+
+[ext_resource type="PackedScene" uid="uid://4bx5x1pj82li" path="res://addons/iRadialMenu/examples/assets/televisionVintage.glb" id="1_2ugba"]
+[ext_resource type="Script" uid="uid://ciqtxp1oq6pn8" path="res://addons/iRadialMenu/examples/Interactible.gd" id="2_74gqf"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_fdo0a"]
+size = Vector3(0.400146, 0.262878, 0.245544)
+
+[node name="TV" type="StaticBody3D"]
+transform = Transform3D(0.791187, 0, 1.83685, 0, 2, 0, -1.83685, 0, 0.791187, 0, 0, 0)
+
+[node name="Mesh" parent="." instance=ExtResource("1_2ugba")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.203491, 0.138214, -0.119965)
+shape = SubResource("BoxShape3D_fdo0a")
+
+[node name="Interactible" type="Node3D" parent="."]
+script = ExtResource("2_74gqf")
+metadata/_custom_type_script = "uid://ciqtxp1oq6pn8"
