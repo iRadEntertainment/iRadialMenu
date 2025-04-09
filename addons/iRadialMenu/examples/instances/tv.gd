@@ -40,7 +40,8 @@ var streamers_dict = {
 	},
 	"FoolBox": {"description": "furuba",
 			"texture": preload("res://addons/iRadialMenu/examples/assets/FeaturedStreamers/fullbocksoo.png"),
-			"twitch_link": "https://www.twitch.tv/foolbox"
+			"twitch_link": "https://www.twitch.tv/foolbox",
+			"trailer": "res://addons/iRadialMenu/examples/assets/videos/Block-Shop_Trailer3.ogv"
 	},
 	"IrishJohn": {"description": "Elbows",
 			"texture": preload("res://addons/iRadialMenu/examples/assets/FeaturedStreamers/irishjohn.png"),
