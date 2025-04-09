@@ -22,7 +22,7 @@ A Godot 4 addon that provides customizable radial menu components for your proje
 
 ## Installation
 
-1. Download or clone this repository into your Godot project's `addons/` folder.
+1. Download or clone this repository, copy the content of `addons/` into your Godot project's `addons/` folder.
 2. Enable the addon in your project settings under `Project > Project Settings > Plugins`.
 3. You can now use the RadialMenu Nodes.
 
@@ -36,15 +36,18 @@ A Godot 4 addon that provides customizable radial menu components for your proje
 2. Create an array of `RadialMenuItem` resources and assign it to the `items` property.
 3. Customize the menu's appearance and behavior using the `RadialMenuSettings` resource.
 4. Use the `selected`, `selection_changed`, and `canceled` signals to handle user interactions.
+5. Open the built-in documentation and search for `RadialMenu2D` to get a better understanding of it's properties and methods.
+6. The `RadialMenu2D` code is meant to be modified and adapted to your project needs.
 
 ### RadialMenu2D
 
 1. Add the `RadialMenu2D` node to your scene.
-2. Create an array of `RadialMenuItem` resources, each representing a menu item. Configure their properties such as `option_name`, `description`, `image`, and `callback_name`.
+2. Create an array of `RadialMenuItem` resources, each representing a menu item. Configure their properties such as `name`, `description`, `texure`, and `callback_name`.
 3. Assign the array of `RadialMenuItem` resources to the `items` property of the `RadialMenu2D` node.
 4. Customize the appearance and behavior of the radial menu by creating and assigning a `RadialMenuSettings` resource to the `settings` property of the `RadialMenu2D` node.
 5. Both the `items` and `settings` properties are exposed in the Godot inspector, allowing you to edit them directly in the editor or via code.
 6. Use the signals `selected`, `selection_changed`, and `canceled` to handle user interactions with the menu.
+7. Using the inspector, you can preview the radial menu in the editor if you enable the `preview_draw` property.
 
 ### RadialMenu3DFlat
 
@@ -59,14 +62,16 @@ A Godot 4 addon that provides customizable radial menu components for your proje
 ![RadialMenuItem_script](media/readme-item_script.png)
 
 The `RadialMenuItem` resource represents a single menu item. It includes the following properties:
-- `option_name`: The name of the menu option.
-- `description`: A description of the menu option.
-- `image`: A texture to display for the menu item.
-- `callback_name`: The name of the callback function to invoke when the item is selected.
+- `name`: The name of the menu option. _exposed in the inspector_
+- `description`: A description of the menu option. _exposed in the inspector_
+- `texture`: A texture to display for the menu item. _exposed in the inspector_
+- `callback_name`: The name of the callback function to invoke when the item is selected. _exposed in the inspector_
+- `callback`: A direct callable reference to execute when the item is selected. Automatically called on selection.
+
 
 ### RadialMenuSettings
 
-The `RadialMenuSettings` resource allows you to configure the appearance and behavior of the radial menu. Key properties include:
+The `RadialMenuSettings` resource allows you to configure the appearance and behavior of the radial menu. Key properties include for example:
 - `start_angle_offset`: Adjusts the starting angle of the menu.
 - `bg_circle_color`: Sets the background color of the menu.
 - `hover_color`: Defines the color of the hovered menu item.
