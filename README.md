@@ -144,6 +144,8 @@ In the example scene there is an _easter egg_ (the main menu) where you can have
 [![WardstoneStudio](https://static-cdn.jtvnw.net/jtv_user_pictures/e0fba9f5-6a15-4d37-b898-b285414e72a8-profile_image-70x70.jpeg)](https://www.twitch.tv/wardstonestudio)
 [![Foolbox](https://static-cdn.jtvnw.net/jtv_user_pictures/4a0085b1-1c8c-4780-899c-2c7c6e2e8e57-profile_image-70x70.png)](https://www.twitch.tv/foolbox)
 [![IrishJohnGames](https://static-cdn.jtvnw.net/jtv_user_pictures/16630846-e4c8-4ff2-82c7-0f02ed2b5ff6-profile_image-70x70.png)](https://www.twitch.tv/irishjohngames)
+[![PracticalNPC](https://static-cdn.jtvnw.net/jtv_user_pictures/0ce658ab-2346-4edb-90ff-1e56a3086613-profile_image-70x70.jpeg)](https://www.twitch.tv/practicalnpc)
+[![BrainoidGames](https://static-cdn.jtvnw.net/jtv_user_pictures/brainoidgames-profile_image-c8d330957605311f-70x70.jpeg)](https://www.twitch.tv/brainoidgames)
 
 Cute plush:
 

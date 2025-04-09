@@ -208,3 +208,6 @@ shape = SubResource("BoxShape3D_fdo0a")
 [node name="Interactible" type="Node3D" parent="."]
 script = ExtResource("2_74gqf")
 metadata/_custom_type_script = "uid://ciqtxp1oq6pn8"
+
+[node name="HTTPRequest" type="HTTPRequest" parent="."]
+unique_name_in_owner = true

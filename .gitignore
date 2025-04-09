@@ -6,6 +6,7 @@
 .import/
 export.cfg
 export_presets.cfg
+.tmp*
 
 # Imported translations (automatically generated from CSV files)
 *.translation
@@ -21,3 +22,4 @@ mono_crash.*.json
 .ignore/
 *.kra*
 *.mp4
+*.mov*
