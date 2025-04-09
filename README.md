@@ -98,6 +98,14 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE.md) fi
 Special thanks to the Godot community for their support and inspiration.
 A big thank you to the Twitch community for their support, feedback, and encouragement during the development of this project.
 
+- Addon beta test and feedbacks:
+<div align="center">
+    <a href="https://twitch.tv/symbol24">
+        <img src="https://static-cdn.jtvnw.net/jtv_user_pictures/ab4ccfdb-2d3b-4bcd-bb66-9634bdf8486e-profile_image-70x70.png" alt="Symbol24" />
+    </a>
+</div>
+
+
 - The 2D part of the `RadialMenu2D.gd` class is based on the work of [diklor](https://github.com/diklor/advanced_radial_menu).
 
 - Thanks to Andrea "SirAeron" Di Bartolo, for providing 3D model assets for the example scene. Check out his portfolio on [Artstation](https://www.artstation.com/andreadbx).
