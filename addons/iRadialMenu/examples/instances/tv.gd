@@ -4,6 +4,10 @@ extends StaticBody3D
 @onready var television_vintage_clone_: MeshInstance3D = $"televisionVintage(Clone)"
 @onready var sub_viewport: SubViewport = $"televisionVintage(Clone)/SubViewport"
 
+var radial_menu: RadialMenu3DFlat:
+	get():
+		return get_tree().current_scene.radial_menu
+
 var streamers_dict = {
 	"Fin": {"description": "is fine",
 			"texture": preload("res://addons/iRadialMenu/examples/assets/FeaturedStreamers/finisfine.png"),
@@ -78,13 +82,51 @@ func _setup_streamer_items() -> void:
 
 
 func _on_streamer_pressed(streamer_name: String) -> void:
-	var description: String = streamers_dict[streamer_name].get("description", "")
-	var texture: Texture2D = streamers_dict[streamer_name].get("texture", null)
+	radial_menu.items = get_streamer_sub_menu(streamer_name)
+	radial_menu.popup_screen_center()
+
+
+func get_streamer_sub_menu(streamer_name: String) -> Array[RadialMenuItem]:
 	var twitch_link: String = streamers_dict[streamer_name].get("twitch_link", "")
 	var trailer: String = streamers_dict[streamer_name].get("trailer", "")
-	print("Streamer clicked: ", streamer_name)
+	
+	var new_items: Array[RadialMenuItem] = []
+	
+	var item_open_twitch := RadialMenuItem.new()
+	item_open_twitch.name = "Watch %s!" % streamer_name
+	item_open_twitch.description = "Open %s Twitch page" % streamer_name
+	item_open_twitch.texture = load("res://addons/iRadialMenu/examples/assets/Icons/tv.svg")
+	item_open_twitch.callback = open_twitch_page.bind(twitch_link)
+	new_items.append(item_open_twitch)
+	
 	if !trailer.is_empty():
-		print("trailer: ", trailer)
-		%VideoStreamPlayer.stop()
-		%VideoStreamPlayer.stream = load(trailer)
-		%VideoStreamPlayer.play()
+		var item_play_clip := RadialMenuItem.new()
+		item_play_clip.name = "Swap channel"
+		item_play_clip.description = "Something interesting from %s" % streamer_name
+		item_play_clip.texture = load("res://addons/iRadialMenu/examples/assets/Icons/tv-remote.svg")
+		item_play_clip.callback = play_clip.bind(trailer)
+		new_items.append(item_play_clip)
+	
+	var item_go_back := RadialMenuItem.new()
+	item_go_back.name = "Back"
+	item_go_back.description = ""
+	item_go_back.texture = load("res://addons/iRadialMenu/examples/assets/Icons/boomerang.svg")
+	item_go_back.callback = go_to_main_tv_menu
+	new_items.append(item_go_back)
+	
+	return new_items
+
+
+func go_to_main_tv_menu() -> void:
+	radial_menu.items = streamers_items
+	radial_menu.popup_screen_center()
+
+
+func play_clip(clip_path: String) -> void:
+	%VideoStreamPlayer.stop()
+	%VideoStreamPlayer.stream = load(clip_path)
+	%VideoStreamPlayer.play()
+
+
+func open_twitch_page(twitch_link: String) -> void:
+	OS.shell_open(twitch_link)
