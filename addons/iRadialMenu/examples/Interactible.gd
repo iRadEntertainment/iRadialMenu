@@ -94,11 +94,13 @@ func _physics_process(_delta: float) -> void:
 	var temp_hovered: bool = is_hovered
 	if not found:
 		temp_hovered = false
-	elif found == parent:
-		temp_hovered = true
+	else:
+		temp_hovered = found == parent
+	
 	if is_hovered != temp_hovered:
 		is_hovered = temp_hovered
-		just_hovered.emit(self, parent)
+		if is_hovered:
+			just_hovered.emit(self, parent)
 
 
 func highlight(toggle: bool) -> void:

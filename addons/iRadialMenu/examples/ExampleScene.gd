@@ -61,8 +61,8 @@ func check_hovered_interactibles() -> void:
 	var is_interactible: bool = false
 	if collider:
 		is_interactible = collider.has_node(^"Interactible")
+		hovered_body = collider if is_interactible else null
 		if is_interactible:
-			hovered_body = collider
 			intersect_point = res.position
 	else:
 		hovered_body = null
@@ -71,10 +71,11 @@ func check_hovered_interactibles() -> void:
 
 
 func _debug_radial_menu() -> void:
-	var lb_style: StyleBoxFlat = $GUI/Info/lb_mouse_in_radial.get_theme_stylebox("normal")
+	var lb_style: StyleBoxFlat = %lb_mouse_in_radial.get_theme_stylebox("normal")
 	var intersection: Variant = radial_menu._get_mouse_2D_pos_on_plane()
 	lb_style.bg_color = Color.SEA_GREEN if intersection else Color.BROWN
-	$GUI/Info/lb_mouse_in_radial.text = "%s" % intersection
+	%lb_mouse_in_radial.text = "%s" % intersection
+	%lb_hovered.text = "Hovered: %s" % [hovered_body]
 
 
 func _input(event: InputEvent) -> void:
@@ -125,7 +126,8 @@ func _on_interactible_just_right_clicked(interactible: Interactible, body: Physi
 
 
 func _on_interactible_just_hovered(interactible: Interactible, body: PhysicsBody3D) -> void:
-	hovered_body = body
+	pass
+	#hovered_body = body
 
 
 func _on_radial_menu_visibility_changed() -> void:

@@ -1,4 +1,4 @@
-[gd_scene load_steps=46 format=4 uid="uid://bho2erxj4orht"]
+[gd_scene load_steps=45 format=4 uid="uid://bho2erxj4orht"]
 
 [ext_resource type="PackedScene" uid="uid://c35rsgng7lh12" path="res://addons/iRadialMenu/examples/assets/Meshes/GLB/Counter.gltf" id="1_cg6bm"]
 [ext_resource type="PackedScene" uid="uid://b4nbpeht3ov8l" path="res://addons/iRadialMenu/examples/assets/Meshes/GLB/Wall.gltf" id="2_cu21e"]
@@ -173,9 +173,6 @@ size = Vector3(0.8, 0.896069, 3.69727)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_3ebhb"]
 size = Vector3(0.8, 0.896069, 3.97626)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_fkbdc"]
-size = Vector3(0.898901, 2.00417, 0.792999)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_y847h"]
 resource_name = "GradientMap"
@@ -498,7 +495,6 @@ visible = false
 shape = SubResource("WorldBoundaryShape3D_gnr32")
 
 [node name="Furnitures" type="StaticBody3D" parent="Collisions"]
-visible = false
 
 [node name="Counter01" type="CollisionShape3D" parent="Collisions/Furnitures"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.52558, 0.448035, 1.09831)
@@ -507,10 +503,6 @@ shape = SubResource("BoxShape3D_v5jv7")
 [node name="Counter02" type="CollisionShape3D" parent="Collisions/Furnitures"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.947781, 0.448035, 2.55674)
 shape = SubResource("BoxShape3D_3ebhb")
-
-[node name="Fridge" type="CollisionShape3D" parent="Collisions/Furnitures"]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -1.47638, 1.00208, 2.50729)
-shape = SubResource("BoxShape3D_fkbdc")
 
 [node name="Door" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, -2.9)

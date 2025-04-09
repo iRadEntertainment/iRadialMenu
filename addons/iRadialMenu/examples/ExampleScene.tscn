@@ -130,7 +130,7 @@ item_auto_size_factor = 1.015
 item_offset = Vector2(0, 0)
 item_modulate = Color(1, 1, 1, 1)
 preview_show = true
-preview_size_factor = 0.8
+preview_size_factor = 0.66
 preview_font = ExtResource("12_w45ar")
 preview_font_size_name = 26
 preview_font_size_description = 22
@@ -166,7 +166,7 @@ height = 0.2
 radius = 0.3
 height = 1.8
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yoxnx"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tumbf"]
 content_margin_left = 8.0
 content_margin_top = 8.0
 content_margin_right = 8.0
@@ -182,7 +182,7 @@ corner_radius_top_right = 8
 corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tumbf"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yoxnx"]
 content_margin_left = 8.0
 content_margin_top = 8.0
 content_margin_right = 8.0
@@ -208,8 +208,10 @@ script = ExtResource("2_2m568")
 items = Array[ExtResource("6_poqfy")]([SubResource("Resource_wfcuc"), SubResource("Resource_yhmy5"), SubResource("Resource_csfdt"), SubResource("Resource_8njal"), SubResource("Resource_drjwn"), SubResource("Resource_nsecs"), SubResource("Resource_ifmut"), SubResource("Resource_w45ar"), SubResource("Resource_y0hjm")])
 suppress_warnings = true
 preview_draw = true
+preview_movement = true
 settings2D = SubResource("Resource_2m568")
 ui_dimension = 0.75
+tilt_strength = 0.07
 metadata/_custom_type_script = "uid://conyevxgcg0rc"
 
 [node name="Picking" type="Node3D" parent="."]
@@ -293,13 +295,6 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="lb_mouse_in_radial" type="Label" parent="GUI/Info"]
-layout_mode = 1
-offset_right = 188.0
-offset_bottom = 39.0
-theme_override_styles/normal = SubResource("StyleBoxFlat_yoxnx")
-text = "Mouse in Radial menu"
-
 [node name="Label" type="Label" parent="GUI/Info"]
 layout_mode = 1
 anchors_preset = 3
@@ -313,6 +308,24 @@ grow_horizontal = 0
 grow_vertical = 0
 theme_override_styles/normal = SubResource("StyleBoxFlat_tumbf")
 text = "Use Q to toggle between Mouse Capture"
+
+[node name="vb_debug" type="VBoxContainer" parent="GUI/Info"]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+grow_vertical = 2
+
+[node name="lb_mouse_in_radial" type="Label" parent="GUI/Info/vb_debug"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_yoxnx")
+text = "Mouse in Radial menu"
+
+[node name="lb_hovered" type="Label" parent="GUI/Info/vb_debug"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_yoxnx")
+text = "hovered: Null"
 
 [node name="crt_test" type="TextureRect" parent="GUI"]
 visible = false

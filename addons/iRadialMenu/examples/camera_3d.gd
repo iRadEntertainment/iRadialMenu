@@ -37,7 +37,7 @@ func _input(event: InputEvent) -> void:
 		elif event.keycode == KEY_CTRL:
 			var target_height: float
 			if event.is_pressed():
-				target_height = cam_height_default - 1.2
+				target_height = cam_height_default - 0.95
 			else:
 				target_height = cam_height_default
 				
