@@ -20,6 +20,11 @@ A Godot 4 addon that provides customizable radial menu components for your proje
 - Includes a 3D version (`RadialMenu3DFlat`) for projecting radial menus in 3D space.
 - Signals for selection, cancellation, and hover changes.
 
+## Known bugs
+
+1. Signal "selected" fires twice when an item is selected.
+2. EditorInterface class, used for editor preview, cannot be used when export and needs to be commented out.
+
 ## Installation
 
 1. Download or clone this repository, copy the content of `addons/` into your Godot project's `addons/` folder.
