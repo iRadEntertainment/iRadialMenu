@@ -49,10 +49,7 @@ enum SeparatorType{LINE, SECTOR}
 @export_subgroup("Preview", "preview_")
 @export var preview_show := true
 @export_range(0.01, 2.0, 0.01) var preview_size_factor: float = 0.8
-@export var preview_font: Font:
-	get():
-		if preview_font: return preview_font
-		return EditorInterface.get_editor_theme().default_font
+@export var preview_font: Font
 @export_range(4, 72, 1) var preview_font_size_name: int = 26
 @export_range(4, 72, 1) var preview_font_size_description: int = 22
 @export var preview_font_color_name: Color = Color.WHITE
