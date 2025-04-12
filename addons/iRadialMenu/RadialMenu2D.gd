@@ -371,23 +371,30 @@ func _draw_center_preview() -> void:
 	if item.texture:
 		_image_rect = Rect2(Vector2.ZERO ,item.texture.get_size())
 	#var _center_rect: Rect2 = resized_rect_to_dimension(_image_rect, _encircled_square_size * settings.hover_size_factor)
-
+	
+	var _image_center_y: float = 0
+	var _item_name_size := Vector2()
+	var _description_size := Vector2()
+	
 	# calculate text occupied space
-	var _item_name_size: Vector2 = settings.preview_font.get_string_size(
-		item.name,
-		HORIZONTAL_ALIGNMENT_CENTER,
-		_encircled_square_size,
-		settings.preview_font_size_name,
-	)
-	var _description_size: Vector2 = settings.preview_font.get_multiline_string_size(
-		item.description,
-		HORIZONTAL_ALIGNMENT_CENTER,
-		_encircled_square_size,
-		settings.preview_font_size_description, 3,
-		TextServer.BREAK_WORD_BOUND,
-		TextServer.JUSTIFICATION_WORD_BOUND
-	)
-
+	if settings.preview_font:
+		_item_name_size = settings.preview_font.get_string_size(
+			item.name,
+			HORIZONTAL_ALIGNMENT_CENTER,
+			_encircled_square_size,
+			settings.preview_font_size_name,
+		)
+		_description_size = settings.preview_font.get_multiline_string_size(
+			item.description,
+			HORIZONTAL_ALIGNMENT_CENTER,
+			_encircled_square_size,
+			settings.preview_font_size_description, 3,
+			TextServer.BREAK_WORD_BOUND,
+			TextServer.JUSTIFICATION_WORD_BOUND
+		)
+		_image_center_y += _item_name_size.y / 2.0
+		_image_center_y -= _description_size.y / 2.0
+	
 	if item.texture:
 		var _icon_size: float = _encircled_square_size - _item_name_size.y - _description_size.y
 		_icon_size *= settings.preview_size_factor
@@ -395,33 +402,40 @@ func _draw_center_preview() -> void:
 			_image_rect,
 			_icon_size
 		)
-		draw_item_image_at_position(selected_idx, Vector2.ZERO, settings.item_modulate, PI/2, _icon_preview_rect)
-
+		draw_item_image_at_position(selected_idx, Vector2.DOWN * _image_center_y, settings.item_modulate, PI/2, _icon_preview_rect)
+	
+	
 	# text option name and description
-	var _top_left_pos: Vector2 = Vector2(-_encircled_square_size, -_encircled_square_size)/2.0 + center
-	var _bot_left_pos: Vector2 = Vector2(-_encircled_square_size,  _encircled_square_size)/2.0 + center
-
-	draw_string(
-		settings.preview_font,
-		_top_left_pos + Vector2.DOWN * _item_name_size.y,
-		item.name,
-		HORIZONTAL_ALIGNMENT_CENTER,
-		_encircled_square_size,
-		settings.preview_font_size_name,
-		settings.preview_font_color_name,
-	)
-
-	draw_multiline_string(
-		settings.preview_font,
-		_bot_left_pos + Vector2.UP * _description_size.y,
-		item.description,
-		HORIZONTAL_ALIGNMENT_CENTER,
-		_encircled_square_size,
-		settings.preview_font_size_description, 3,
-		settings.preview_font_color_description,
-		TextServer.BREAK_WORD_BOUND,
-		TextServer.JUSTIFICATION_WORD_BOUND
-	)
+	if settings.preview_font:
+		var _top_left_pos: Vector2 = Vector2(-_encircled_square_size, -_encircled_square_size)/2.0 + center
+		var _bot_left_pos: Vector2 = Vector2(-_encircled_square_size,  _encircled_square_size)/2.0 + center
+		
+		# shift the top and bottom position of text according to their vertical size
+		_top_left_pos += Vector2.DOWN * _item_name_size.y
+		_bot_left_pos += Vector2.UP * _description_size.y
+		_bot_left_pos += Vector2.DOWN * settings.preview_font.get_ascent(settings.preview_font_size_description)
+		
+		draw_string(
+			settings.preview_font,
+			_top_left_pos,
+			item.name,
+			HORIZONTAL_ALIGNMENT_CENTER,
+			_encircled_square_size,
+			settings.preview_font_size_name,
+			settings.preview_font_color_name,
+		)
+		
+		draw_multiline_string(
+			settings.preview_font,
+			_bot_left_pos,
+			item.description,
+			HORIZONTAL_ALIGNMENT_CENTER,
+			_encircled_square_size,
+			settings.preview_font_size_description, 3,
+			settings.preview_font_color_description,
+			TextServer.BREAK_WORD_BOUND,
+			TextServer.JUSTIFICATION_WORD_BOUND
+		)
 
 
 func _process(_delta: float) -> void:
