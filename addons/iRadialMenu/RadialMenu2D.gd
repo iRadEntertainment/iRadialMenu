@@ -80,8 +80,9 @@ signal canceled
 #region Init
 func _ready() -> void:
 	_is_editor = Engine.is_editor_hint()
-	if _is_editor:
-		EditorInterface.get_inspector().property_edited.connect(_on_property_edited)
+	# DEPRECATED: _on_property_edited is connected to EditorInterface which will break builds on export
+	#if _is_editor:
+		#EditorInterface.get_inspector().property_edited.connect(_on_property_edited)
 	gui_input.connect(_gui_input)
 	await get_tree().process_frame
 	queue_redraw()
@@ -124,7 +125,7 @@ func _input(event: InputEvent) -> void:
 			return
 		if event.button_index == MOUSE_BUTTON_LEFT:
 			if selected_idx != -1:
-				select()
+				pass
 			else:
 				cancel()
 		elif event.button_index == MOUSE_BUTTON_RIGHT:
@@ -441,16 +442,17 @@ func _draw_center_preview() -> void:
 func _process(_delta: float) -> void:
 	if !_is_editor:
 		return
-	if preview_draw and !EditorInterface.get_edited_scene_root() is RadialMenu3DFlat:
+	if preview_draw:# and !EditorInterface.get_edited_scene_root() is RadialMenu3DFlat:
 		hover_at_local_position(get_local_mouse_position())
 		update()
 #endregion
 
 
 #region Signals
-func _on_property_edited(property: StringName) -> void:
-	if property == &"items":
-		update_configuration_warnings()
+# DEPRECATED: see _ready function where this function is connected
+#func _on_property_edited(property: StringName) -> void:
+	#if property == &"items":
+		#update_configuration_warnings()
 
 
 func _on_settings_changed() -> void:

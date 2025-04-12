@@ -25,7 +25,7 @@ resource_name = "metalDark"
 albedo_color = Color(0.589021, 0.656282, 0.656282, 1)
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_6flfi"]
-viewport_path = NodePath("televisionVintage(Clone)/SubViewport")
+viewport_path = NodePath("televisionVintage/SubViewport")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4770f"]
 resource_local_to_scene = true
@@ -162,22 +162,21 @@ shadow_mesh = SubResource("ArrayMesh_p4nkk")
 size = Vector3(0.400146, 0.262878, 0.245544)
 
 [node name="TV" type="StaticBody3D"]
-transform = Transform3D(0.791187, 0, 1.83685, 0, 2, 0, -1.83685, 0, 0.791187, 0, 0, 0)
 script = ExtResource("1_ch1u7")
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
 transform = Transform3D(0.5, 0, -1.49012e-08, 0, 0.5, 0, 1.49012e-08, 0, 0.5, 0, 0, 0)
 stream = SubResource("AudioStreamGenerator_6flfi")
 
-[node name="televisionVintage(Clone)" type="MeshInstance3D" parent="."]
+[node name="televisionVintage" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, -2.98023e-08, 0, 1, 0, 2.98023e-08, 0, 1, 0, 0, 0)
 mesh = SubResource("ArrayMesh_us2ae")
 skeleton = NodePath("")
 
-[node name="SubViewport" type="SubViewport" parent="televisionVintage(Clone)"]
+[node name="SubViewport" type="SubViewport" parent="televisionVintage"]
 size = Vector2i(640, 400)
 
-[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="televisionVintage(Clone)/SubViewport"]
+[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="televisionVintage/SubViewport"]
 unique_name_in_owner = true
 material = ExtResource("1_hrinw")
 anchors_preset = 15
@@ -191,7 +190,7 @@ autoplay = true
 expand = true
 loop = true
 
-[node name="TextureRect" type="TextureRect" parent="televisionVintage(Clone)/SubViewport"]
+[node name="TextureRect" type="TextureRect" parent="televisionVintage/SubViewport"]
 visible = false
 material = ExtResource("1_hrinw")
 anchors_preset = 15

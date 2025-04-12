@@ -4,8 +4,8 @@ extends StaticBody3D
 const TEMP_VIDEO_FILE_PATH = "res://temp_video.ogv"
 const VIDEO_FOLDER_ON_GITHUB = "https://github.com/iRadEntertainment/iRadialMenu/blob/main/addons/iRadialMenu/examples/assets/videos/"
 
-@onready var television_vintage_clone_: MeshInstance3D = $"televisionVintage(Clone)"
-@onready var sub_viewport: SubViewport = $"televisionVintage(Clone)/SubViewport"
+@onready var television_vintage_clone_: MeshInstance3D = $"televisionVintage"
+@onready var sub_viewport: SubViewport = $"televisionVintage/SubViewport"
 @onready var http_request: HTTPRequest = %HTTPRequest
 
 

@@ -81,7 +81,10 @@ class_name RadialMenu3DFlat extends Node3D
 
 #region Node references
 var _cam: Camera3D:
-	get(): return viewport.get_camera_3d()
+	get():
+		if viewport:
+			return viewport.get_camera_3d()
+		return null
 
 var _plane_material: StandardMaterial3D:
 	get():
@@ -97,10 +100,16 @@ var radial_menu_2d: RadialMenu2D
 # for editor preview
 var viewport: Viewport:
 	get():
-		return get_viewport() if !_is_editor else EditorInterface.get_editor_viewport_3d()
+		if !_is_editor:
+			return get_viewport()
+		elif helper:
+			return helper.get_editor_viewport_3d()
+		else:
+			return null
 var node_3d_editor: Node: # Node3DEditor (unlisted)
 	get():
-		return null if !_is_editor else EditorInterface.get_editor_main_screen().get_child(1)
+		return null if !_is_editor else helper.get_node_3d_editor()
+var helper
 #endregion
 
 #region Functional variables
@@ -122,7 +131,11 @@ signal canceled
 func _ready() -> void:
 	_is_editor = Engine.is_editor_hint()
 	if _is_editor:
-		EditorInterface.get_inspector().property_edited.connect(_on_property_edited)
+		helper = load("res://addons/iRadialMenu/RadialMenuEditor.gd")
+		#add_child(helper)
+	# DEPRECATED: _on_property_edited is connected to EditorInterface which will break builds on export
+	#if _is_editor:
+		#EditorInterface.get_inspector().property_edited.connect(_on_property_edited)
 	_clear_nodes()
 	create_nodes()
 	setup_nodes()
@@ -133,17 +146,18 @@ func _ready() -> void:
 		hide()
 
 
-func fetch_nodes() -> void:
-	_plane = get_node_or_null("Plane")
-	if _plane:
-		_mesh = _plane.mesh
-		sub_viewport = get_node_or_null("Plane/SubViewport")
-		radial_menu_2d = get_node_or_null("Plane/SubViewport/RadialMenu2D")
-	else:
-		_clear_nodes()
-		create_nodes()
-		setup_nodes()
-		_connect_signals()
+# DEPRECATED: fetch_nodes()
+#func fetch_nodes() -> void:
+	#_plane = get_node_or_null("Plane")
+	#if _plane:
+		#_mesh = _plane.mesh
+		#sub_viewport = get_node_or_null("Plane/SubViewport")
+		#radial_menu_2d = get_node_or_null("Plane/SubViewport/RadialMenu2D")
+	#else:
+		#_clear_nodes()
+		#create_nodes()
+		#setup_nodes()
+		#_connect_signals()
 
 
 func _clear_nodes() -> void:
@@ -182,7 +196,7 @@ func setup_nodes() -> void:
 	_plane_material.no_depth_test = draw_on_top
 	_plane_material.albedo_texture = sub_viewport.get_texture()
 	if _is_editor:
-		_plane_material.albedo_texture.viewport_path = EditorInterface.get_edited_scene_root().get_path_to(sub_viewport)
+		_plane_material.albedo_texture.viewport_path = helper.get_edited_scene_root().get_path_to(sub_viewport)
 	#else:
 		#_plane_material.albedo_texture.viewport_path = self.get_path_to(sub_viewport)
 	#print("viewport path: ", _plane_material.albedo_texture.viewport_path)
@@ -211,6 +225,8 @@ func validate_items() -> bool:
 
 
 #region Update
+# The process function is only used in editor to preview the node
+# It is not needed at all for the correct functioning of the RadialMenu3DFlat class in-game
 func _process(_delta: float) -> void:
 	if not _is_editor:
 		return
@@ -282,20 +298,24 @@ func _face_camera() -> void:
 	if not _plane:
 		push_warning("RadialMenu3DFlat: nodes not initialized correctly.")
 		return
-	_plane.global_rotation = _cam.global_rotation
+	if _cam:
+		_plane.global_rotation = _cam.global_rotation
 	
 	if tilt_with_mouse: 
 		_tilt()
 
 
 func _tilt() -> void:
+	if not viewport:
+		return
 	# tilt _plane with mouse
 	var m_pos: Vector2 = viewport.get_mouse_position()
 	var tilt: Vector2 = m_pos - Vector2(viewport.size)/2.0
 	tilt /= Vector2(sub_viewport.size)
 	tilt *= tilt_strength
 	
-	_plane.global_rotation = _cam.global_rotation + Vector3(-tilt.y, -tilt.x, 0)
+	if _cam:
+		_plane.global_rotation = _cam.global_rotation + Vector3(-tilt.y, -tilt.x, 0)
 
 
 func _input(event: InputEvent) -> void:
@@ -341,6 +361,8 @@ func _get_mouse_2D_pos_on_plane() -> Variant:
 
 
 func _get_mouse_on_projection_plane() -> Variant:
+	if not _cam:
+		return
 	if not _plane:
 		push_warning("RadialMenu3DFlat: nodes not initialized correctly.")
 		return
@@ -403,9 +425,10 @@ func _on_canceled() -> void:
 	close_popup()
 
 
-func _on_property_edited(property: StringName) -> void:
-	if property == &"items":
-		update_configuration_warnings()
+# DEPRECATED: see _ready function where this function is connected
+#func _on_property_edited(property: StringName) -> void:
+	#if property == &"items":
+		#update_configuration_warnings()
 #endregion
 
 

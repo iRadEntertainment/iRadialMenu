@@ -10,7 +10,7 @@ config_version=5
 
 [application]
 
-config/name="iRadial Menu"
+config/name="iRadial_Menu"
 run/main_scene="uid://c2n486inebntt"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="uid://b21v3xndx75sm"
